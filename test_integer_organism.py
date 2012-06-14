@@ -1,7 +1,7 @@
 import unittest
 from unittest import TestCase as TC
 
-import integer_organism
+import integer_organism as organism
 from integer_organism import Organism
 
 
@@ -33,7 +33,8 @@ class TestOrganism(TC):
         set_of_organisms2 = {Organism(1), Organism(2)}
         set_of_organisms3 = set_of_organisms.union(set_of_organisms2)
 
-        self.assertSetEqual(set_of_organisms3, {Organism(0), Organism(1), Organism(2)})
+        self.assertSetEqual(set_of_organisms3,
+                {Organism(0), Organism(1), Organism(2)})
 
     def test_duplicate(self):
         g0 = Organism(0)
@@ -49,4 +50,4 @@ class TestOrganism(TC):
 
 class TestModule(TC):
     def test_default_organism(self):
-        organism = integer_organism.default_organism
+        org = organism.default_organism

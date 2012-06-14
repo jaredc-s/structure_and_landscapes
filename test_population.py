@@ -21,4 +21,4 @@ class TestPopulation(TC):
     def test_leastfit_removal(self):
         population = Population([1,20,30,40],2)
         population.remove_least_fit()
-        self.assertItemsEqual([40,30]
+        self.assertItemsEqual([40,30],population)
