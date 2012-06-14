@@ -4,14 +4,26 @@ from unittest import TestCase as TC
 import population
 from population import Population
 
+class MockOrganism(object):
+    def __init__(self, value):
+        self.fitness = value
+    
+    def eval_fit(self):
+        return self.fitness
+    
+    def mutate(self):
+        return self.fitness += 1
+    
 class TestPopulation(TC):
+    def setUo(self):
+        self.population =  Population([MockOrganism(1),MockOrganism(2),MockOrganism(3),MockOrganism(4)])
+
     def test_init_nogivensize(self):
-        population = Population([1,2,3,4])
-        self.assertEqual(population.maxsize, 4)
+        self.assertEqual(self.population.maxsize, 4)
 
     def test_init_givensize(self):
         population = Population([1,2,3,4],5)
-        self.assertEqual(population.maxsize, 5)
+        self.assertEqual(self.population.maxsize, 5)
 
     def test_removal(self):
         population = Population([1,2,3],2)
