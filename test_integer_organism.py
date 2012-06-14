@@ -1,7 +1,7 @@
 import unittest
 from unittest import TestCase as TC
 
-import integer_organism
+import integer_organism as organism
 from integer_organism import Organism
 
 
@@ -49,4 +49,4 @@ class TestOrganism(TC):
 
 class TestModule(TC):
     def test_default_organism(self):
-        organism = integer_organism.default_organism
+        organism = organism.default_organism
