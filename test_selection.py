@@ -1,3 +1,0 @@
-import selection
-
-class Test
