@@ -1,4 +1,5 @@
 import random
+random_generator = random.Random()
  
 def select(population, fitness, num):
      total_fit = float(sum(fitness))
@@ -8,7 +9,7 @@ def select(population, fitness, num):
             
      new_population = []
      for n in xrange(num):
-         r = random.random()
+         r = random_generator.random()
          for (i, individual) in enumerate(population):
              if r<= prob[i]:
                  new_population.append(individual)
