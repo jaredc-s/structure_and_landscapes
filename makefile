@@ -12,3 +12,6 @@ install:
 
 style:
 	pep8 *.py
+
+clean:
+	rm *.pyc
