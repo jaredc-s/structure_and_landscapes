@@ -44,12 +44,6 @@ class TestOrganism(TC):
                 {Organism(self.value_0), Organism(self.value_1),
                     Organism(self.value_2)})
 
-    def test_duplicate(self):
-        g0 = Organism(self.value_0)
-        g1 = Organism(self.value_1)
-        self.assertEqual(g0, g0.duplicate())
-        self.assertNotEqual(g1, g0.duplicate())
-
     def test_mutate(self):
         g0 = Organism(self.value_0)
         g_ = g0.mutate()

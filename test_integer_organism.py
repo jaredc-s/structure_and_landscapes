@@ -36,12 +36,6 @@ class TestOrganism(TC):
         self.assertSetEqual(set_of_organisms3,
                 {Organism(0), Organism(1), Organism(2)})
 
-    def test_duplicate(self):
-        g0 = Organism(0)
-        g1 = Organism(1)
-        self.assertEqual(g0, g0.duplicate())
-        self.assertNotEqual(g1, g0.duplicate())
-
     def test_mutate(self):
         g0 = Organism(0)
         g_ = g0.mutate()

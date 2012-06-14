@@ -23,9 +23,6 @@ class Organism(object):
     def __hash__(self):
         return hash(self.value)
 
-    def duplicate(self):
-        return Organism(self.value)
-
     def mutate(self):
         mutated_value = mutate_value(self.value)
         return Organism(mutated_value)
