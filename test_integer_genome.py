@@ -35,6 +35,17 @@ class TestGenome(TC):
 
         self.assertSetEqual(set_of_genomes3, {Genome(0), Genome(1), Genome(2)})
 
+    def test_duplicate(self):
+        g0 = Genome(0)
+        g1 = Genome(1)
+        self.assertEqual(g0, g0.duplicate())
+        self.assertNotEqual(g1, g0.duplicate())
+
+    def test_mutate(self):
+        g0 = Genome(0)
+        g_ = g0.mutate()
+        self.assertNotEqual(g0, g_)
+
 
 class TestModule(TC):
     def test_default_genome(self):

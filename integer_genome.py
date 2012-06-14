@@ -3,6 +3,8 @@ Simple representation of a genome.
 
 Intended for testing purposes.
 """
+import random
+from mutate import mutate_value
 
 
 class Genome(object):
@@ -20,5 +22,13 @@ class Genome(object):
 
     def __hash__(self):
         return hash(self.value)
+
+    def duplicate(self):
+        return Genome(self.value)
+
+    def mutate(self):
+        mutated_value = mutate_value(self.value)
+        return Genome(mutated_value)
+
 
 default_genome = Genome(0)
