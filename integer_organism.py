@@ -27,5 +27,9 @@ class Organism(object):
         mutated_value = mutate_value(self.value)
         return Organism(mutated_value)
 
+    @property
+    def fitness(self):
+        return float(abs(self.value))
+
 
 default_organism = Organism(0)

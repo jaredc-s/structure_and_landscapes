@@ -10,8 +10,8 @@ from bitstring import Bitstring
 class TestOrganism(TC):
     def setUp(self):
         self.value_0 = Bitstring("000")
-        self.value_1 = Bitstring("101")
-        self.value_2 = Bitstring("101")
+        self.value_1 = Bitstring("001")
+        self.value_2 = Bitstring("111")
         self.bad_value = "000"
 
     def test_init(self):
@@ -48,6 +48,12 @@ class TestOrganism(TC):
         g0 = Organism(self.value_0)
         g_ = g0.mutate()
         self.assertNotEqual(g0, g_)
+
+    def test_fitness(self):
+        g0 = Organism(self.value_0)
+        self.assertAlmostEqual(0, g0.fitness)
+        g1 = Organism(self.value_1)
+        self.assertAlmostEqual(1, g1.fitness)
 
 
 class TestModule(TC):

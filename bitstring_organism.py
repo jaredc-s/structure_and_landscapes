@@ -29,5 +29,9 @@ class Organism(object):
         mutated_value = mutate_value(self.value)
         return Organism(mutated_value)
 
+    @property
+    def fitness(self):
+        all_zeroes = Bitstring(False for _ in self.value)
+        return float(all_zeroes.hamming_distance(self.value))
 
 default_organism = Organism(Bitstring(False for _ in range(10)))
