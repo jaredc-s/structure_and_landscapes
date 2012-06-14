@@ -49,4 +49,4 @@ class TestOrganism(TC):
 
 class TestModule(TC):
     def test_default_organism(self):
-        organism = organism.default_organism
+        org = organism.default_organism
