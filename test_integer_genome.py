@@ -28,6 +28,13 @@ class TestGenome(TC):
         self.assertFalse(g0 == i)
         self.assertTrue(g0 != i)
 
+    def test_hash(self):
+        set_of_genomes = {Genome(0), Genome(1)}
+        set_of_genomes2 = {Genome(1), Genome(2)}
+        set_of_genomes3 = set_of_genomes.union(set_of_genomes2)
+
+        self.assertSetEqual(set_of_genomes3, {Genome(0), Genome(1), Genome(2)})
+
 
 class TestModule(TC):
     def test_default_genome(self):

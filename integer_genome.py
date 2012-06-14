@@ -18,4 +18,7 @@ class Genome(object):
     def __ne__(self, other):
         return not self == other
 
+    def __hash__(self):
+        return hash(self.value)
+
 default_genome = Genome(0)
