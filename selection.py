@@ -12,5 +12,7 @@ def select(population, fitness, num):
          for (i, individual) in enumerate(population):
              if r<= prob[i]:
                  new_population.append(individual)
+                 prob.pop(i)
+                 population.pop(i)
                  break
      return new_population 

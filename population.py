@@ -1,7 +1,6 @@
 """
 Meant to hold a population of organisms
 Should be robust enough to handle bitstrings, user-defined alphabet etc.
-
 Updates should:
 1. replicate organisms
 2. Calculate fitness for all organisms
@@ -21,16 +20,17 @@ class Population(object):
         
     def replicate(self):
         pass
-        x-men = [organism.mutate() for org in self.population]
-        self.population += x-men
+        #x-men = [organism.mutate() for org in self.population]
+        #self.population += x-men
 
     def remove_at_random(self):
         """
         Currently removes organisms from population at random
         in the future should look at a way to evaluate fitness and cull based off that
         """
-        if self.population > self.maxsize:
+        if len(self.population) > self.maxsize:
             self.population = [random.choice(self.population) for i in range(self.maxsize)]
+            self.size = len(self.population)
 
     def remove_least_fit(self):
         """
@@ -38,21 +38,6 @@ class Population(object):
         then can remove the sorting of tuples
         """
         
-        def select(population, fitness, num):
-            total_fit = float(sum(fitness))
-            rel_fitness = [f/total_fit for f in fitness]
-            
-            prob = [sum(rel_fitness[:i+1]) for i in range(len(rel_fitness))]
-            
-            new_population = []
-            for n in xrange(num):
-                r = random.random()
-                for (i, individual) in enumerate(population):
-                    if r<= prob[i]:
-                        new_population.append(individual)
-                        break
-            return new_population 
-
         fit_list = [org.eval_fit() for org in self.population]
 
         self.population = select(self.population, fit_list, self.maxsize)
@@ -61,4 +46,4 @@ class Population(object):
         self.replicate()
         self.remove_least_fit()
 
-default_population = population([1,1,0,0,1])
+default_population = Population([1,1,0,0,1])
