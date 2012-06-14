@@ -31,29 +31,26 @@ class Population():
         Need to find way to choose based off of weighing the fitness values
         then can remove the sorting of tuples
         """
-        fit_orgs = []
-        for org in self.population:
-            package = (org.eval_fitness(), org)
-            fit_orgs.append(package)
-        fit_orgs.sort()
         
         def select(population, fitness, num):
             total_fit = float(sum(fitness))
             rel_fitness = [f/total_fit for f in fitness]
             
-            prob = [sum(rel_fitness[:i+1]) for i in range(len(rel_fitness))]
+            #prob = [sum(rel_fitness[:i+1]) for i in range(len(rel_fitness))]
             
             new_population = []
             for n in xrange(num):
-                r = rand()
+                r = random.random()
                 for (i, individual) in enumerate(population):
-                    if r<= prob[i]:
+                    if r<= rel_fitness[i]:
                         new_population.append(individual)
                         break
             return new_population
 
+        fit_list = [org.eval_fit() for org in self.population]
+
+        self.population = select(self.population, fit_list, self.maxsize)
+        
     def advance_generation(self):
         self.replicate()
         self.remove_least_fit()
-
-
