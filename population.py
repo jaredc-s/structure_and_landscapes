@@ -9,12 +9,18 @@ Updates should:
 
 import random
 
-class Population():
-    def __init__(self,init_pop):
+class Population(object):
+    def __init__(self,init_pop,max_size=None):
         self.population = list(init_pop)
-        self.maxsize = len(self.population)
+        self.size = len(self.population)
+        if max_size == None:
+            self.maxsize = len(self.population)
+        
+        else:
+            self.maxsize = max_size
         
     def replicate(self):
+        pass
         x-men = [organism.mutate() for org in self.population]
         self.population += x-men
 
@@ -36,16 +42,16 @@ class Population():
             total_fit = float(sum(fitness))
             rel_fitness = [f/total_fit for f in fitness]
             
-            #prob = [sum(rel_fitness[:i+1]) for i in range(len(rel_fitness))]
+            prob = [sum(rel_fitness[:i+1]) for i in range(len(rel_fitness))]
             
             new_population = []
             for n in xrange(num):
                 r = random.random()
                 for (i, individual) in enumerate(population):
-                    if r<= rel_fitness[i]:
+                    if r<= prob[i]:
                         new_population.append(individual)
                         break
-            return new_population
+            return new_population 
 
         fit_list = [org.eval_fit() for org in self.population]
 
@@ -54,3 +60,5 @@ class Population():
     def advance_generation(self):
         self.replicate()
         self.remove_least_fit()
+
+default_population = population([1,1,0,0,1])
