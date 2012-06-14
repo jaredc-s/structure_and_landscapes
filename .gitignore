@@ -4,7 +4,10 @@
 *.egg
 *.egg-info
 dist
+lib
 build
+include
+.Python
 eggs
 parts
 bin
