@@ -33,7 +33,8 @@ class TestOrganism(TC):
         set_of_organisms2 = {Organism(1), Organism(2)}
         set_of_organisms3 = set_of_organisms.union(set_of_organisms2)
 
-        self.assertSetEqual(set_of_organisms3, {Organism(0), Organism(1), Organism(2)})
+        self.assertSetEqual(set_of_organisms3,
+                {Organism(0), Organism(1), Organism(2)})
 
     def test_duplicate(self):
         g0 = Organism(0)
