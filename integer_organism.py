@@ -1,5 +1,5 @@
 """
-Simple representation of a genome.
+Simple representation of a organism.
 
 Intended for testing purposes.
 """
@@ -7,7 +7,7 @@ import random
 from mutate import mutate_value
 
 
-class Genome(object):
+class Organism(object):
     def __init__(self, value):
         assert(isinstance(value, int))
         self.value = value
@@ -24,11 +24,11 @@ class Genome(object):
         return hash(self.value)
 
     def duplicate(self):
-        return Genome(self.value)
+        return Organism(self.value)
 
     def mutate(self):
         mutated_value = mutate_value(self.value)
-        return Genome(mutated_value)
+        return Organism(mutated_value)
 
 
-default_genome = Genome(0)
+default_organism = Organism(0)
