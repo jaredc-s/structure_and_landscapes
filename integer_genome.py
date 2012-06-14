@@ -10,4 +10,12 @@ class Genome(object):
         assert(isinstance(value, int))
         self.value = value
 
+    def __eq__(self, other):
+        if not isinstance(other, type(self)):
+            return False
+        return self.value == other.value
+
+    def __ne__(self, other):
+        return not self == other
+
 default_genome = Genome(0)
