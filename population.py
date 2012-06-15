@@ -27,6 +27,9 @@ class Population(object):
     def __len__(self):
         return len(self.population)
 
+    def is_full(self):
+        return len(self.population) == self.maxsize
+
     def replicate(self):
         xmen = [org.mutate() for org in self.population]
         
@@ -53,5 +56,11 @@ class Population(object):
     def advance_generation(self):
         self.replicate()
         self.remove_least_fit()
+
+    def add_to_pop(self, org):
+        self.pop.append(org)
+
+    def remove_from_pop(self, org_pos):
+        self.pop.remove()
 
 default_population = Population([1, 1, 0, 0, 1])
