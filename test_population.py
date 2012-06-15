@@ -58,3 +58,8 @@ class TestPopulation(TC):
         
         for org, poporg in zip(self.orgs,self.pop):
             self.assertEqual(org, poporg)
+
+    def test_add_to_pop(self):
+        org = MockOrganism(6)
+        self.pop.add_to_pop(org)
+        self.assertEqual(5,len(self.pop))

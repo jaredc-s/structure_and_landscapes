@@ -58,9 +58,10 @@ class Population(object):
         self.remove_least_fit()
 
     def add_to_pop(self, org):
-        self.pop.append(org)
+        self.population.append(org)
 
-    def remove_from_pop(self, org_pos):
-        self.pop.remove()
+    def remove_from_pop(self, org):
+        pass
+        #self.pop.remove(org)
 
 default_population = Population([1, 1, 0, 0, 1])
