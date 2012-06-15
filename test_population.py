@@ -18,8 +18,10 @@ class MockOrganism(object):
 
 class TestPopulation(TC):
     def setUp(self):
-        self.pop = Population([MockOrganism(1), MockOrganism(2),
-                                MockOrganism(3), MockOrganism(4)])
+        self.orgs = [MockOrganism(1), MockOrganism(2),
+                     MockOrganism(3), MockOrganism(4)]
+        
+        self.pop = Population(self.orgs)
 
     def test_init_nogivensize(self):
         self.assertEqual(self.pop.maxsize, 4)
@@ -31,7 +33,7 @@ class TestPopulation(TC):
     def test_removal(self):
         population = Population([1, 2, 3], 2)
         population.remove_at_random()
-        self.assertEqual(population.size, 2)
+        self.assertEqual(len(population), 2)
 
     def test_leastfit_removal(self):
         this_pop = Population([MockOrganism(1), MockOrganism(2), 
@@ -41,14 +43,18 @@ class TestPopulation(TC):
         self.assertItemsEqual([100], [org.eval_fit() for org in this_pop])
 
     def test_replicate(self):
-        self.setUp()
         self.pop.replicate()
-        self.assertEqual(8, self.pop.size)
+        self.assertEqual(8, len(self.pop))
 
     def test_advance(self):
         big_pop = Population([MockOrganism(1), MockOrganism(2), 
                                MockOrganism(90)], 3)
         
         big_pop.advance_generation()
-        self.assertLessEqual(big_pop.size, 3)
+        self.assertLessEqual(len(big_pop), 3)
         
+    def test_iter_len(self):
+        self.assertEqual(4,len(self.pop))
+        
+        for org, poporg in zip(self.orgs,self.pop):
+            self.assertEqual(org, poporg)

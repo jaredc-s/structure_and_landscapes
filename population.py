@@ -14,7 +14,7 @@ from selection import select
 class Population(object):
     def __init__(self, init_pop, max_size=None):
         self.population = list(init_pop)
-        self.size = len(self.population)
+
         if max_size is None:
             self.maxsize = len(self.population)
 
@@ -24,11 +24,13 @@ class Population(object):
     def __iter__(self):
         return iter(self.population)
 
+    def __len__(self):
+        return len(self.population)
+
     def replicate(self):
         xmen = [org.mutate() for org in self.population]
         
         self.population += xmen
-        self.size = len(self.population)
 
     def remove_at_random(self):
         """
@@ -39,7 +41,6 @@ class Population(object):
         if len(self.population) > self.maxsize:
             self.population = [random.choice(self.population)
                                for i in range(self.maxsize)]
-            self.size = len(self.population)
 
     def remove_least_fit(self):
         """
@@ -48,7 +49,6 @@ class Population(object):
         """
 
         self.population = select(self.population, self.maxsize)
-        self.size = len(self.population)
 
     def advance_generation(self):
         self.replicate()
