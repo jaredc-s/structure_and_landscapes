@@ -7,6 +7,8 @@ Updates should:
 """
 
 import random
+import bitstring_organism
+from selection import select
 
 
 class Population(object):
@@ -18,11 +20,15 @@ class Population(object):
 
         else:
             self.maxsize = max_size
+    
+    def __iter__(self):
+        return iter(self.population)
 
     def replicate(self):
-        pass
-        #x-men = [organism.mutate() for org in self.population]
-        #self.population += x-men
+        xmen = [org.mutate() for org in self.population]
+        
+        self.population += xmen
+        self.size = len(self.population)
 
     def remove_at_random(self):
         """
@@ -41,9 +47,8 @@ class Population(object):
         then can remove the sorting of tuples
         """
 
-        fit_list = [org.eval_fit() for org in self.population]
-
-        self.population = select(self.population, fit_list, self.maxsize)
+        self.population = select(self.population, self.maxsize)
+        self.size = len(self.population)
 
     def advance_generation(self):
         self.replicate()

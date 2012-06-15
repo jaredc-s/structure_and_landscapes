@@ -13,7 +13,7 @@ class MockOrganism(object):
         return self.fitness
 
     def mutate(self):
-        return self.fitness
+        return MockOrganism(self.fitness)
 
 
 class TestPopulation(TC):
@@ -22,9 +22,8 @@ class TestPopulation(TC):
                                 MockOrganism(3), MockOrganism(4)])
 
     def test_init_nogivensize(self):
-       # self.assertEqual(self.pop.maxsize, 4)
-        pass
-
+        self.assertEqual(self.pop.maxsize, 4)
+        
     def test_init_givensize(self):
         population = Population([1, 2, 3, 4], 5)
         self.assertEqual(population.maxsize, 5)
@@ -35,7 +34,21 @@ class TestPopulation(TC):
         self.assertEqual(population.size, 2)
 
     def test_leastfit_removal(self):
-        #population = Population([1, 20, 30, 40], 2)
-        #population.remove_least_fit()
-        #self.assertItemsEqual([40, 30], population)
-        pass
+        this_pop = Population([MockOrganism(1), MockOrganism(2), 
+                               MockOrganism(100)], 1)
+
+        this_pop.remove_least_fit()
+        self.assertItemsEqual([100], [org.eval_fit() for org in this_pop])
+
+    def test_replicate(self):
+        self.setUp()
+        self.pop.replicate()
+        self.assertEqual(8, self.pop.size)
+
+    def test_advance(self):
+        big_pop = Population([MockOrganism(1), MockOrganism(2), 
+                               MockOrganism(90)], 3)
+        
+        big_pop.advance_generation()
+        self.assertLessEqual(big_pop.size, 3)
+        
