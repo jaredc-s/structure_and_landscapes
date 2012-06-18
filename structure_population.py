@@ -15,15 +15,15 @@ class Structured_Population(object):
     def __iter__(self):
         return iter(self.all_pop)
 
-    def migrate(self, rate):
+    def migrate(self, rate = 0):
         """should happen after replicate but before the culling
         However migration prior to replication would allow greater chance of survival
         """
 
-        from_pop = self.all_pop[random.randint(0, len(self.pop) - 1)]
-        from_org = from_pop[random.randint(0, len(from_pop))]
+        from_pop = self.all_pop[random.randint(0, len(self.all_pop) - 1)]
+        from_org = from_pop[random.randint(0, len(from_pop) - 1)]
 
-        to_pop = self.all_pop[random.randint(0, len(self.pop) - 1)]
+        to_pop = self.all_pop[random.randint(0, len(self.all_pop) - 1)]
 
         if to_pop.is_full():
             to_org = to_pop[random.randint(0,len(to_pop))]
@@ -31,7 +31,7 @@ class Structured_Population(object):
         else:
             to_pop.add_to_pop(from_org)
 
-        from_pop.remove_from_pop(from_org)
+        #from_pop.remove_from_pop(from_org)
 
     def replicate(self):
         for pop in self.all_pop:

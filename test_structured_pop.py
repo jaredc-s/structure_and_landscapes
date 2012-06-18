@@ -19,9 +19,16 @@ class MockPopulation(object):
     def __init__(self, orgs, maxsize=None):
         self.pop = list(orgs)
         self.max_size = maxsize
+    
     def __len__(self):
         return len(self.pop)
     
+    def __iter__(self):
+        return iter(self.pop)
+    
+    def __getitem__(self,key):
+        return self.pop[key]
+
     def replicate(self):
         xmen = [org.mutate() for org in self.pop]
         self.pop += xmen
@@ -30,12 +37,18 @@ class MockPopulation(object):
         if len(self.pop) > self.max_size:
             self.pop = [random.choice(self.pop) for i in range(self.max_size)]
 
+    def is_full(self):
+        return len(self.pop) >= self.max_size
+
+    def add_to_pop(self, org):
+        self.pop.append(org)
+
 class TestPopulation(TC):
     def setUp(self):
         self.orgs = [MockOrganism(1), MockOrganism(2),
                      MockOrganism(3), MockOrganism(4)]
         
-        self.pops = [MockPopulation(self.orgs, 4) for i in range(10)]
+        self.pops = [MockPopulation(self.orgs, 5) for i in range(10)]
         self.struct = Structured_Population(self.pops)
 
     def test_replicate(self):
@@ -47,8 +60,10 @@ class TestPopulation(TC):
         self.struct.replicate()
         self.struct.remove_at_random()
         for pop in self.struct:
-            self.assertEqual(4,len(pop))
+            self.assertEqual(5,len(pop))
 
     def test_migrate(self):
-        pass
-        
+        self.struct.migrate()
+        intended = [4, 4, 4, 4, 4, 4, 4, 4, 4, 5]
+        actual = [len(pop) for pop in self.struct]
+        self.assertItemsEqual(intended, actual)
