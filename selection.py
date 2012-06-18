@@ -3,6 +3,10 @@ Module to perform fitness proportional selection
 Selection is based off number line proportionallity
 If random number is selected in area that has already been selected
    the space in the population will be returned unfilled
+
+Birth-death models:
+Moran: Random death, among neighbors (well mixed for everyone) pick org to give birth into that slot
+       do it 1,000 times for a population size of 1,000.  This is termed a "generation"
 """
 
 import random
@@ -56,3 +60,20 @@ def normalize(nums):
     total = float(sum(nums))
 
     return [(num / total) for num in nums]
+
+def moran_death_birth(orgs):
+    """Method to execute the replacement of organism in a death-birth fashion using
+    fecundity to replace the randomly seleted death organism
+    """
+    for _ in range(len(orgs)):
+        index_to_kill = random.randrange(len(orgs))
+        chosen_to_give_birth = fecundity_birth_selection(orgs)
+        orgs[index_to_kill] = chosen_to_give_birth.mutate()
+
+def fecundity_birth_selection(orgs):
+    """Method to select an organism based off its fitness to replace death organism"""
+    numberlined = numberline(orgs)
+
+    for (i, (org, cum_fit)) in enumerate(numberlined):
+        if random_generator.random() < cum_fit:
+            return org

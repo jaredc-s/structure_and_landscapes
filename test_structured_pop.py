@@ -18,7 +18,7 @@ class MockOrganism(object):
 class MockPopulation(object):
     def __init__(self, orgs, maxsize=None):
         self.pop = list(orgs)
-        self.max_size = maxsize
+        self.maxsize = maxsize
     
     def __len__(self):
         return len(self.pop)
@@ -34,11 +34,11 @@ class MockPopulation(object):
         self.pop += xmen
 
     def remove_at_random(self):
-        if len(self.pop) > self.max_size:
-            self.pop = [random.choice(self.pop) for i in range(self.max_size)]
+        if len(self.pop) > self.maxsize:
+            self.pop = [random.choice(self.pop) for i in range(self.maxsize)]
 
     def is_full(self):
-        return len(self.pop) >= self.max_size
+        return len(self.pop) >= self.maxsize
 
     def add_to_pop(self, org):
         self.pop.append(org)
@@ -49,7 +49,10 @@ class TestPopulation(TC):
                      MockOrganism(3), MockOrganism(4)]
         
         self.pops = [MockPopulation(self.orgs, 5) for i in range(10)]
-        self.struct = Structured_Population(self.pops)
+        self.struct = Structured_Population(self.pops, 5)
+
+    def test_length(self):
+        self.assertEqual(10,len(self.struct))
 
     def test_replicate(self):
         self.struct.replicate()
@@ -67,3 +70,11 @@ class TestPopulation(TC):
         intended = [4, 4, 4, 4, 4, 4, 4, 4, 4, 5]
         actual = [len(pop) for pop in self.struct]
         self.assertItemsEqual(intended, actual)
+
+    def test_advance_generation(self):
+        self.struct.advance_generation()
+        for pop in self.struct:
+            for org in pop:
+                print org.eval_fit()
+            print '\n'
+        

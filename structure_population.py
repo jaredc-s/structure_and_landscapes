@@ -7,13 +7,11 @@ class Structured_Population(object):
     def __init__(self, sub_populations, maxsize = None):
         self.all_pop = list(sub_populations)
 
-        if maxsize == None:
-            self.max_size = maxsize
-        else:
-            self.max_size = len(sub_population[0])
-
     def __iter__(self):
         return iter(self.all_pop)
+
+    def __len__(self):
+        return len(self.all_pop)
 
     def migrate(self, rate = 0):
         """should happen after replicate but before the culling
@@ -55,5 +53,6 @@ class Structured_Population(object):
             pop = select(pop, pop.maxsize)
 
     def advance_generation(self):
+        self.migrate()
         self.replicate()
         self.remove_least_fit()

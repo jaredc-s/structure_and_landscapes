@@ -27,6 +27,9 @@ class Population(object):
     def __len__(self):
         return len(self.population)
 
+    def __getitem__(self, key):
+        return self.population[key]
+
     def is_full(self):
         return len(self.population) == self.maxsize
 
@@ -61,6 +64,8 @@ class Population(object):
         self.population.append(org)
 
     def remove_from_pop(self, org):
+        # Very expensive to do with a list.  Might be worthwile to 
+        # look in to using a different data structure such as a multiset
         pass
         #self.pop.remove(org)
 
