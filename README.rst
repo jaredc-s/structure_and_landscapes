@@ -13,7 +13,7 @@ fitness mappings will be explored including:
 
 Authors
 =======
-* Jared
+* Jared Carlson-Stevermer
 * `Joshua Nahum`_ 
  
 .. _`Joshua Nahum` : josh@nahum.us

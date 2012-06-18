@@ -7,43 +7,61 @@ Updates should:
 """
 
 import random
+import bitstring_organism
+from selection import select
+
 
 class Population(object):
-    def __init__(self,init_pop,max_size=None):
+    def __init__(self, init_pop, max_size=None):
         self.population = list(init_pop)
-        self.size = len(self.population)
-        if max_size == None:
+
+        if max_size is None:
             self.maxsize = len(self.population)
-        
+
         else:
             self.maxsize = max_size
-        
+    
+    def __iter__(self):
+        return iter(self.population)
+
+    def __len__(self):
+        return len(self.population)
+
+    def is_full(self):
+        return len(self.population) == self.maxsize
+
     def replicate(self):
-        pass
-        #x-men = [organism.mutate() for org in self.population]
-        #self.population += x-men
+        xmen = [org.mutate() for org in self.population]
+        
+        self.population += xmen
 
     def remove_at_random(self):
         """
         Currently removes organisms from population at random
-        in the future should look at a way to evaluate fitness and cull based off that
+        in the future should look at a way to evaluate fitness
+        and cull based off that
         """
         if len(self.population) > self.maxsize:
-            self.population = [random.choice(self.population) for i in range(self.maxsize)]
-            self.size = len(self.population)
+            self.population = [random.choice(self.population)
+                               for i in range(self.maxsize)]
 
     def remove_least_fit(self):
         """
         Need to find way to choose based off of weighing the fitness values
         then can remove the sorting of tuples
         """
-        
-        fit_list = [org.eval_fit() for org in self.population]
 
-        self.population = select(self.population, fit_list, self.maxsize)
-        
+        self.population = select(self.population, self.maxsize)
+
     def advance_generation(self):
         self.replicate()
         self.remove_least_fit()
 
-default_population = Population([1,1,0,0,1])
+    def add_to_pop(self, org):
+        self.population.append(org)
+
+    def remove_from_pop(self, org):
+        pass
+        #self.pop.remove(org)
+
+default_population = Population([1, 1, 0, 0, 1])
