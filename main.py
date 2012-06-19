@@ -26,22 +26,30 @@ def structured_pop_demo():
     pop_list = [Population(org_list) for _ in range(10)]
     struct_pop = Structured_Population(pop_list, 0.5, 0.5)
     
-    for _ in range(50):
-        population_state(struct_pop)
+    avg_fit = [[] for _ in range(len(pop_list))]
+    for i in range(50):
+        avg_fit.append(population_state(struct_pop, avg_fit, i))
         struct_pop.advance_generation()
+    plot(transpose(avg_fit))
+    show()
 
-def population_state(struct_pop):
-    for subpop in struct_pop:
+def population_state(struct_pop, fit_holder, gen_number):
+    for i in range(len(struct_pop)):
+        subpop = struct_pop[i]
+        dummy = []
         print "[",
         for org in subpop:
             print org.fitness,
+            dummy.append(org.fitness)
+        fit_holder[i][gen_number].append(average(dummy))
         print "]"
     print "\n"
+    return fit_holder
 
 
 def run(pop):
     fit_list = []
-    for gen in range(51):
+    for gen in range(50):
         one_gen = []
         for org in pop:
             print org.fitness,
