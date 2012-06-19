@@ -15,7 +15,8 @@ Authors
 =======
 * Jared Carlson-Stevermer
 * `Joshua Nahum`_ 
- 
+* `Joseph Marcus`_
+.. _`Joseph Marcus` : josephhmarcus@gmail.com 
 .. _`Joshua Nahum` : josh@nahum.us
 
 Requirements
