@@ -5,6 +5,7 @@ import mutate
 import population
 from population import Population
 from basic_plot import *
+from structure_population import Structured_Population
 
 
 def int_org_demo():
@@ -20,6 +21,24 @@ def bit_org_demo():
     pop = Population(bit_list, 100)
     run(pop)
 
+def structured_pop_demo():
+    org_list = [int_organism(i) for i in range(1, 11)]
+    pop_list = [Population(org_list) for _ in range(10)]
+    struct_pop = Structured_Population(pop_list, 0.5, 0.5)
+    
+    for _ in range(50):
+        population_state(struct_pop)
+        struct_pop.advance_generation()
+
+def population_state(struct_pop):
+    for subpop in struct_pop:
+        print "[",
+        for org in subpop:
+            print org.fitness,
+        print "]"
+    print "\n"
+
+
 def run(pop):
     fit_list = []
     for gen in range(51):
@@ -34,8 +53,9 @@ def run(pop):
 
 
 def main():
-    bit_org_demo()
-    int_org_demo()
+    #bit_org_demo()
+    #int_org_demo()
+    structured_pop_demo()
 
 if __name__ == "__main__":
     main()

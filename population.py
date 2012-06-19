@@ -8,7 +8,7 @@ Updates should:
 
 import random
 import bitstring_organism
-from selection import select
+from selection import *
 
 
 class Population(object):
