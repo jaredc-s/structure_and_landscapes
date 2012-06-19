@@ -63,6 +63,3 @@ class TestPopulation(TC):
         org = MockOrganism(6)
         self.pop.add_to_pop(org)
         self.assertEqual(5, len(self.pop))
-
-    def test_remove_single(self):
-        pass

@@ -59,17 +59,14 @@ class Population(object):
 
         self.population = select(self.population, self.maxsize)
 
+    def moran_selection(self):
+        self.population = moran_death_birth(self.population)
+
     def advance_generation(self):
         self.replicate()
         self.remove_least_fit()
 
     def add_to_pop(self, org):
         self.population.append(org)
-
-    def remove_from_pop(self, org):
-        # Very expensive to do with a list.  Might be worthwile to
-        # look in to using a different data structure such as a multiset
-        raise NotImplementedError()
-        #self.pop.remove(org)
 
 default_population = Population([1, 1, 0, 0, 1])
