@@ -12,5 +12,6 @@ def plot_average_fitness(fitness):
     plot(values)
     show()
 
+
 def average_gen(generation_fitness):
     return average(generation_fitness)

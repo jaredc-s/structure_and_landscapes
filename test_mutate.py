@@ -24,7 +24,7 @@ class TestModule(TC):
         mutated_value1 = mutate.mutate_value(value)
 
         self.assertSetEqual({mutated_value0, mutated_value1},
-                {value + 1, value - 1})
+                            {value + 1, value - 1})
 
     def test_mutate_bitstring(self):
         value = bitstring.Bitstring("00")
