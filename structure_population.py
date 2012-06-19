@@ -44,7 +44,6 @@ class Structured_Population(object):
 
         from_pops = random.sample(self.list_of_populations,
                                   number_migrating_pops)
-
         together = zip(from_pops[0::2], from_pops[1::2])
         for popA, popB in together:
             self.swap(popA, popB)
@@ -79,7 +78,10 @@ class Structured_Population(object):
         for pop in self.list_of_populations:
             pop.remove_least_fit()
 
+    def moran_cull(self):
+        for pop in self.list_of_populations:
+            pop.moran_selection()
+
     def advance_generation(self):
-        self.replicate()
-        self.remove_least_fit()
+        self.moran_cull()
         self.migrate()

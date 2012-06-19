@@ -72,6 +72,7 @@ def moran_death_birth(orgs):
         chosen_to_give_birth = fecundity_birth_selection(orgs)
         orgs[index_to_kill] = chosen_to_give_birth.mutate()
 
+    return orgs
 
 def fecundity_birth_selection(orgs):
     """Method to select an organism based off its fitness
