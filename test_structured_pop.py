@@ -26,8 +26,11 @@ class MockPopulation(object):
     def __iter__(self):
         return iter(self.pop)
     
-    def __getitem__(self,key):
+    def __getitem__(self, key):
         return self.pop[key]
+
+    def __setitem__(self, key, value):
+        self.pop[key] = value
 
     def replicate(self):
         xmen = [org.mutate() for org in self.pop]
@@ -43,13 +46,16 @@ class MockPopulation(object):
     def add_to_pop(self, org):
         self.pop.append(org)
 
+    def remove_least_fit(self):
+        pass
+
 class TestPopulation(TC):
     def setUp(self):
         self.orgs = [MockOrganism(1), MockOrganism(2),
                      MockOrganism(3), MockOrganism(4)]
         
-        self.pops = [MockPopulation(self.orgs, 5) for i in range(10)]
-        self.struct = Structured_Population(self.pops, 5)
+        self.pops = [MockPopulation(self.orgs, 5) for _ in range(10)]
+        self.struct = Structured_Population(self.pops, 0.5, 0.5)
 
     def test_length(self):
         self.assertEqual(10,len(self.struct))
@@ -65,16 +71,12 @@ class TestPopulation(TC):
         for pop in self.struct:
             self.assertEqual(5,len(pop))
 
-    def test_migrate(self):
-        self.struct.migrate()
-        intended = [4, 4, 4, 4, 4, 4, 4, 4, 4, 5]
-        actual = [len(pop) for pop in self.struct]
-        self.assertItemsEqual(intended, actual)
-
     def test_advance_generation(self):
         self.struct.advance_generation()
         for pop in self.struct:
             for org in pop:
                 print org.eval_fit()
             print '\n'
-        
+
+    def test_migrate(self):
+        self.struct.migrate()

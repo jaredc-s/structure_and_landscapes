@@ -86,5 +86,5 @@ class TestMoran(TC):
 
     def test_moran(self):
         moran_death_birth(self.pop)
-        print self.pop.fitness()
+        
 

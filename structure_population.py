@@ -1,38 +1,49 @@
+"""
+Structured populations have multple instatiations of population class
+Migration occurs after each generation by swapping between two subpopulations
+Migration rate is equal to proption of subpopulations experiencing a migration event
+Proportion of population swapped is proportion of population swapped in each migration event
+"""
+
 import random
 from selection import select
 from population import Population
-from selection import select
+
 
 class Structured_Population(object):
-    def __init__(self, sub_populations, maxsize = None):
-        self.all_pop = list(sub_populations)
+    def __init__(self, sub_populations, migration_rate, proportion_of_pop_swapped):
+        self.list_of_populations = list(sub_populations)
+        self.mig_rate = migration_rate
+        self.prop_swapped = proportion_of_pop_swapped
 
     def __iter__(self):
-        return iter(self.all_pop)
+        return iter(self.list_of_populations)
 
     def __len__(self):
-        return len(self.all_pop)
+        return len(self.list_of_populations)
 
-    def migrate(self, rate = 0):
+    def migrate(self):
         """should happen after replicate but before the culling
         However migration prior to replication would allow greater chance of survival
         """
+        number_migrating_pops = int(self.mig_rate * len(self.list_of_populations))
 
-        from_pop = self.all_pop[random.randint(0, len(self.all_pop) - 1)]
-        from_org = from_pop[random.randint(0, len(from_pop) - 1)]
+        from_pops = random.sample(self.list_of_populations, number_migrating_pops)
 
-        to_pop = self.all_pop[random.randint(0, len(self.all_pop) - 1)]
+        together = zip(from_pops[0::2], from_pops[1::2])
+        for popA, popB in together:
+            self.swap(popA, popB)
 
-        if to_pop.is_full():
-            to_org = to_pop[random.randint(0,len(to_pop))]
-            self.pop[to_pop][to_org] = self.pop[from_pop][from_org]
-        else:
-            to_pop.add_to_pop(from_org)
-
-        #from_pop.remove_from_pop(from_org)
+    def swap(self, popA, popB):
+        number_migrating_orgs = int(self.prop_swapped * len(popA))
+        popA_indices = random.sample(list(range(len(popA))), number_migrating_orgs)
+        popB_indices = random.sample(list(range(len(popB))), number_migrating_orgs)
+        for popA_index, popB_index in zip(popA_indices, popB_indices):
+            popA[popA_index], popB[popB_index] = popB[popB_index], popA[popA_index]
+        
 
     def replicate(self):
-        for pop in self.all_pop:
+        for pop in self.list_of_populations:
             pop.replicate()
 
     def remove_at_random(self):
@@ -41,7 +52,7 @@ class Structured_Population(object):
         in the future should look at a way to evaluate fitness
         and cull based off that
         """
-        for pop in self.all_pop:
+        for pop in self.list_of_populations:
             pop.remove_at_random()
 
     def remove_least_fit(self):
@@ -49,10 +60,10 @@ class Structured_Population(object):
         Need to find way to choose based off of weighing the fitness values
         then can remove the sorting of tuples
         """
-        for pop in self.all_pop:
-            pop = select(pop, pop.maxsize)
+        for pop in self.list_of_populations:
+            pop.remove_least_fit()
 
     def advance_generation(self):
-        self.migrate()
         self.replicate()
         self.remove_least_fit()
+        self.migrate()
