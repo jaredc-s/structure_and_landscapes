@@ -20,7 +20,7 @@ class Population(object):
 
         else:
             self.maxsize = max_size
-    
+
     def __iter__(self):
         return iter(self.population)
 
@@ -38,7 +38,7 @@ class Population(object):
 
     def replicate(self):
         xmen = [org.mutate() for org in self.population]
-        
+
         self.population += xmen
 
     def remove_at_random(self):
@@ -67,7 +67,7 @@ class Population(object):
         self.population.append(org)
 
     def remove_from_pop(self, org):
-        # Very expensive to do with a list.  Might be worthwile to 
+        # Very expensive to do with a list.  Might be worthwile to
         # look in to using a different data structure such as a multiset
         raise NotImplementedError()
         #self.pop.remove(org)

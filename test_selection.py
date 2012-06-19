@@ -4,6 +4,7 @@ from unittest import TestCase as TC
 import selection
 from selection import *
 
+
 class MockRandom(object):
     def __init__(self, value):
         self.value = value
@@ -28,6 +29,7 @@ class MockOrganism(object):
 
     def mutate(self):
         return self
+
 
 class TestSelection(TC):
     def setUp(self):
@@ -79,6 +81,7 @@ class TestNumberline(TC):
         self.assertEquals([MockOrganism(3, 'B'), 4 / float(6)], numline[1])
         self.assertEquals([MockOrganism(2, 'C'), 6 / float(6)], numline[2])
 
+
 class TestMoran(TC):
     def setUp(self):
         self.pop = [MockOrganism(1, 'A'), MockOrganism(3, 'B'),
@@ -86,5 +89,3 @@ class TestMoran(TC):
 
     def test_moran(self):
         moran_death_birth(self.pop)
-        
-
