@@ -64,6 +64,14 @@ class TestBitstring(unittest.TestCase):
         self.assertSetEqual({b, b_},
                             {Bitstring("000"), Bitstring("101")})
 
+    def test_int(self):
+        b = Bitstring('110110')
+        c = Bitstring('0000')
+        d = Bitstring('')
+        self.assertEqual(int(b), 54)
+        self.assertEqual(int(c), 0)
+        self.assertEqual(int(d), 0)
+
 
 class TestModule(unittest.TestCase):
 
