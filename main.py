@@ -33,12 +33,13 @@ def structured_pop_demo():
     for i in range(50):
         avg_fit_pop = population_state(struct_pop, avg_fit_pop, i)
         struct_pop.advance_generation()
-    
+
     xlabel("Fitness")
     ylabel("Updates")
-    pyplot.legend([str(i) for i in range(1,10)], loc = 2)
+    pyplot.legend([str(i) for i in range(1, 10)], loc=2)
     plot(transpose(avg_fit_pop))
     show()
+
 
 def population_state(struct_pop, fit_holder, gen_number):
     for i in range(len(struct_pop)):

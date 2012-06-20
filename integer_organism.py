@@ -2,26 +2,18 @@
 Simple representation of a organism.
 
 Intended for testing purposes.
+
+See bitstring_organism.py for more documentation.
 """
 import random
 from mutate import mutate_value
+from mixins import KeyedHashingMixin
 
 
-class Organism(object):
+class Organism(KeyedHashingMixin):
     def __init__(self, value):
         assert(isinstance(value, int))
         self.value = value
-
-    def __eq__(self, other):
-        if not isinstance(other, type(self)):
-            return False
-        return self.value == other.value
-
-    def __ne__(self, other):
-        return not self == other
-
-    def __hash__(self):
-        return hash(self.value)
 
     def mutate(self):
         mutated_value = mutate_value(self.value)
@@ -30,6 +22,12 @@ class Organism(object):
     @property
     def fitness(self):
         return float(abs(self.value))
+
+    def __key__(self):
+        """
+        Returns hashable object
+        """
+        return self.value
 
 
 default_organism = Organism(0)
