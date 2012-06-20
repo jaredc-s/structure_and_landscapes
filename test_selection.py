@@ -87,5 +87,10 @@ class TestMoran(TC):
         self.pop = [MockOrganism(1, 'A'), MockOrganism(3, 'B'),
                     MockOrganism(2, 'C')]
 
-    def test_moran(self):
+    def test_moran_len(self):
         moran_death_birth(self.pop)
+        self.assertEqual(3, len(self.pop))
+
+    def test_fecundity(self):
+        new_org = fecundity_birth_selection(self.pop)
+        self.assertIsInstance(new_org, MockOrganism)
