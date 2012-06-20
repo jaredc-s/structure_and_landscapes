@@ -7,17 +7,17 @@ class Simple(object):
         self.x = x
 
 
-class EqualityClass(Simple, KeyedEqualityMixin):
-    def __key__(self):
-        return self.x
-
-
 class TestDefault(TC):
     def test(self):
         x, y = Simple(1), Simple(1)
         self.assertFalse(x == y)
         self.assertTrue(x < y or y < x)
         self.assertFalse(hash(x) == hash(y))
+
+
+class EqualityClass(Simple, KeyedEqualityMixin):
+    def __key__(self):
+        return self.x
 
 
 class TestEquality(TC):
@@ -27,6 +27,8 @@ class TestEquality(TC):
         self.assertFalse(x != y)
         self.assertFalse(x == z)
         self.assertTrue(x != z)
+        self.assertFalse(x == 1)
+        self.assertTrue(x != 1)
 
 
 class ComparisonClass(EqualityClass, KeyedComparisonMixin):
@@ -48,6 +50,7 @@ class TestComparision(TC):
         self.assertFalse(z <= x)
         self.assertTrue(z > x)
         self.assertTrue(z >= x)
+        self.assertTrue(x > 1 or x < 1)
 
 
 class HashClass(EqualityClass, KeyedHashingMixin):
