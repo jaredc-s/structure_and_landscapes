@@ -38,13 +38,12 @@ class Bitstring(object):
                 return "1"
             return "0"
 
-        value_as_string = "".join(
-                bool_to_str(pos) for pos in self)
+        value_as_string = "".join(bool_to_str(pos) for pos in self)
         return "{}({!r})".format(self.__class__.__name__, value_as_string)
 
     def hamming_distance(self, other):
-        return len(tuple(None for (self_pos, other_pos)
-                in zip(self, other) if self_pos != other_pos))
+        return len(tuple(None for (self_pos, other_pos) in zip(
+            self, other) if self_pos != other_pos))
 
 
 def flip_positions(bitstring_instance, positions_to_flip):

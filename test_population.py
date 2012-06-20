@@ -47,8 +47,9 @@ class TestPopulation(TC):
         self.assertEqual(8, len(self.pop))
 
     def test_advance(self):
-        big_pop = Population([MockOrganism(1), MockOrganism(2),
-                               MockOrganism(90)], 3)
+        big_pop = Population(
+            [MockOrganism(1), MockOrganism(2),
+                MockOrganism(90)], 3)
 
         big_pop.advance_generation()
         self.assertLessEqual(len(big_pop), 3)

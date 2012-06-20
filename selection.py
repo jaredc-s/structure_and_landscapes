@@ -74,6 +74,7 @@ def moran_death_birth(orgs):
 
     return orgs
 
+
 def fecundity_birth_selection(orgs):
     """Method to select an organism based off its fitness
     to replace death organism"""

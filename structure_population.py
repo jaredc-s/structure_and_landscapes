@@ -55,7 +55,8 @@ class Structured_Population(object):
         popB_indices = random.sample(list(range(len(popB))),
                                      number_migrating_orgs)
         for popA_index, popB_index in zip(popA_indices, popB_indices):
-            popA[popA_index], popB[popB_index] = popB[popB_index], popA[popA_index]
+            (popA[popA_index], popB[popB_index]) = \
+                (popB[popB_index], popA[popA_index])
 
     def replicate(self):
         for pop in self.list_of_populations:

@@ -62,7 +62,7 @@ class TestBitstring(unittest.TestCase):
         b = Bitstring("000")
         b_ = Bitstring("101")
         self.assertSetEqual({b, b_},
-                {Bitstring("000"), Bitstring("101")})
+                            {Bitstring("000"), Bitstring("101")})
 
 
 class TestModule(unittest.TestCase):

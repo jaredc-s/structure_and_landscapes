@@ -14,6 +14,7 @@ def int_org_demo():
     pop = Population(org_list, 100)
     run(pop)
 
+
 def bit_org_demo():
     base_bit = '0000000000'
     bit_list = [bit_organism(Bitstring(base_bit + '1' * i)) for i in range(10)]
@@ -21,16 +22,22 @@ def bit_org_demo():
     pop = Population(bit_list, 100)
     run(pop)
 
+
 def structured_pop_demo():
     org_list = [int_organism(i) for i in range(1, 11)]
     pop_list = [Population(org_list) for _ in range(10)]
     struct_pop = Structured_Population(pop_list, 0.5, 0.5)
-    
-    avg_fit = [[] for _ in range(len(pop_list))]
+
+    avg_fit_pop = [zeros(50) for _ in range(len(pop_list))]
+
     for i in range(50):
-        avg_fit.append(population_state(struct_pop, avg_fit, i))
+        avg_fit_pop = population_state(struct_pop, avg_fit_pop, i)
         struct_pop.advance_generation()
-    plot(transpose(avg_fit))
+    
+    xlabel("Fitness")
+    ylabel("Updates")
+    pyplot.legend([str(i) for i in range(1,10)], loc = 2)
+    plot(transpose(avg_fit_pop))
     show()
 
 def population_state(struct_pop, fit_holder, gen_number):
@@ -41,7 +48,7 @@ def population_state(struct_pop, fit_holder, gen_number):
         for org in subpop:
             print org.fitness,
             dummy.append(org.fitness)
-        fit_holder[i][gen_number].append(average(dummy))
+        fit_holder[i][gen_number] = average(dummy)
         print "]"
     print "\n"
     return fit_holder
