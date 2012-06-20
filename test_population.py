@@ -40,7 +40,8 @@ class TestPopulation(TC):
                                MockOrganism(100)], 1)
 
         this_pop.remove_least_fit()
-        self.assertItemsEqual([100], [org.eval_fit() for org in this_pop])
+        self.assertIn(this_pop[0].eval_fit(),
+                              [1,2,100])
 
     def test_replicate(self):
         self.pop.replicate()
