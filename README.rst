@@ -15,9 +15,10 @@ fitness mappings will be explored including:
 
 Authors
 =======
-* Jared Carlson-Stevermer
+* `Jared Carlson-Stevermer`_
 * `Joshua Nahum`_ 
 * `Joseph Marcus`_
+.. _`Jared Carlson-Stevermer` : jmcs@utexas.edu
 .. _`Joseph Marcus` : josephhmarcus@gmail.com 
 .. _`Joshua Nahum` : josh@nahum.us
 
