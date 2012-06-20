@@ -30,6 +30,20 @@ class NKModel(object):
         self.n = n
         self.k = k
         self.random_generator = random_generator
+        self._contribution_lookup = contribution_lookup_table(self.n, self.k, self.random_generator)
 
-    def _initialize(self):
-        pass
+    def _initialize_contribution_lookup(self):
+        """
+        Fitness is the mean of the contribution of each loci.
+        Each loci has its own lookup table composed of 2^(k+1) uniformly
+        distributed entries corresponding to the numerical value of the
+        subbitstring (locus + k neighbors).
+        """
+        self._contribution_lookup = [
+            [random_generator.random() for _ in range(2 ^ (self.k + 1))]
+            for _ in range(self.n)]
+
+
+def contribution_lookup_table(n, k, random_generator=module_random_generator):
+    return [[random_generator.random() for _ in range(2 ^ (k + 1))]
+            for _ in range(n)]
