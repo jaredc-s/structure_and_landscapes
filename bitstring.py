@@ -2,9 +2,10 @@
 This module implements a crude Bitstring with boolean values
 in python tuples. Bitstring instances are immutable.
 """
+import mixins
 
 
-class Bitstring(object):
+class Bitstring(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
 
     def __init__(self, iterable):
         """
@@ -48,25 +49,11 @@ class Bitstring(object):
         """
         return iter(self._value)
 
-    def __hash__(self):
+    def __key__(self):
         """
-        Bitstrings are hashable
-        Bitstrings can be used as keys for dictionaries or in sets
+        Returns a key object that can be compared, hashed and equaled.
         """
-        return hash(self._value)
-
-    def __eq__(self, other):
-        """
-        Bitstrings compare equal if they are the
-        same class and identical by elements
-        """
-
-        if not isinstance(other, type(self)):
-            return False
-        return self._value == other._value
-
-    def __ne__(self, other):
-        return not self == other
+        return tuple(self._value)
 
     def __repr__(self):
         """

@@ -7,33 +7,16 @@ import random
 from mutate import mutate_value
 import bitstring
 from bitstring import Bitstring
+import mixins
 
 
-class Organism(object):
+class Organism(mixins.KeyedHashingMixin):
     def __init__(self, value):
         """
         init takes a single argument which should be a bit string
         """
         assert(isinstance(value, Bitstring))
         self.value = value
-
-    def __eq__(self, other):
-        """
-        organisms are equal if they have the same type
-        and have the same bitstring
-        """
-        if not isinstance(other, type(self)):
-            return False
-        return self.value == other.value
-
-    def __ne__(self, other):
-        return not self == other
-
-    def __hash__(self):
-        """
-        organisms are hashable
-        """
-        return hash(self.value)
 
     def mutate(self):
         """
@@ -51,5 +34,11 @@ class Organism(object):
         its bitstring from a bitstring composed of all False's
         """
         return sum(self.value)
+
+    def __key__(self):
+        """
+        Returns an object capable of being hashed and equaled
+        """
+        return self.value
 
 default_organism = Organism(Bitstring(False for _ in range(10)))
