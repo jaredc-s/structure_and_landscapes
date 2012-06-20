@@ -22,28 +22,27 @@ class NKModel(object):
     """
     Class which is used to evaluate the fitness of a bitstring.
     """
-    def __init__(self, n=2, k=0, random_generator=module_random_generator):
+    def __init__(self, n=2, k=0, contribution_lookup_table=None):
         """
         NKModel instances default to a simple smooth landscape (n=2, k=0),
         and using the module's random number generator (seeded by time).
         """
         self.n = n
         self.k = k
-        self.random_generator = random_generator
-        self._contribution_lookup = contribution_lookup_table(self.n, self.k, self.random_generator)
+        if contribution_lookup_table is None:
+            contribution_lookup_table = generate_contribution_lookup_table(
+                self.n, self.k)
 
-    def _initialize_contribution_lookup(self):
-        """
-        Fitness is the mean of the contribution of each loci.
-        Each loci has its own lookup table composed of 2^(k+1) uniformly
-        distributed entries corresponding to the numerical value of the
-        subbitstring (locus + k neighbors).
-        """
-        self._contribution_lookup = [
-            [random_generator.random() for _ in range(2 ^ (self.k + 1))]
-            for _ in range(self.n)]
+        self.contribution_lookup_table = contribution_lookup_table
 
 
-def contribution_lookup_table(n, k, random_generator=module_random_generator):
+def generate_contribution_lookup_table(
+        n, k, random_generator=module_random_generator):
+    """
+    Fitness is the mean of the contribution of each loci.
+    Each loci has its own lookup table composed of 2^(k+1) uniformly
+    distributed entries corresponding to the numerical value of the
+    subbitstring (locus + k neighbors).
+    """
     return [[random_generator.random() for _ in range(2 ^ (k + 1))]
             for _ in range(n)]

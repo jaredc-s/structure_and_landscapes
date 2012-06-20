@@ -15,11 +15,7 @@ class TestNKModel(TC):
         self.assertEqual(nk3.n, 10)
         self.assertEqual(nk3.k, 6)
 
-    def test_init_random(self):
-        nk = NKModel()
-        nk2 = NKModel(random_generator=Random(0))
-        nk3 = NKModel(random_generator=Random(0))
-
-        nk.random_generator.random()
-        self.assertAlmostEqual(nk2.random_generator.random(),
-                               nk3.random_generator.random())
+    def test_init_table(self):
+        clt = [[.25, .75], [.4, .8]]
+        nk = NKModel(2, 0, clt)
+        self.assertEqual(nk.contribution_lookup_table, clt)
