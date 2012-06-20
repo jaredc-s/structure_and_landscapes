@@ -9,13 +9,16 @@ organisms with smooth or rugged adaptive landscapes. Various sequence to
 fitness mappings will be explored including:
 
 * RNA secondary structure
+* Simple Integer Model 
+* Bitstrings
 * Kauffman's N-K Model
 
 Authors
 =======
-* Jared Carlson-Stevermer
+* `Jared Carlson-Stevermer`_
 * `Joshua Nahum`_ 
 * `Joseph Marcus`_
+.. _`Jared Carlson-Stevermer` : jmcs@utexas.edu
 .. _`Joseph Marcus` : josephhmarcus@gmail.com 
 .. _`Joshua Nahum` : josh@nahum.us
 
@@ -30,4 +33,7 @@ Optional
 ++++++++
 * Ned Batchelder's coverage.py
 * Nose
+* Pep8
+* Numpy
+* Matplotlib
 

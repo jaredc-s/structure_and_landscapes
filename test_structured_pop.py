@@ -48,8 +48,8 @@ class MockPopulation(object):
     def add_to_pop(self, org):
         self.pop.append(org)
 
-    def remove_least_fit(self):
-        pass
+    def moran_selection(self):
+        self.pop = self.pop
 
 
 class TestPopulation(TC):
