@@ -80,6 +80,9 @@ class Bitstring(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
         return len(tuple(None for (self_pos, other_pos) in zip(
             self, other) if self_pos != other_pos))
 
+    def __int__(self):
+        return sum(2 ** i for i, value in enumerate(reversed(self)) if value)
+
 
 def flip_positions(bitstring_instance, positions_to_flip):
     """

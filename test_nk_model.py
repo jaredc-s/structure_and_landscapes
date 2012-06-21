@@ -1,6 +1,7 @@
 from unittest import TestCase as TC
 from nk_model import NKModel
 from random import Random
+from nk_model import generate_contribution_lookup_table
 
 
 class TestNKModel(TC):
@@ -15,11 +16,16 @@ class TestNKModel(TC):
         self.assertEqual(nk3.n, 10)
         self.assertEqual(nk3.k, 6)
 
-    def test_init_random(self):
-        nk = NKModel()
-        nk2 = NKModel(random_generator=Random(0))
-        nk3 = NKModel(random_generator=Random(0))
+    def test_init_table(self):
+        clt = [[.25, .75], [.4, .8]]
+        nk = NKModel(2, 0, clt)
+        self.assertEqual(nk.contribution_lookup_table, clt)
 
-        nk.random_generator.random()
-        self.assertAlmostEqual(nk2.random_generator.random(),
-                               nk3.random_generator.random())
+
+class TestModule(TC):
+    def test(self):
+        n, k = 10, 2
+        clt = generate_contribution_lookup_table(n, k)
+        self.assertEqual(len(clt), n)
+        self.assertEqual(len(clt[0]), 2 ** (k + 1))
+        self.assertEqual(len(clt[-1]), 2 ** (k + 1))
