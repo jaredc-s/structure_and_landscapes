@@ -71,10 +71,7 @@ def get_substring_with_wrapping(bitstring, k, i):
     if i + k >= len(bitstring):
         bitstring_as_list = list(bitstring[i:])
         postwrap = list(bitstring[:(i + k) - len(bitstring) + 1])
-        print bitstring_as_list
-        print postwrap
         bitstring_as_list.extend(postwrap)
-        print bitstring_as_list
         return Bitstring(bitstring_as_list)
     else:
         return Bitstring(bitstring[i: k + i + 1])
