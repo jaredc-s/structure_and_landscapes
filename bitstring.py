@@ -21,6 +21,7 @@ class Bitstring(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
         for example:
              "1001" --> (True, False, False, True)
             [1, 0, None, [], 'hello'] --> (True, False, False, False, True)
+        consider converting bitstring into long data type
         """
 
         if isinstance(iterable, str):

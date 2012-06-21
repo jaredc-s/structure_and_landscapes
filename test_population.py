@@ -42,6 +42,7 @@ class TestPopulation(TC):
         this_pop.remove_least_fit()
         self.assertIn(this_pop[0].eval_fit(),
                               [1,2,100])
+        self.assertEqual(len(this_pop), 1)
 
     def test_replicate(self):
         self.pop.replicate()
