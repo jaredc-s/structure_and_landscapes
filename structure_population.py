@@ -71,14 +71,6 @@ class Structured_Population(object):
         for pop in self.list_of_populations:
             pop.remove_at_random()
 
-    def remove_least_fit(self):
-        """
-        Need to find way to choose based off of weighing the fitness values
-        then can remove the sorting of tuples
-        """
-        for pop in self.list_of_populations:
-            pop.remove_least_fit()
-
     def moran_cull(self):
         for pop in self.list_of_populations:
             pop.moran_selection()
