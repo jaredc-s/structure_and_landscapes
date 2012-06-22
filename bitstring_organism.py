@@ -15,7 +15,6 @@ class Organism(mixins.KeyedHashingMixin):
         """
         init takes a single argument which should be a bit string
         """
-        assert(isinstance(value, Bitstring))
         self.value = value
 
     def mutate(self):

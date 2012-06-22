@@ -21,10 +21,6 @@ class TestOrganism(TC):
         organism2 = Organism(self.value_1)
         self.assertEqual(organism2.value, self.value_1)
 
-    def test_init_exception(self):
-        with self.assertRaises(AssertionError):
-            Organism(self.bad_value)
-
     def test_eq(self):
         g0 = Organism(self.value_0)
         g0_ = Organism(self.value_0)
