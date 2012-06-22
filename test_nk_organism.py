@@ -11,15 +11,15 @@ class TestOrganism(TC):
         self.value = bitstring.Bitstring("100")
         self.lookup = [[1, 0.5], [0.2, 0.4], [0.1, 0.8]]
         self.model = nk_model.NKModel(3, 0, self.lookup)
-        self.org = Organism(self.value, self.model) 
-   
+        self.org = Organism(self.value, self.model)
+
     def test_init(self):
-        self.assertEqual(self.org.value,self.value)
+        self.assertEqual(self.org.value, self.value)
         self.assertEqual(self.org.nk_model.contribution_lookup_table,
                          self.model.contribution_lookup_table)
 
     def test_fitness(self):
-        expected_fit = (0.5 + 0.2 + 0.1)/float(3)
+        expected_fit = (0.5 + 0.2 + 0.1) / float(3)
         self.assertEqual(expected_fit, self.org.fitness)
 
     def test_equality(self):

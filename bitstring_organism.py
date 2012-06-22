@@ -23,8 +23,10 @@ class Organism(mixins.KeyedHashingMixin):
         mutate and returns a new organism with the mutation
         note: original organism is unchanged
         """
-        mutated_value = mutate_value(self.value)
-        return Organism(mutated_value)
+        return Organism(self._mutate_value())
+
+    def _mutate_value(self):
+        return mutate_value(self.value)
 
     @property
     def fitness(self):

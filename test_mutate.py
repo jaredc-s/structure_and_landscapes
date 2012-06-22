@@ -3,6 +3,7 @@ import mutate
 import bitstring
 import random
 
+
 class MockRandom(object):
     def __init__(self, value):
         self.value = value
