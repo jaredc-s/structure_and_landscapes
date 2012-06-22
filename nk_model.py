@@ -15,6 +15,7 @@ The outcome of each function is drawn from a  uniformly
 distribution. The mean contribution of each locus is the fitness.
 """
 from random import Random
+from bitstring import Bitstring
 module_random_generator = Random()
 
 
@@ -35,11 +36,14 @@ class NKModel(object):
 
         self.contribution_lookup_table = contribution_lookup_table
 
-    def determined_fitness(bitstring):
+    def determine_fitness(self, bitstring):
         """
         Takes a bitstring and computes a floating point fitness
         """
-        bitstring_as_int = int(bitstring)
+        contribs = [table[int(sub)] for sub, table in zip(
+            deconstruct_bitstring(bitstring, self.k),
+            self.contribution_lookup_table)]
+        return sum(contribs) / float(len(contribs))
 
 
 def deconstruct_bitstring(bitstring, k):
@@ -48,7 +52,9 @@ def deconstruct_bitstring(bitstring, k):
     with each item starting at a given locus and including the next
     k elements.
     """
-    return [bitstring[i : i + k] for i in range(len(bitstring))]
+    return [get_substring_with_wrapping(
+        bitstring, k, i) for i in range(len(bitstring))]
+
 
 def get_substring_with_wrapping(bitstring, k, i):
     """
@@ -62,14 +68,14 @@ def get_substring_with_wrapping(bitstring, k, i):
     i = 2
     returns '1001'
     """
-
     if i + k >= len(bitstring):
         bitstring_as_list = list(bitstring[i:])
-        postwrap = list(bitstring[:(i + k) - len(bitstring)])
+        postwrap = list(bitstring[:(i + k) - len(bitstring) + 1])
         bitstring_as_list.extend(postwrap)
         return Bitstring(bitstring_as_list)
     else:
-        return bitstring[i : k + i]
+        return Bitstring(bitstring[i: k + i + 1])
+
 
 def generate_contribution_lookup_table(
         n, k, random_generator=module_random_generator):
