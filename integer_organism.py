@@ -29,5 +29,11 @@ class Organism(KeyedHashingMixin):
         """
         return self.value
 
+    def __repr__(self):
+        """
+        Looks like Organism(value=1)
+        """
+        return "{}(value={})".format(self.__class__.__name__, self.value)
+
 
 default_organism = Organism(0)

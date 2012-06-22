@@ -54,6 +54,11 @@ class TestOrganism(TC):
         g1 = Organism(self.value_1)
         self.assertAlmostEqual(1, g1.fitness)
 
+    def test_repr(self):
+        org = Organism(1)
+        expected = 'Organism(value=1)'
+        self.assertEqual(repr(org), expected)
+
 
 class TestModule(TC):
     def test_default_organism(self):

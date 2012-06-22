@@ -42,4 +42,10 @@ class Organism(mixins.KeyedHashingMixin):
         """
         return self.value
 
+    def __repr__(self):
+        """
+        Organism(value=Bitstring('10101'))
+        """
+        return "{}(value={})".format(self.__class__.__name__, self.value)
+
 default_organism = Organism(Bitstring(False for _ in range(10)))
