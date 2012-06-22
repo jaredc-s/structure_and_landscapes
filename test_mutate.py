@@ -1,7 +1,7 @@
 from unittest import TestCase as TC
 import mutate
 import bitstring
-
+import random
 
 class MockRandom(object):
     def __init__(self, value):
@@ -15,6 +15,9 @@ class MockRandom(object):
 
 
 class TestModule(TC):
+    def tearDown(self):
+        mutate.random_generator = random.Random()
+
     def test_mutate_integer(self):
         value = 0
         mutate.random_generator = MockRandom(0)
