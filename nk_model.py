@@ -45,6 +45,15 @@ class NKModel(object):
             self.contribution_lookup_table)]
         return sum(contribs) / float(len(contribs))
 
+    def determine_fitness_from_random(self, bitstring):
+        """
+        Takes a bitstring and computes floating point fitness
+        from a subset of random bitstrings of length k+1
+        """
+        contribs = [table[int(sub)] for sub, table in zip(
+                decontruct_random_bitstring(bitstring, self.k),
+                self.contribution_lookup_table)]
+        return sum(contribs) / float(len(contribs))
 
 def deconstruct_bitstring(bitstring, k):
     """
@@ -55,6 +64,28 @@ def deconstruct_bitstring(bitstring, k):
     return [get_substring_with_wrapping(
         bitstring, k, i) for i in range(len(bitstring))]
 
+def decontruct_random_bitstring(bitstring, k):
+    """
+    For use when k loci are not spacially attatched
+    Breaks bitstring into a list of sub bitstrings
+    where the next k elements are randomly separated
+    around bitstring
+    """
+    return [get_random_substring(bitstring, k, i) 
+            for i in range(len(bitstring))]
+
+def get_random_substring(bitstring, k, i):
+    """
+    Takes a bitstring, k and an index, breaks the bitstring
+    into a list of length k+1 where the first index is the 
+    value found at i and the remaining k values are chosen
+    at random from remainder of bitstring
+    """
+    bitstring_as_list = list(bitstring)
+    first_index = [bitstring_as_list.pop(i)]
+    random_indices = module_random_generator.sample(bitstring_as_list, k)
+    first_index.extend(random_indices)
+    return Bitstring(first_index)
 
 def get_substring_with_wrapping(bitstring, k, i):
     """

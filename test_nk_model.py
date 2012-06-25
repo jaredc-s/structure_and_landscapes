@@ -35,6 +35,12 @@ class TestNKModel(TC):
         expected_rugged_fit = (.1 + .8) / 2
         self.assertEqual(rugged_fit, expected_rugged_fit)
 
+    def test_determine_fitness_from_random(self):
+        b = Bitstring("10")
+        rug_fit = self.rugged.determine_fitness(b)
+        expected_rugged_fit = (.1 + .8) / 2
+        self.assertEqual(rug_fit, expected_rugged_fit)
+
 
 class TestModule(TC):
     def test_generate_constribution_lookup_table(self):
@@ -52,7 +58,7 @@ class TestModule(TC):
         self.assertEqual(Bitstring("1001"), sub2)
         sub3 = get_substring_with_wrapping(b, k=3, i=3)
         self.assertEqual(Bitstring("0011"), sub3)
-
+        
     def test_deconstruct_bitstring(self):
         B = Bitstring
         b = B("11001")
@@ -61,3 +67,9 @@ class TestModule(TC):
                     B("0011"), B("0111"),
                     B("1110")]
         self.assertEqual(subs, expected)
+        
+    def test_deconstruct_random(self):
+        B = Bitstring
+        b = Bitstring("100")
+        sub = decontruct_random_bitstring(b, 2)
+        self.assertEqual(3, len(sub))
