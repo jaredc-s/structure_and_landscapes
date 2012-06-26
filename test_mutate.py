@@ -2,7 +2,7 @@ from unittest import TestCase as TC
 import mutate
 import bitstring
 import random
-
+import RNA_Sequence as RS
 
 class MockRandom(object):
     def __init__(self, value):
@@ -42,3 +42,10 @@ class TestModule(TC):
     def test_mutate_value_raises(self):
         with self.assertRaises(TypeError):
             mutate.mutate_value("unknown")
+
+    def test_change_base(self):
+        test_seq = RS.RNAsequence("agcuu")
+        sequence = mutate.mutate_value(test_seq)
+        self.assertEqual(len(test_seq), len(sequence))
+        self.assertNotEqual(test_seq, sequence)
+        

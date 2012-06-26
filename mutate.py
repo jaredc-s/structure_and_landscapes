@@ -6,6 +6,7 @@ random_generator attribute allows MockRandom swapping
 """
 import random
 import bitstring
+import RNA_Sequence as RS
 
 random_generator = random.Random()
 
@@ -18,6 +19,8 @@ def mutate_value(value):
         return shift_by_one(value)
     elif isinstance(value, bitstring.Bitstring):
         return flip_single_bit(value)
+    elif isinstance(value, RS.RNAsequence):
+        return change_single_base(value)
     else:
         raise TypeError("unknown type to mutate")
 
@@ -38,3 +41,9 @@ def flip_single_bit(bitstring_):
     """
     position = random_generator.randrange(len(bitstring_))
     return bitstring.flip_positions(bitstring_, [position])
+
+def change_single_base(sequence):
+    """changes a single base in a sequence"""
+
+    position = random_generator.randrange(len(sequence))
+    return RS.change_base(sequence, [position])
