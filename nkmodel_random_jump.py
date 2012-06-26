@@ -15,7 +15,7 @@ used to score the fitness of subbitstrings
 from nk_organism import Organism
 import random
 import nk_model
-
+from bitstring import Bitstring
 random_generator = random.Random()
 
 class NKWithGenes(object):
@@ -38,8 +38,9 @@ class NKWithGenes(object):
         else:
             self.contribution_lookup_table = contribution_lookup_table
 
-        self.dependencies = generate_dependencies(self.number_of_genes,
-                                                  self.length_of_gene, self.k_jump)
+        self.dependencies = generate_dependencies(self.k_intra, self.k_jump,
+                                                  self.number_of_genes,
+                                                  self.length_of_gene)
 
     def determine_fitness(self, list_of_bitstrings):
         """
@@ -50,16 +51,43 @@ class NKWithGenes(object):
         look in contrib table to determine fitness
         primary_bit = 
         """
-        pass
+        basic_strings = [nk_model.deconstruct_bitstring(single_bit, self.k_intra)
+                           for single_bit in list_of_bitstrings]
+        return basic_strings
+#add_to_basic = [for i in len(basic_strings)]
 
-def generate_dependencies(number_of_genes, length_of_gene, k_jump):
+        #for i in range(len(k_jump)):
+        #    org = self.dependencies[i]
+        #    for j in range
+
+def generate_dependencies(k_intra, k_jump, number_of_genes, length_of_gene):
     """
     Function takes in each independent gene and returns
     a list of dependencies based off locus for each gene
+    Random gene and random loci
     """
     dependencies = []
-    for _ in range(number_of_genes):
-        dependencies.append([(random_generator.randrange(number_of_genes), 
+    for i in range(number_of_genes):
+        dependencies.append([])
+        for _ in range(k_intra + 1):
+            dependencies[i].append([(random_generator.randrange(number_of_genes), 
                                  random_generator.randrange(length_of_gene))
-                             for _ in range(k_jump)])
+                                 for _ in range(k_jump)])
     return dependencies
+
+def generate_sub_bitstring(bitstrings, dependencies, k_intra):
+    basic_strings = [nk_model.deconstruct_bitstring(single_bit, k_intra)
+                     for single_bit in bitstrings]
+    complex_strings = []
+    for i in range(len(basic_strings)):
+        subbit = []
+        for j in range(len(basic_strings[i])):
+            orglist  = list(basic_strings[i][j])
+            dependent = dependencies[i][j]
+            for org, pos in dependent:
+                hold = bitstrings[org][pos]
+                orglist.append(hold)
+
+            subbit.append(Bitstring(orglist))
+        complex_strings.append(subbit)
+    return complex_strings
