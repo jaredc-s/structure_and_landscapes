@@ -10,13 +10,16 @@ class TestNKWithGenes(TC):
                            Bitstring("001")]
 
     def test_determine_fitness(self):
-        nk = NKWithGenes(2, 1, 3, 3)
+        contrib_table = [[0.25, 0.8, 0.15], [0.9, 0.4, 0.55], [0.05, 0.7, 0.3]]
+        nk = NKWithGenes(1, 1, 2, 2)
+        bit_org = Bitstring("0101")
+        self.assertNotEqual(0, nk.determine_fitness(bit_org))
 
     def test_gene_divider(self):
         gene = Bitstring("101010101010")
         nk = NKWithGenes(2, 2, 3, 4)
         divided = nk.divide_to_genes(gene)
-        print divided
+
         self.assertEqual(len(divided), 4)
         self.assertEqual(len(divided[0]), 3)
         self.assertEqual(Bitstring("010"), divided[-1])

@@ -50,19 +50,24 @@ class NKWithGenes(object):
         look in bitstring for values at loci
         append values 
         look in contrib table to determine fitness
-        primary_bit = 
         """
-        contribs = [table[int(sub)] for sub, table in zip(
-            deconstruct_bitstring(bitstring, self.k),
-            self.contribution_lookup_table)]
+        genes = self.divide_to_genes(bitstring)
+        contribs = []
+        each_org = []
+        sub_bits = generate_sub_bitstring(genes, self.dependencies,
+                                          self.k_intra)
+        for orgs in sub_bits:
+            each_org.extend(orgs)
+        for sub, table in zip(each_org, self.contribution_lookup_table):
+            contribs.extend([table[int(sub)]])
         return sum(contribs) / float(len(contribs))
 
     def divide_to_genes(self, bitstring):
-        geneholder = []
+        gene_holder = []
         for i in range(len(bitstring)/self.length_of_gene):
-            geneholder.append(Bitstring(bitstring[i * self.length_of_gene:(i + 1) 
+            gene_holder.append(Bitstring(bitstring[i * self.length_of_gene:(i + 1) 
                                                   * self.length_of_gene]))
-        return geneholder
+        return gene_holder
 
 def generate_dependencies(k_intra, k_jump, number_of_genes, length_of_gene):
     """
@@ -73,7 +78,7 @@ def generate_dependencies(k_intra, k_jump, number_of_genes, length_of_gene):
     dependencies = []
     for i in range(number_of_genes):
         dependencies.append([])
-        for _ in range(k_intra + 1):
+        for _ in range(length_of_gene):
             dependencies[i].append([(random_generator.randrange(number_of_genes), 
                                  random_generator.randrange(length_of_gene))
                                  for _ in range(k_jump)])
