@@ -9,8 +9,8 @@ random_generator = random.Random()
 
 
 class RNAsequence(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
-    def __init__(self, value):
-        self.value = [base for base in value]
+    def __init__(self, iterable):
+        self.value = [base for base in iterable]
 
     def __len__(self):
         return len(self.value)
@@ -27,10 +27,10 @@ class RNAsequence(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
     def __iter__(self):
         return iter(self.value)
 
-def change_base(RNA, position):
+def change_base(RNA, positions):
     value = list(RNA)
-    possibilities = ['g', 'c', 'a', 'u']
-    for pos in position:
+    possibilities = ['G', 'C', 'A', 'U']
+    for pos in positions:
         mutate_to = random_generator.choice(possibilities)
         while value[pos] == mutate_to:
             mutate_to = random_generator.choice(possibilities)

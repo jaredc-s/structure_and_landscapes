@@ -3,6 +3,7 @@ Organism where the genome is represented by RNA
 """
 import mixins
 import RNA_Sequence as RS
+import mutate
 
 class Organism(mixins.KeyedHashingMixin):
     def __init__(self, value):
@@ -14,11 +15,14 @@ class Organism(mixins.KeyedHashingMixin):
     def __key__(self):
         return self.value
 
+    def __getitem__(self,key):
+        return self.value[key]
+    
     def mutate(self):
         return Organism(self._mutate_value())
 
     def _mutate_value(self):
-        return muatate_value(self.value)
+        return mutate.mutate_value(self.value)
 
     @property
     def fitness(self):
