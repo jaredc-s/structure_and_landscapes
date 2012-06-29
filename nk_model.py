@@ -35,6 +35,7 @@ class NKModel(object):
                 self.n, self.k)
 
         self.contribution_lookup_table = contribution_lookup_table
+        self.inner_dependcies = None
 
     def determine_fitness(self, bitstring):
         """
@@ -50,6 +51,8 @@ class NKModel(object):
         Takes a bitstring and computes floating point fitness
         from a subset of random bitstrings of length k+1
         """
+        if self.inner_dependcies is None:
+            determine_inner_dependencie(self.n, self.k)
         contribs = [table[int(sub)] for sub, table in zip(
                 decontruct_random_bitstring(bitstring, self.k),
                 self.contribution_lookup_table)]
@@ -86,6 +89,19 @@ def get_random_substring(bitstring, k, i):
     random_indices = module_random_generator.sample(bitstring_as_list, k)
     first_index.extend(random_indices)
     return Bitstring(first_index)
+
+def determine_inner_dependencies(n, k):
+    """
+    Returns related loci within a bitstring for use with a random
+    model
+    """
+    depends = []
+    for i in range(n):
+        positions = [i]
+        positions.extend(module_random_generator.sample(range(n), k))
+        depends.append(positions)
+    return depends
+            
 
 def get_substring_with_wrapping(bitstring, k, i):
     """
