@@ -54,11 +54,6 @@ class NKWithGenes(object):
         basic_strings = [nk_model.deconstruct_bitstring(single_bit, self.k_intra)
                            for single_bit in list_of_bitstrings]
         return basic_strings
-#add_to_basic = [for i in len(basic_strings)]
-
-        #for i in range(len(k_jump)):
-        #    org = self.dependencies[i]
-        #    for j in range
 
 def generate_dependencies(k_intra, k_jump, number_of_genes, length_of_gene):
     """
@@ -76,6 +71,10 @@ def generate_dependencies(k_intra, k_jump, number_of_genes, length_of_gene):
     return dependencies
 
 def generate_sub_bitstring(bitstrings, dependencies, k_intra):
+    """
+    Chooses k_intra random bits from any bitstring (including own)
+    and appends them onto the normal nk model sub-bit
+    """
     basic_strings = [nk_model.deconstruct_bitstring(single_bit, k_intra)
                      for single_bit in bitstrings]
     complex_strings = []
@@ -91,3 +90,32 @@ def generate_sub_bitstring(bitstrings, dependencies, k_intra):
             subbit.append(Bitstring(orglist))
         complex_strings.append(subbit)
     return complex_strings
+
+def generate_linear_bistring(bitstrings, k_intra, k_jump):
+    """
+    Generates standard nk model and appends value at starting locus
+    in the next k_intra genes
+
+    ex. n = 3 genes = 3 k_in = 2 k_out = 2
+    gene1:101    gene2:010 gene3: 100
+
+    bitstring1: 10101
+    bitstring2: 01110
+    bitstring3: 11000
+    """
+    basic_strings = [nk_model.deconstruct_bitstring(single_bit, k_intra)
+                     for single_bit in bitstrings]
+
+    complex_strings = []
+    for i in range(len(basic_strings)):
+        subbit = []
+        for j in range(len(basic_strings[i])):
+            orglist = list(basic_strings[i][j])
+            toadd = []
+            for org in range(i+1, i+k_jump+1):
+                toadd.append(bitstrings[org%len(bitstrings)][j])
+            orglist.extend(toadd)
+            subbit.append(Bitstring(orglist))
+        complex_strings.append(subbit)
+    return complex_strings
+    
