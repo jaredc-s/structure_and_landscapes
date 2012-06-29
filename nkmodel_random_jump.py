@@ -18,6 +18,7 @@ import nk_model
 from bitstring import Bitstring
 random_generator = random.Random()
 
+
 class NKWithGenes(object):
 
     def __init__(self, k_intra, k_jump, length_of_gene,
@@ -42,7 +43,7 @@ class NKWithGenes(object):
                                                   self.number_of_genes,
                                                   self.length_of_gene)
 
-    def determine_fitness(self, list_of_bitstrings):
+    def determine_fitness(self, bitstring):
         """
         grab value at each k+1 loci
         look in dependency table for the allied loci
@@ -51,9 +52,17 @@ class NKWithGenes(object):
         look in contrib table to determine fitness
         primary_bit = 
         """
-        basic_strings = [nk_model.deconstruct_bitstring(single_bit, self.k_intra)
-                           for single_bit in list_of_bitstrings]
-        return basic_strings
+        contribs = [table[int(sub)] for sub, table in zip(
+            deconstruct_bitstring(bitstring, self.k),
+            self.contribution_lookup_table)]
+        return sum(contribs) / float(len(contribs))
+
+    def divide_to_genes(self, bitstring):
+        geneholder = []
+        for i in range(len(bitstring)/self.length_of_gene):
+            geneholder.append(Bitstring(bitstring[i * self.length_of_gene:(i + 1) 
+                                                  * self.length_of_gene]))
+        return geneholder
 
 def generate_dependencies(k_intra, k_jump, number_of_genes, length_of_gene):
     """

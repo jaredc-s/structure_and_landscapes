@@ -12,7 +12,14 @@ class TestNKWithGenes(TC):
     def test_determine_fitness(self):
         nk = NKWithGenes(2, 1, 3, 3)
 
-
+    def test_gene_divider(self):
+        gene = Bitstring("101010101010")
+        nk = NKWithGenes(2, 2, 3, 4)
+        divided = nk.divide_to_genes(gene)
+        print divided
+        self.assertEqual(len(divided), 4)
+        self.assertEqual(len(divided[0]), 3)
+        self.assertEqual(Bitstring("010"), divided[-1])
 
 class TestModule(TC):
     def setUp(self):
