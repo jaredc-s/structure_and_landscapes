@@ -71,11 +71,14 @@ class TestModule(TC):
     def test_deconstruct_random(self):
         B = Bitstring
         b = Bitstring("100")
-        sub = decontruct_random_bitstring(b, 2)
+        l = determine_inner_dependencies(3,2)
+        sub = decontruct_random_bitstring(b, l)
         self.assertEqual(3, len(sub))
+        self.assertEqual(sub[0], B("100"))
 
     def test_inner_dependencies(self):
         l = determine_inner_dependencies(4, 2)
         self.assertEqual(len(l), 4)
         self.assertEqual(len(l[0]), 3)
         self.assertEqual(l[0][0], 0)
+
