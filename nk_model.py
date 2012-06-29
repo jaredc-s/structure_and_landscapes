@@ -23,7 +23,7 @@ class NKModel(object):
     """
     Class which is used to evaluate the fitness of a bitstring.
     """
-    def __init__(self, n=2, k=0, contribution_lookup_table=None, inner_dependcies=None):
+    def __init__(self, n=2, k=0, contribution_lookup_table=None, inner_dependencies=None):
         """
         NKModel instances default to a simple smooth landscape (n=2, k=0),
         and using the module's random number generator (seeded by time).
@@ -36,10 +36,10 @@ class NKModel(object):
 
         self.contribution_lookup_table = contribution_lookup_table
         
-        if inner_dependcies is None:
-            inner_dependcies = determine_inner_dependencies(self.n, self.k)
+        if inner_dependencies is None:
+            inner_dependencies = determine_inner_dependencies(self.n, self.k)
         
-        self.inner_dependcies = inner_dependcies
+        self.inner_dependencies = inner_dependencies
 
     def determine_fitness(self, bitstring):
         """
@@ -56,7 +56,7 @@ class NKModel(object):
         from a subset of random bitstrings of length k+1
         """
         contribs = [table[int(sub)] for sub, table in zip(
-                decontruct_random_bitstring(bitstring, self.dependencies),
+                decontruct_random_bitstring(bitstring, self.inner_dependencies),
                 self.contribution_lookup_table)]
         return sum(contribs) / float(len(contribs))
 

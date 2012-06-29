@@ -37,7 +37,7 @@ class TestNKModel(TC):
 
     def test_determine_fitness_from_random(self):
         b = Bitstring("10")
-        rug_fit = self.rugged.determine_fitness(b)
+        rug_fit = self.rugged.determine_fitness_from_random(b)
         expected_rugged_fit = (.1 + .8) / 2
         self.assertEqual(rug_fit, expected_rugged_fit)
 
