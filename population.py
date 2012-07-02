@@ -64,7 +64,7 @@ class Population(object):
 
     def advance_generation(self):
         self.replicate()
-        self.remove_least_fit()
+        self.moran_selection()
 
     def add_to_pop(self, org):
         self.population.append(org)
