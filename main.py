@@ -70,7 +70,7 @@ def run(pop):
 
 def main():
     #bit_org_demo()
-    #int_org_demo()
+    int_org_demo()
     structured_pop_demo()
 
 if __name__ == "__main__":
