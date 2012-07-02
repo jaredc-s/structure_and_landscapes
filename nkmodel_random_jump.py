@@ -78,10 +78,16 @@ def generate_dependencies(k_intra, k_jump, number_of_genes, length_of_gene):
     dependencies = []
     for i in range(number_of_genes):
         dependencies.append([])
-        for _ in range(length_of_gene):
-            dependencies[i].append([(random_generator.randrange(number_of_genes), 
-                                 random_generator.randrange(length_of_gene))
-                                 for _ in range(k_jump)])
+        for j in range(length_of_gene):
+            dependencies[i].append([])
+            for _ in range(k_jump):
+                location = (random_generator.randrange(number_of_genes),
+                            random_generator.randrange(length_of_gene))
+                while location in dependencies[i]:
+                    location = (random_generator.randrange(number_of_genes), 
+                                random_generator.randrange(length_of_gene))
+                dependencies[i][j].append(location)
+                                 
     return dependencies
 
 def generate_sub_bitstring(bitstrings, dependencies, k_intra):
@@ -111,7 +117,7 @@ def generate_linear_bistring(bitstrings, k_intra, k_jump):
     in the next k_intra genes
 
     ex. n = 3 genes = 3 k_in = 2 k_out = 2
-    gene1:101    gene2:010 gene3: 100
+    gene1:101 gene2:010 gene3:100
 
     bitstring1: 10101
     bitstring2: 01110
