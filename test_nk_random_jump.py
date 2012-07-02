@@ -11,7 +11,7 @@ class TestNKWithGenes(TC):
 
     def test_determine_fitness(self):
         contrib_table = [[0.25, 0.8, 0.15], [0.9, 0.4, 0.55], [0.05, 0.7, 0.3]]
-        nk = NKWithGenes(1, 1, 2, 2)
+        nk = NKWithGenes(1, 0, 2, 2)
         bit_org = Bitstring("0101")
         self.assertNotEqual(0, nk.determine_fitness(bit_org))
 
@@ -35,6 +35,14 @@ class TestModule(TC):
         self.assertEqual(len(self.depend[0]), 3)
         self.assertEqual(len(self.depend[-1]), 3)
 
+    def test_passed_depend(self):
+        dependencies = [[[(2, 0), (1, 2)], [(1, 1), (2, 1)],[(1, 0), (2, 2)]],
+                        [[(1, 2), (1, 1)], [(0, 0), (1, 1)], [(0, 1), (0, 1)]],
+                        [[(2, 2), (2, 0)], [(2, 2), (2, 0)], [(1, 1), (0, 1)]]]
+        subs = nkmodel_random_jump.generate_sub_bitstring(self.list_of_strings,
+                                                          dependencies, 2)
+        self.assertEqual(subs[0][1], Bitstring("10000"))
+
     def test_sub_bitstring(self):
         
         full = nkmodel_random_jump.generate_sub_bitstring(self.list_of_strings,
@@ -50,3 +58,4 @@ class TestModule(TC):
         self.assertEqual(4, len(linear_model[0][0]))
         self.assertEqual(3, len(linear_model))
         self.assertEqual(3, len(linear_model[0]))
+        self.assertEqual(Bitstring("0101"), linear_model[0][0])
