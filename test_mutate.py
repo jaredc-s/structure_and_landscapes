@@ -32,20 +32,18 @@ class TestModule(TC):
 
     def test_mutate_bitstring(self):
         value = bitstring.Bitstring("00")
-        mutated_value = mutate.mutate_value(value)
+        mutated_value = mutate.mutate_value(value,1)
         self.assertNotEqual(value, mutated_value)
-
-        mutate.random_generator = MockRandom(1)
-        mutated_value_ = mutate.mutate_value(value)
-        self.assertEqual(bitstring.Bitstring("01"), mutated_value_)
+        mutate.random_generator = MockRandom(0)
+        mutated_value_ = mutate.mutate_value(value,1)
+        self.assertEqual(bitstring.Bitstring("10"), mutated_value_)
 
     def test_mutate_value_raises(self):
         with self.assertRaises(TypeError):
             mutate.mutate_value("unknown")
 
     def test_change_base(self):
-        test_seq = RS.RNAsequence("agcuu")
-        sequence = mutate.mutate_value(test_seq)
+        test_seq = RS.RNAsequence("AGCUU")
+        sequence = mutate.mutate_value(test_seq, 1)
         self.assertEqual(len(test_seq), len(sequence))
         self.assertNotEqual(test_seq, sequence)
-        

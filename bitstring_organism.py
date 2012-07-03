@@ -17,16 +17,16 @@ class Organism(mixins.KeyedHashingMixin):
         """
         self.value = value
         self.f = None
-    def mutate(self):
+    def mutate(self, rate = 0.2):
         """
         the mutate method of an organism calls the module
         mutate and returns a new organism with the mutation
         note: original organism is unchanged
         """
-        return Organism(self._mutate_value())
+        return Organism(self._mutate_value(rate))
 
-    def _mutate_value(self):
-        return mutate_value(self.value)
+    def _mutate_value(self, rate):
+        return mutate_value(self.value, rate)
 
     @property
     def fitness(self):

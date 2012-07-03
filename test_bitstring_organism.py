@@ -43,7 +43,7 @@ class TestOrganism(TC):
 
     def test_mutate(self):
         g0 = Organism(self.value_0)
-        g_ = g0.mutate()
+        g_ = g0.mutate(1)
         self.assertNotEqual(g0, g_)
 
     def test_fitness(self):
