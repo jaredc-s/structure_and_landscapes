@@ -4,6 +4,7 @@ import bitstring
 import random
 import RNA_Sequence as RS
 
+
 class MockRandom(object):
     def __init__(self, value):
         self.value = value
@@ -41,11 +42,10 @@ class TestModule(TC):
 
     def test_mutate_value_raises(self):
         with self.assertRaises(TypeError):
-            mutate.mutate_value("unknown")
+            mutate.mutate_value({"hi", 2})
 
     def test_change_base(self):
-        test_seq = RS.RNAsequence("agcuu")
+        test_seq = "ACCGUA"
         sequence = mutate.mutate_value(test_seq)
         self.assertEqual(len(test_seq), len(sequence))
         self.assertNotEqual(test_seq, sequence)
-        

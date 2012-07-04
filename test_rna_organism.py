@@ -4,7 +4,7 @@ from unittest import TestCase as TC
 import RNA_organism
 from RNA_organism import Organism
 import RNA_Sequence
-from RNA_Sequence import RNAsequence
+from RNA_Sequence import RNASequence
 
 class TestOrganism(TC):
     def setUp(self):
