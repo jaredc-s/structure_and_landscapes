@@ -19,7 +19,6 @@ class TestNKWithGenes(TC):
         gene = Bitstring("101010101010")
         nk = NKWithGenes(2, 2, 3, 4)
         divided = nk.divide_to_genes(gene)
-
         self.assertEqual(len(divided), 4)
         self.assertEqual(len(divided[0]), 3)
         self.assertEqual(Bitstring("010"), divided[-1])

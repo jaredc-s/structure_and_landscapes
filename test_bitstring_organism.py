@@ -5,7 +5,18 @@ import bitstring_organism as organism
 from bitstring_organism import Organism
 import bitstring
 from bitstring import Bitstring
+import mutate
+import random
 
+class MockRandom(object):
+    def __init__(self, value):
+        self.value = value
+
+    def random(self):
+        return self.value
+
+    def randrange(self, stop):
+        return self.value
 
 class TestOrganism(TC):
     def setUp(self):
@@ -13,6 +24,9 @@ class TestOrganism(TC):
         self.value_1 = Bitstring("001")
         self.value_2 = Bitstring("111")
         self.bad_value = "000"
+
+    def tearDown(self):
+        mutate.random_generator = random.Random()
 
     def test_init(self):
         organism = Organism(self.value_0)
@@ -43,6 +57,7 @@ class TestOrganism(TC):
 
     def test_mutate(self):
         g0 = Organism(self.value_0)
+        mutate.random_generator = MockRandom(0)
         g_ = g0.mutate()
         self.assertNotEqual(g0, g_)
 

@@ -16,7 +16,7 @@ class Organism(mixins.KeyedHashingMixin):
         init takes a single argument which should be a bit string
         """
         self.value = value
-
+        self.f = None
     def mutate(self):
         """
         the mutate method of an organism calls the module
@@ -34,7 +34,9 @@ class Organism(mixins.KeyedHashingMixin):
         fitness of this organism is the hamming distance of
         its bitstring from a bitstring composed of all False's
         """
-        return sum(self.value)
+        if self.f is None:
+            self.f = sum(self.value)
+        return self.f
 
     def __key__(self):
         """

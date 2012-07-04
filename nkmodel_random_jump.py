@@ -62,10 +62,10 @@ class NKWithGenes(object):
             contribs.extend([table[int(sub)]])
         return sum(contribs) / float(len(contribs))
 
-    def divide_to_genes(self, bitstring):
+    def divide_to_genes(self, whole_bitstring):
         gene_holder = []
-        for i in range(len(bitstring)/self.length_of_gene):
-            gene_holder.append(Bitstring(bitstring[i * self.length_of_gene:(i + 1) 
+        for i in range(len(whole_bitstring)/self.length_of_gene):
+            gene_holder.append(Bitstring(whole_bitstring[i * self.length_of_gene:(i + 1) 
                                                   * self.length_of_gene]))
         return gene_holder
 

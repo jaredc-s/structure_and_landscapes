@@ -13,4 +13,4 @@ class TestOrganism(TC):
 
     def test_mutate(self):
         org2 = self.organism.mutate()
-        self.assertNotEqual(self.organism, org2)
+        self.assertNotEqual(self.organism.value, org2.value)
