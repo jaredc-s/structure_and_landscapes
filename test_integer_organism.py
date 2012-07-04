@@ -3,7 +3,18 @@ from unittest import TestCase as TC
 
 import integer_organism as organism
 from integer_organism import Organism
+import mutate
+import random
 
+class MockRandom(object):
+    def __init__(self, value):
+        self.value = value
+
+    def random(self):
+        return self.value
+
+    def randrange(self, stop):
+        return self.value
 
 class TestOrganism(TC):
     def setUp(self):
@@ -11,6 +22,9 @@ class TestOrganism(TC):
         self.value_1 = 1
         self.value_2 = 2
         self.bad_value = "0"
+
+    def cleanUp(self):
+        mutate.random_generator = random.Random()
 
     def test_init(self):
         organism = Organism(self.value_0)
@@ -45,6 +59,7 @@ class TestOrganism(TC):
 
     def test_mutate(self):
         g0 = Organism(self.value_0)
+        mutate.random_generator = MockRandom(0)
         g_ = g0.mutate()
         self.assertNotEqual(g0, g_)
 

@@ -15,10 +15,10 @@ class Organism(BOrg):
             self.fit = self.nk_model.determine_fitness(self.value)
         return self.fit
 
-    def mutate(self, rate = 0.2):
+    def mutate(self):
         """
         the mutate method of an organism calls the module
         mutate and returns a new organism with the mutation
         note: original organism is unchanged
         """
-        return Organism(self._mutate_value(rate), self.nk_model)
+        return Organism(self._mutate_value(), self.nk_model)

@@ -18,11 +18,11 @@ class Organism(mixins.KeyedHashingMixin):
     def __getitem__(self,key):
         return self.value[key]
     
-    def mutate(self, rate = 0.2):
-        return Organism(self._mutate_value(rate))
+    def mutate(self):
+        return Organism(self._mutate_value())
 
-    def _mutate_value(self, rate):
-        return mutate.mutate_value(self.value, rate)
+    def _mutate_value(self):
+        return mutate.mutate_value(self.value)
 
     @property
     def fitness(self):
