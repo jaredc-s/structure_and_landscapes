@@ -2,7 +2,6 @@ from unittest import TestCase as TC
 import mutate
 import bitstring
 import random
-import RNA_Sequence as RS
 
 
 class MockRandom(object):

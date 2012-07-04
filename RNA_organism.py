@@ -2,7 +2,6 @@
 Organism where the genome is represented by RNA
 """
 import mixins
-import RNA_Sequence as RS
 import mutate
 
 class Organism(mixins.KeyedHashingMixin):
