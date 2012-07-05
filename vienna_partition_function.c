@@ -14,7 +14,40 @@ const char* tRNA_sequence()
     return "GCCTCGATAGCTCAGTTGGGAGAGCGTACGACTGAAGATCGTAAGGtCACCAGTTCGATCCTGGTTCGGGGCA";
 }
 
-float partition_distance(char *seq1, char *seq2)
+float partition_distance_from_tRNA_sequence(const char * seq)
+{
+    return partition_distance(tRNA_sequence(), seq);
+}
+
+const char * fold_string(const char * seq)
+{
+    char * struc;
+    struc = (char *) space(sizeof(char)*(strlen(seq)+1));
+    fold(seq, struc);
+    return struc;
+}
+
+int get_bp_distance(const char * seq1, const char * seq2)
+{
+
+   char *struct1,* struct2;
+
+   struct1 = (char* ) space(sizeof(char)*(strlen(seq1)+1));
+   struct2 = (char* ) space(sizeof(char)*(strlen(seq2)+1));
+
+   fold(seq1, struct1);
+   fold(seq2, struct2);
+   free_arrays();
+
+   return bp_distance(struct1, struct2);
+}
+
+int get_bp_distance_from_tRNA(const char * seq)
+{
+    return get_bp_distance(tRNA_sequence(), seq);
+}
+
+float partition_distance(const char *seq1, const char *seq2)
 {
    char *struct1,* struct2;
    float e1, e2, profile_dist;
@@ -24,6 +57,7 @@ float partition_distance(char *seq1, char *seq2)
    /* allocate memory for structure and fold */
    struct1 = (char* ) space(sizeof(char)*(strlen(seq1)+1));
    struct2 = (char* ) space(sizeof(char)*(strlen(seq2)+1));
+
 
    /* calculate partition function and base pair probabilities */
    pf_fold(seq1, struct1);
