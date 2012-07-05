@@ -54,7 +54,7 @@ def flip_single_bit(bitstring_):
 
 def change_single_base(sequence):
     """changes a single base in a sequence"""
-    possibilities = ['G', 'C', 'A', 'U']
+    possibilities = ['G', 'C', 'A', 'T']
     position = random_generator.randrange(len(sequence))
     print(possibilities)
     print(sequence[position])

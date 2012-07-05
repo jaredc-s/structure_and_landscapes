@@ -29,6 +29,7 @@ class Organism(mixins.KeyedHashingMixin):
         This is where calls to vienna RNA will have to come in folding it to
         a predefined structure or seeing it's distance from tRNA
         """
-        vienna_distance.get_distance_from_tRNA_sequence(self.value)
+        num_diffs = vienna_distance.get_distance_from_tRNA_sequence(self.value)
+        return (len(self.value) - num_diffs) / len(self.value)
 
 default_organism = Organism(vienna_distance.get_tRNA_sequence())

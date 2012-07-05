@@ -21,10 +21,16 @@ class TestModule(TC):
             mutate.mutate_value({"hi", 2})
 
     def test_change_base(self):
-        test_seq = "ACCGUA"
+        test_seq = "ACCGTA"
         sequence = mutate.mutate_value(test_seq)
         self.assertEqual(len(test_seq), len(sequence))
         self.assertNotEqual(test_seq, sequence)
+
+    def test_change_base_many(self):
+        test_seq = "AAAACCCCTTTTGGGG"
+        for _ in range(100):
+            test_seq = mutate.mutate_value(test_seq)
+        self.assertTrue(set(test_seq)  <= set("ATCG"))
 
     def test_mutation_rate(self):
         value = 0

@@ -10,8 +10,8 @@
 
 const char* tRNA_sequence()
 {
-    // From http://gtrnadb.ucsc.edu/legend.html
-    return "GCCTCGATAGCTCAGTTGGGAGAGCGTACGACTGAAGATCGTAAGGtCACCAGTTCGATCCTGGTTCGGGGCA";
+    // >gi|7276232:c443271-443198 Saccharomyces cerevisiae tRNA-Ile
+    return "GGTCTCTTGGCCCAGTTGGTTAAGGCACCGTGCTAATAACGCGGGGATCAGCGGTTCGATCCCGCTAGAGACCA";
 }
 
 float partition_distance_from_tRNA_sequence(const char * seq)
