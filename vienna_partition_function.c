@@ -7,6 +7,13 @@
 #include  "profiledist.h"
 #include "vienna_partition_function.h"
 
+
+const char* tRNA_sequence()
+{
+    // From http://gtrnadb.ucsc.edu/legend.html
+    return "GCCTCGATAGCTCAGTTGGGAGAGCGTACGACTGAAGATCGTAAGGtCACCAGTTCGATCCTGGTTCGGGGCA";
+}
+
 float partition_distance(char *seq1, char *seq2)
 {
    char *struct1,* struct2;

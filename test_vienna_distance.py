@@ -16,6 +16,7 @@ class TestModule(TC):
         distance = vienna_distance.get_distance(seq_1, seq_2)
         self.assertGreater(distance, 0)
 
-if __name__ == "__main__":
-    import unittest
-    unittest.main()
+    def test_get_tRNA_sequence(self):
+        expected = "GCCTCGATAGCTCAGTTGGGAGAGCGTACGACTGAAGATCGTAAGGtCACCAGTTCGATCCTGGTTCGGGGCA"
+        actual = vienna_distance.get_tRNA_sequence()
+        self.assertEqual(expected, actual)
