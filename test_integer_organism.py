@@ -6,15 +6,6 @@ from integer_organism import Organism
 import mutate
 import random
 
-class MockRandom(object):
-    def __init__(self, value):
-        self.value = value
-
-    def random(self):
-        return self.value
-
-    def randrange(self, stop):
-        return self.value
 
 class TestOrganism(TC):
     def setUp(self):
@@ -59,7 +50,6 @@ class TestOrganism(TC):
 
     def test_mutate(self):
         g0 = Organism(self.value_0)
-        mutate.random_generator = MockRandom(0)
         g_ = g0.mutate()
         self.assertNotEqual(g0, g_)
 

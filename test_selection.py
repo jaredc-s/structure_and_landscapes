@@ -5,14 +5,6 @@ import selection
 from selection import *
 
 
-class MockRandom(object):
-    def __init__(self, value):
-        self.value = value
-
-    def random(self):
-        return self.value
-
-
 class MockOrganism(object):
     def __init__(self, fitness, identifier):
         self.fitness = fitness

@@ -7,15 +7,6 @@ from nk_organism import Organism
 import random
 import mutate
 
-class MockRandom(object):
-    def __init__(self, value):
-        self.value = value
-
-    def random(self):
-        return self.value
-
-    def randrange(self, stop):
-        return self.value
 
 class TestOrganism(TC):
     def setUp(self):
@@ -23,9 +14,6 @@ class TestOrganism(TC):
         self.lookup = [[1, 0.5], [0.2, 0.4], [0.1, 0.8]]
         self.model = nk_model.NKModel(3, 0, self.lookup)
         self.org = Organism(self.value, self.model)
-
-    def cleanUp(self):
-        mutate.random_generator = random.Random
 
     def test_init(self):
         self.assertEqual(self.org.value, self.value)
@@ -42,6 +30,5 @@ class TestOrganism(TC):
         self.assertEqual(self.org, self.org)
 
     def test_mutate(self):
-        mutate.random_generator = MockRandom(0)
         other = self.org.mutate()
         self.assertNotEqual(self.org, other)
