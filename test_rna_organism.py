@@ -1,8 +1,8 @@
 import unittest
 from unittest import TestCase as TC
 
-import RNA_organism
-from RNA_organism import Organism
+import rna_organism
+from rna_organism import Organism
 
 class TestOrganism(TC):
     def setUp(self):
