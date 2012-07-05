@@ -3,7 +3,6 @@ Organism where the genome is represented by RNA
 """
 import mixins
 import mutate
-import vienna_distance
 
 class Organism(mixins.KeyedHashingMixin):
     def __init__(self, value):
@@ -29,4 +28,4 @@ class Organism(mixins.KeyedHashingMixin):
         This is where calls to vienna RNA will have to come in folding it to
         a predefined structure or seeing it's distance from tRNA
         """
-        return vienna_distance.get_distance_from_tRNA(self.value)
+        pass
