@@ -33,5 +33,5 @@ float partition_distance(char *seq1, char *seq2)
 
    profile_dist = profile_edit_distance(pf1, pf2);
    free_profile(pf1); free_profile(pf2);
-   return profile_dist;
+   return abs(profile_dist);
 }

@@ -4,7 +4,7 @@ import vienna_distance
 class TestModule(TC):
     def test_distance_unequal(self):
         distance = vienna_distance.get_distance("CGCAGGGAUACCCGCG", "GCGCCCAUAGGGACGC")
-        self.assertGreater(distance, 0)
+        self.assertGreaterEqual(distance, 0)
 
     def test_distance_same(self):
         distance = vienna_distance.get_distance("CGAUGCC", "CGAUGCC")
