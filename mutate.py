@@ -10,10 +10,10 @@ import bitstring
 random_generator = random.Random()
 
 
-def mutate_value(value, mutation_rate = 1.0):
+def mutate_value(value, mutation_rate=1.0):
     """
-    mutate_values if the random number is less than mutation_rate (defaults to always)
-    currently handles:
+    mutate_values if the random number is less than mutation_rate
+    (defaults to always) currently handles:
     1: ints
     2: bitstrings
     3: str (RNAs)

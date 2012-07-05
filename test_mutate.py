@@ -30,7 +30,7 @@ class TestModule(TC):
         test_seq = "AAAACCCCTTTTGGGG"
         for _ in range(100):
             test_seq = mutate.mutate_value(test_seq)
-        self.assertTrue(set(test_seq)  <= set("ATCG"))
+        self.assertTrue(set(test_seq) <= set("ATCG"))
 
     def test_mutation_rate(self):
         value = 0

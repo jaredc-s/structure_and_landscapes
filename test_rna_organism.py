@@ -5,6 +5,7 @@ import rna_organism
 from rna_organism import Organism
 import vienna_distance
 
+
 class TestOrganism(TC):
     def setUp(self):
         self.organism = rna_organism.default_organism
@@ -19,7 +20,6 @@ class TestOrganism(TC):
 
         a_org = Organism(all_As)
         self.assertLess(a_org.fitness, self.organism.fitness)
-
 
 
 class TestModule(TC):

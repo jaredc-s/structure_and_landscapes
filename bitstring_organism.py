@@ -17,6 +17,7 @@ class Organism(mixins.KeyedHashingMixin):
         """
         self.value = value
         self.f = None
+
     def mutate(self):
         """
         the mutate method of an organism calls the module

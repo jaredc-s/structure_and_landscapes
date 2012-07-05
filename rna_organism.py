@@ -5,6 +5,7 @@ import mixins
 import mutate
 import vienna_distance
 
+
 class Organism(mixins.KeyedHashingMixin):
     def __init__(self, value):
         """
@@ -16,7 +17,7 @@ class Organism(mixins.KeyedHashingMixin):
     def __key__(self):
         return self.value
 
-    def __getitem__(self,key):
+    def __getitem__(self, key):
         return self.value[key]
 
     def mutate(self):
