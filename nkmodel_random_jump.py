@@ -83,7 +83,7 @@ def generate_dependencies(k_intra, k_jump, number_of_genes, length_of_gene):
             for _ in range(k_jump):
                 location = (random_generator.randrange(number_of_genes),
                             random_generator.randrange(length_of_gene))
-                while location in dependencies[i]:
+                while location in dependencies[i][j]:
                     location = (random_generator.randrange(number_of_genes), 
                                 random_generator.randrange(length_of_gene))
                 dependencies[i][j].append(location)
