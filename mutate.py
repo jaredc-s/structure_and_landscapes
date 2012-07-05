@@ -10,10 +10,20 @@ import bitstring
 random_generator = random.Random()
 
 
-def mutate_value(value, mutation_rate = 0.2):
+def mutate_value(value, mutation_rate = 1.0):
     """
-    mutate_values knowns ints and Bitstrings so far"
+    mutate_values if the random number is less than mutation_rate (defaults to always)
+    currently handles:
+    1: ints
+    2: bitstrings
+    3: str (RNAs)
     """
+    if random_generator.random() < mutation_rate:
+        return _get_mutant_value(value)
+    return value
+
+
+def _get_mutant_value(value):
     if isinstance(value, int):
         return shift_by_one(value)
     elif isinstance(value, bitstring.Bitstring):
@@ -22,17 +32,7 @@ def mutate_value(value, mutation_rate = 0.2):
         return change_single_base(value)
     else:
         raise TypeError("unknown type to mutate")
-    if random_generator.random() < mutation_rate:
-        if isinstance(value, int):
-            return shift_by_one(value)
-        elif isinstance(value, bitstring.Bitstring):
-            return flip_single_bit(value)
-        elif isinstance(value, RS.RNAsequence):
-            return change_single_base(value)
-        else:
-            raise TypeError("unknown type to mutate")
-    else:
-        return value
+
 
 def shift_by_one(number):
     """
@@ -56,6 +56,8 @@ def change_single_base(sequence):
     """changes a single base in a sequence"""
     possibilities = ['G', 'C', 'A', 'U']
     position = random_generator.randrange(len(sequence))
+    print(possibilities)
+    print(sequence[position])
     possibilities.remove(sequence[position])
     mutate_to = random_generator.choice(possibilities)
     return sequence[:position] + mutate_to + sequence[position + 1:]

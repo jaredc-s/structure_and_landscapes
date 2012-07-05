@@ -7,6 +7,17 @@
 #include  "profiledist.h"
 #include "vienna_partition_function.h"
 
+// tRNA from http://gtrnadb.ucsc.edu/legend.html
+char * tRNA_target(void)
+{
+    return "GCCTCGATAGCTCAGTTGGGAGAGCGTACGACTGAAGATCGTAAGGtCACCAGTTCGATCCTGGTTCGGGGCA";
+}
+
+float parition_distance_from_tRNA(char *seq)
+{
+    return partition_distance(tRNA_target(), seq);
+}
+
 float partition_distance(char *seq1, char *seq2)
 {
    char *struct1,* struct2;
@@ -33,5 +44,5 @@ float partition_distance(char *seq1, char *seq2)
 
    profile_dist = profile_edit_distance(pf1, pf2);
    free_profile(pf1); free_profile(pf2);
-   return profile_dist;
+   return abs(profile_dist);
 }

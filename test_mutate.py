@@ -25,3 +25,10 @@ class TestModule(TC):
         sequence = mutate.mutate_value(test_seq)
         self.assertEqual(len(test_seq), len(sequence))
         self.assertNotEqual(test_seq, sequence)
+
+    def test_mutation_rate(self):
+        value = 0
+        not_mutated_value = mutate.mutate_value(value, mutation_rate=-1.0)
+        self.assertEqual(value, not_mutated_value)
+        mutated_value = mutate.mutate_value(value, mutation_rate=1.0)
+        self.assertNotEqual(value, mutated_value)
