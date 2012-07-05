@@ -1,5 +1,5 @@
-#ifndef VIENNA_PARTITION_FUNCTION_H
-#define VIENNA_PARTITION_FUNCTION_H
+#ifndef VIENNA_UTILS_H
+#define VIENNA_UTILS_H
 const char* tRNA_sequence();
 float partition_distance_from_tRNA_sequence(const char * seq);
 float partition_distance(const char *, const char *);

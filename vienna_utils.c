@@ -5,7 +5,7 @@
 #include  "fold.h"
 #include  "part_func.h"
 #include  "profiledist.h"
-#include "vienna_partition_function.h"
+#include "vienna_utils.h"
 
 
 const char* tRNA_sequence()

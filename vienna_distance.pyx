@@ -1,4 +1,4 @@
-cdef extern from "vienna_partition_function.h":
+cdef extern from "vienna_utils.h":
     cdef float partition_distance(char *, char *)
     cdef char * tRNA_sequence()
     cdef float partition_distance_from_tRNA_sequence(char * seq)
