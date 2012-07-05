@@ -4,7 +4,10 @@ Organism where the genome is represented by RNA
 import mixins
 import mutate
 import vienna_distance
+import random
 
+OPTIMAL_RNA_SEQUENCE = vienna_distance.get_tRNA_sequence()
+RNA_SEQUENCE_LENGTH = len(OPTIMAL_RNA_SEQUENCE)
 
 class Organism(mixins.KeyedHashingMixin):
     def __init__(self, value):
@@ -31,6 +34,18 @@ class Organism(mixins.KeyedHashingMixin):
         a predefined structure or seeing it's distance from tRNA
         """
         num_diffs = vienna_distance.get_distance_from_tRNA_sequence(self.value)
-        return (len(self.value) - num_diffs) / len(self.value)
+        return (len(self.value) - num_diffs) / float(len(self.value))
 
-default_organism = Organism(vienna_distance.get_tRNA_sequence())
+default_organism = Organism(OPTIMAL_RNA_SEQUENCE)
+
+def random_organism():
+    """
+    returns an rna organism with a randomly generated
+    genome of the same length as our optimal rna sequence
+    """
+    nucleotides = ['A', 'T', 'G', 'C']
+    sequence = [random.choice(nucleotides) for _ in range(RNA_SEQUENCE_LENGTH)]
+    sequence_string = "".join(sequence)
+    return Organism(sequence_string)
+
+

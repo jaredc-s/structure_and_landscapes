@@ -24,6 +24,7 @@ class TestModule(TC):
         self.assertEqual(distance_at_target, 0)
 
     def test_fold(self):
-        seq = "AAAAAAAAAUUUUUUUUU"
+        seq = "ACTGAAATTGACCCTGTTAAAACTCGCTCGCTAGCTAGCTC"
         struc = vienna_distance.fold(seq)
         self.assertEqual(len(struc), len(seq))
+
