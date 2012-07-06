@@ -8,7 +8,7 @@ run: vienna_distance.so
 	python2.7 main.py
 
 install: vienna_distance.so
-	pip install nose coverage pep8 cython
+	pip install nose coverage pep8 cython RunSnakeRun
 
 style:
 	pep8 *.py
