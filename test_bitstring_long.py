@@ -17,7 +17,7 @@ class TestBitstringLong(TestCase):
 
     def test_string(self):
         b = Bitstring('1000000')
-        self.assertEqual(b.get_string(), '1000000')
+        self.assertEqual(str(b), '1000000')
 
 class TestModule(TestCase):
     def test_mutate_position(self):

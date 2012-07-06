@@ -27,9 +27,6 @@ class Bitstring(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
     def __int__(self):
         return self.value
 
-    def get_string(self):
-        return bin(self.value)[2:]
-
 def flip_positions(bitstring_instance, positions_to_flip):
     int_value = bitstring_instance.value
     for pos in positions_to_flip:
