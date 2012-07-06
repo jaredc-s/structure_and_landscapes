@@ -21,6 +21,10 @@ class TestOrganism(TC):
         a_org = Organism(all_As)
         self.assertLess(a_org.fitness, self.organism.fitness)
 
+    def test_key(self):
+        self.assertEqual(self.organism[0], 'G')
+        self.assertEqual(self.organism, rna_organism.default_organism)
+
 class TestModule(TC):
     def test_default(self):
         def_org = rna_organism.default_organism

@@ -3,6 +3,7 @@ from unittest import TestCase as TC
 import nkmodel_random_jump
 from nkmodel_random_jump import NKWithGenes
 from bitstring import Bitstring
+import nk_model
 
 class TestNKWithGenes(TC):
     def setUp(self):
@@ -14,6 +15,11 @@ class TestNKWithGenes(TC):
         nk = NKWithGenes(1, 0, 2, 2)
         bit_org = Bitstring("0101")
         self.assertNotEqual(0, nk.determine_fitness(bit_org))
+
+    def test_passed_contribution_table(self):
+        contrib_table = nk_model.generate_contribution_lookup_table(3, 2)
+        nk = NKWithGenes(1, 1, 2, 2, contrib_table)
+        self.assertEqual(contrib_table, nk.contribution_lookup_table)
 
     def test_gene_divider(self):
         gene = Bitstring("101010101010")
@@ -30,9 +36,10 @@ class TestModule(TC):
                            Bitstring("001")]
 
     def test_dependencies(self):
-        self.assertEqual(len(self.depend), 3)
-        self.assertEqual(len(self.depend[0]), 3)
-        self.assertEqual(len(self.depend[-1]), 3)
+        long_depend = nkmodel_random_jump.generate_dependencies(2, 4, 3, 3)
+        self.assertEqual(len(long_depend), 3)
+        self.assertEqual(len(long_depend[0]), 3)
+        self.assertEqual(len(long_depend[-1]), 3)
 
     def test_passed_depend(self):
         dependencies = [[[(2, 0), (1, 2)], [(1, 1), (2, 1)],[(1, 0), (2, 2)]],

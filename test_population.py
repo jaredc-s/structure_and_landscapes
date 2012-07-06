@@ -66,3 +66,11 @@ class TestPopulation(TC):
         org = MockOrganism(6)
         self.pop.add_to_pop(org)
         self.assertEqual(5, len(self.pop))
+
+    def test_set(self):
+        self.pop[2] = MockOrganism(6)
+        print self.pop[2]
+        self.assertEqual(self.pop[2].eval_fit(), MockOrganism(6).eval_fit())
+
+    def test_full(self):
+        self.assertTrue(self.pop.is_full())
