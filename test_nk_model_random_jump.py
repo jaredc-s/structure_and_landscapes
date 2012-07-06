@@ -1,7 +1,7 @@
 import unittest
 from unittest import TestCase as TC
-import nkmodel_random_jump
-from nkmodel_random_jump import NKWithGenes
+import nk_model_random_jump
+from nk_model_random_jump import NKWithGenes
 from bitstring import Bitstring
 import nk_model
 
@@ -31,12 +31,12 @@ class TestNKWithGenes(TC):
 
 class TestModule(TC):
     def setUp(self):
-        self.depend = nkmodel_random_jump.generate_dependencies(2, 2, 3, 3)
+        self.depend = nk_model_random_jump.generate_dependencies(2, 2, 3, 3)
         self.list_of_strings = [Bitstring("010"), Bitstring("100"),
                            Bitstring("001")]
 
     def test_dependencies(self):
-        long_depend = nkmodel_random_jump.generate_dependencies(2, 4, 3, 3)
+        long_depend = nk_model_random_jump.generate_dependencies(2, 4, 3, 3)
         self.assertEqual(len(long_depend), 3)
         self.assertEqual(len(long_depend[0]), 3)
         self.assertEqual(len(long_depend[-1]), 3)
@@ -45,22 +45,21 @@ class TestModule(TC):
         dependencies = [[[(2, 0), (1, 2)], [(1, 1), (2, 1)],[(1, 0), (2, 2)]],
                         [[(1, 2), (1, 1)], [(0, 0), (1, 1)], [(0, 1), (0, 1)]],
                         [[(2, 2), (2, 0)], [(2, 2), (2, 0)], [(1, 1), (0, 1)]]]
-        subs = nkmodel_random_jump.generate_sub_bitstring(self.list_of_strings,
+        subs = nk_model_random_jump.generate_sub_bitstring(self.list_of_strings,
                                                           dependencies, 2)
         self.assertEqual(subs[0][1], Bitstring("10000"))
 
     def test_sub_bitstring(self):
-        
-        full = nkmodel_random_jump.generate_sub_bitstring(self.list_of_strings,
+
+        full = nk_model_random_jump.generate_sub_bitstring(self.list_of_strings,
                                                            self.depend, 2)
         self.assertEqual(len(full), len(self.list_of_strings))
         self.assertEqual(len(full[0]), 3)
         self.assertEqual(len(full[0][0]), 5)
 
     def test_linear_jump(self):
-        linear_model = nkmodel_random_jump.generate_linear_bistring(
+        linear_model = nk_model_random_jump.generate_linear_bistring(
             self.list_of_strings, 2, 1)
-        print linear_model
         self.assertEqual(4, len(linear_model[0][0]))
         self.assertEqual(3, len(linear_model))
         self.assertEqual(3, len(linear_model[0]))
