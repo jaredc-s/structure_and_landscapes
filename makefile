@@ -14,7 +14,7 @@ style:
 	pep8 *.py
 
 clean: clean_cython
-	rm *.pyc *.o *.so
+	rm *.pyc *.o *.so profiledata
 
 analysis:
 	pip install numpy 
@@ -31,3 +31,9 @@ clean_cython:
 
 vienna_utils.o: vienna_utils.c vienna_utils.h
 	gcc -c -fopenmp vienna_utils.c -I /usr/local/include/ViennaRNA
+
+profile: profiledata 
+	runsnake profiledata
+
+profiledata: main.py
+	python -m cProfile -o profiledata main.py
