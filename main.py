@@ -12,11 +12,13 @@ import nk_model
 import nkmodel_random_jump
 import rna_organism
 
+
 def int_org_demo():
     org_list = [int_organism(i) for i in range(1, 11)]
 
     pop = Population(org_list, 100)
     run(pop)
+
 
 def nk_org_demo():
     b = Bitstring("11010")
@@ -26,12 +28,14 @@ def nk_org_demo():
     pop = Population(org_list)
     run(pop)
 
+
 def nk_gene_demo():
     b = Bitstring("0100000001010101101010100111")
     nk = nkmodel_random_jump.NKWithGenes(3, 1, 7, 4)
     org_list = [nk_org(b, nk) for _ in range(10)]
     pop = Population(org_list)
     run(pop)
+
 
 def nk_gene_structured_pop_demo():
     b = Bitstring("0100000001010101101010100111")
@@ -47,6 +51,7 @@ def nk_gene_structured_pop_demo():
         avg_fit_pop = population_state(structured_pop, avg_fit_pop, i)
         structured_pop.advance_generation()
 
+
 def bit_org_demo():
     base_bit = '0000000000'
     bit_list = [bit_organism(Bitstring(base_bit + '1' * i)) for i in range(10)]
@@ -54,11 +59,13 @@ def bit_org_demo():
     pop = Population(bit_list, 100)
     run(pop)
 
+
 def rna_org_demo():
     target = rna_organism.default_organism
     start_genome = "".join(["A" for _ in target.value])
     starting_org = rna_organism.Organism(start_genome)
     print starting_org.fitness
+
 
 def rna_org_structured_pop_demo():
     org = rna_organism.default_organism
@@ -69,6 +76,7 @@ def rna_org_structured_pop_demo():
                                            proportion_of_pop_swapped=0.5)
 
     print average_fitness_of_structured_population(structured_pop)
+
 
 def structured_pop_demo():
     b = Bitstring("10011")
@@ -103,12 +111,16 @@ def population_state(struct_pop, fit_holder, gen_number):
     print "\n"
     return fit_holder
 
+
 def average_fitness_of_structured_population(structured_population):
     """
-    This functions computes the average fitness of all of the orgnisms residing in structured population!
+    This functions computes the average fitness of
+    all of the orgnisms residing in structured population!
     """
-    list_of_fitnesses = [org.fitness for pop in structured_population for org in pop]
+    list_of_fitnesses = [org.fitness for pop in
+                         structured_population for org in pop]
     return average(list_of_fitnesses)
+
 
 def run(pop):
     fit_list = []
@@ -132,5 +144,7 @@ def main():
     #nk_gene_structured_pop_demo()
     #rna_org_demo()
     rna_org_structured_pop_demo()
+
+
 if __name__ == "__main__":
     main()

@@ -1,6 +1,7 @@
 """
-A nested NK model. Will fuction like a NK model but in addition a k is specified for
-the number of loci used from any gene within an organism.
+A nested NK model. Will fuction like a NK model
+but in addition a k is specified forthe number of
+loci used from any gene within an organism.
 
 A genome is composed of a bitstring broken up into multiple genes.
 k_intra specifies the number of neighbors within the same gene
@@ -32,10 +33,10 @@ class NKWithGenes(object):
         self.k_jump = k_jump
         self.length_of_gene = length_of_gene
         self.number_of_genes = number_of_genes
-        self.length_of_genome = self.length_of_gene * self.number_of_genes 
+        self.length_of_genome = self.length_of_gene * self.number_of_genes
         if contribution_lookup_table is None:
-           self.contribution_lookup_table = nk_model.generate_contribution_lookup_table(
-               self.length_of_genome, self.k_intra + self.k_jump)
+            self.contribution_lookup_table = nk_model.generate_contribution_lookup_table(
+                self.length_of_genome, self.k_intra + self.k_jump)
         else:
             self.contribution_lookup_table = contribution_lookup_table
 
@@ -48,7 +49,7 @@ class NKWithGenes(object):
         grab value at each k+1 loci
         look in dependency table for the allied loci
         look in bitstring for values at loci
-        append values 
+        append values
         look in contrib table to determine fitness
         """
         genes = self.divide_to_genes(bitstring)
@@ -64,10 +65,12 @@ class NKWithGenes(object):
 
     def divide_to_genes(self, whole_bitstring):
         gene_holder = []
-        for i in range(len(whole_bitstring)/self.length_of_gene):
-            gene_holder.append(Bitstring(whole_bitstring[i * self.length_of_gene:(i + 1) 
-                                                  * self.length_of_gene]))
+        for i in range(len(whole_bitstring) / self.length_of_gene):
+            gene_holder.append(Bitstring(whole_bitstring[i *
+                               self.length_of_gene:(i + 1) *
+                               self.length_of_gene]))
         return gene_holder
+
 
 def generate_dependencies(k_intra, k_jump, number_of_genes, length_of_gene):
     """
@@ -84,11 +87,12 @@ def generate_dependencies(k_intra, k_jump, number_of_genes, length_of_gene):
                 location = (random_generator.randrange(number_of_genes),
                             random_generator.randrange(length_of_gene))
                 while location in dependencies[i][j]:
-                    location = (random_generator.randrange(number_of_genes), 
+                    location = (random_generator.randrange(number_of_genes),
                                 random_generator.randrange(length_of_gene))
                 dependencies[i][j].append(location)
-                                 
+
     return dependencies
+
 
 def generate_sub_bitstring(bitstrings, dependencies, k_intra):
     """
@@ -101,7 +105,7 @@ def generate_sub_bitstring(bitstrings, dependencies, k_intra):
     for i in range(len(basic_strings)):
         subbit = []
         for j in range(len(basic_strings[i])):
-            orglist  = list(basic_strings[i][j])
+            orglist = list(basic_strings[i][j])
             dependent = dependencies[i][j]
             for org, pos in dependent:
                 hold = bitstrings[org][pos]
@@ -110,6 +114,7 @@ def generate_sub_bitstring(bitstrings, dependencies, k_intra):
             subbit.append(Bitstring(orglist))
         complex_strings.append(subbit)
     return complex_strings
+
 
 def generate_linear_bistring(bitstrings, k_intra, k_jump):
     """
@@ -132,10 +137,9 @@ def generate_linear_bistring(bitstrings, k_intra, k_jump):
         for j in range(len(basic_strings[i])):
             orglist = list(basic_strings[i][j])
             toadd = []
-            for org in range(i+1, i+k_jump+1):
+            for org in range(i + 1, i + k_jump + 1):
                 toadd.append(bitstrings[org%len(bitstrings)][j])
             orglist.extend(toadd)
             subbit.append(Bitstring(orglist))
         complex_strings.append(subbit)
     return complex_strings
-    

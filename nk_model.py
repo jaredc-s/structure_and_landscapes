@@ -23,7 +23,8 @@ class NKModel(object):
     """
     Class which is used to evaluate the fitness of a bitstring.
     """
-    def __init__(self, n=2, k=0, contribution_lookup_table=None, inner_dependencies=None):
+    def __init__(self, n=2, k=0, contribution_lookup_table=None,
+                 inner_dependencies=None):
         """
         NKModel instances default to a simple smooth landscape (n=2, k=0),
         and using the module's random number generator (seeded by time).
@@ -35,10 +36,10 @@ class NKModel(object):
                 self.n, self.k)
 
         self.contribution_lookup_table = contribution_lookup_table
-        
+
         if inner_dependencies is None:
             inner_dependencies = determine_inner_dependencies(self.n, self.k)
-        
+
         self.inner_dependencies = inner_dependencies
 
     def determine_fitness(self, bitstring):
@@ -56,9 +57,10 @@ class NKModel(object):
         from a subset of random bitstrings of length k+1
         """
         contribs = [table[int(sub)] for sub, table in zip(
-                decontruct_random_bitstring(bitstring, self.inner_dependencies),
-                self.contribution_lookup_table)]
+                    decontruct_random_bitstring(bitstring, self.inner_dependencies),
+                                                self.contribution_lookup_table)]
         return sum(contribs) / float(len(contribs))
+
 
 def deconstruct_bitstring(bitstring, k):
     """
@@ -69,6 +71,7 @@ def deconstruct_bitstring(bitstring, k):
     return [get_substring_with_wrapping(
         bitstring, k, i) for i in range(len(bitstring))]
 
+
 def decontruct_random_bitstring(bitstring, dependencies):
     """
     For use when k loci are not spacially attatched
@@ -76,19 +79,21 @@ def decontruct_random_bitstring(bitstring, dependencies):
     where the next k elements are randomly separated
     around bitstring
     """
-    return [get_random_substring(bitstring, i, dependencies) 
+    return [get_random_substring(bitstring, i, dependencies)
             for i in range(len(bitstring))]
+
 
 def get_random_substring(bitstring, i, dependencies):
     """
     Takes a bitstring, k and an index, breaks the bitstring
-    into a list of length k+1 where the first index is the 
+    into a list of length k+1 where the first index is the
     value found at i and the remaining k values are chosen
     at random from remainder of bitstring
     """
     bitstring_as_list = list(bitstring)
     bit_values = [bitstring_as_list[locus] for locus in dependencies[i]]
     return Bitstring(bit_values)
+
 
 def determine_inner_dependencies(n, k):
     """
@@ -104,7 +109,7 @@ def determine_inner_dependencies(n, k):
         positions.extend(module_random_generator.sample(r, k))
         depends.append(positions)
     return depends
-            
+
 
 def get_substring_with_wrapping(bitstring, k, i):
     """

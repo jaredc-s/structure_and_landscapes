@@ -9,6 +9,7 @@ import random
 OPTIMAL_RNA_SEQUENCE = vienna_distance.get_tRNA_sequence()
 RNA_SEQUENCE_LENGTH = len(OPTIMAL_RNA_SEQUENCE)
 
+
 class Organism(mixins.KeyedHashingMixin):
     def __init__(self, value):
         """
@@ -38,6 +39,7 @@ class Organism(mixins.KeyedHashingMixin):
 
 default_organism = Organism(OPTIMAL_RNA_SEQUENCE)
 
+
 def random_organism():
     """
     returns an rna organism with a randomly generated
@@ -47,5 +49,3 @@ def random_organism():
     sequence = [random.choice(nucleotides) for _ in range(RNA_SEQUENCE_LENGTH)]
     sequence_string = "".join(sequence)
     return Organism(sequence_string)
-
-
