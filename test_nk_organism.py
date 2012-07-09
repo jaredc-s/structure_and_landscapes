@@ -21,7 +21,7 @@ class TestOrganism(TC):
                          self.model.contribution_lookup_table)
 
     def test_fitness(self):
-        expected_fit = (0.5 + 0.2 + 0.1) / float(3)
+        expected_fit = (1 + 0.2 + 0.8) / float(3)
         self.assertEqual(expected_fit, self.org.fitness)
 
     def test_equality(self):

@@ -12,13 +12,13 @@ class TestBitstring(unittest.TestCase):
 
     def test_init(self):
         b = Bitstring("01")
-        self.assertEqual(True, b[1])
-        self.assertEqual(False, b[0])
+        self.assertEqual(True, b[0])
+        self.assertEqual(False, b[1])
         self.assertEqual(2, len(b))
 
     def test_iter(self):
         b = Bitstring("01")
-        for pos, expected in zip(b, [False, True]):
+        for pos, expected in zip(b, [True, False]):
             self.assertEqual(pos, expected)
 
     def test_eq(self):
@@ -53,10 +53,12 @@ class TestBitstring(unittest.TestCase):
 
     def test_init_from_iterable(self):
         b = Bitstring("0001")
-        b2 = Bitstring([0, 0, 0, 1])
-        b3 = Bitstring((False, False, False, True))
+        b2 = Bitstring([1, 0, 0, 0])
+        b3 = Bitstring((True, False, False, False))
+        b4 = Bitstring("1")
         self.assertEqual(b, b2)
         self.assertEqual(b, b3)
+        self.assertNotEqual(b, b4)
 
     def test_hash(self):
         b = Bitstring("000")
@@ -68,9 +70,18 @@ class TestBitstring(unittest.TestCase):
         b = Bitstring('110110')
         c = Bitstring('0000')
         d = Bitstring('')
+        e = Bitstring('10')
         self.assertEqual(int(b), 54)
         self.assertEqual(int(c), 0)
         self.assertEqual(int(d), 0)
+        self.assertEqual(int(e), 2)
+
+    def test_selected_loci_as_int(self):
+        b = Bitstring('110110')
+        pos_0 = b.selected_loci_as_int([0])
+        self.assertEqual(0, pos_0)
+        pos_123 = b.selected_loci_as_int([1,2,3])
+        self.assertEqual(6, pos_123)
 
 
 class TestModule(unittest.TestCase):
@@ -78,4 +89,4 @@ class TestModule(unittest.TestCase):
     def test_mutate_positions(self):
         b = Bitstring("00000")
         b_mutated = bitstring.flip_positions(b, (0, 3, 4))
-        self.assertEqual(b_mutated, Bitstring("10011"))
+        self.assertEqual(b_mutated, Bitstring("11001"))

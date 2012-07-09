@@ -15,17 +15,16 @@ class Bitstring(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
         the bit string will be true at that position.
 
         If the argument is not a string,
-        the iterable will be converted to a tuple
-        composed of booleans where each value is coerced to a boolean.
+        the iterable will be converted to a tuple (reversed so that the 0'th
+        is first). Otherwise, the iterable is converted to a list of booleans.
 
         for example:
-             "1001" --> (True, False, False, True)
-            [1, 0, None, [], 'hello'] --> (True, False, False, False, True)
-        consider converting bitstring into long data type
+             "10010" --> (False, True, False, False, True)
+            [0, None, [], 'hello', 10] --> (False, False, False, Truei, True)
         """
 
         if isinstance(iterable, str):
-            self._value = tuple(char == "1" for char in iterable)
+            self._value = tuple(char == "1" for char in reversed(iterable))
         else:
             self._value = tuple(bool(value) for value in iterable)
 
@@ -68,8 +67,11 @@ class Bitstring(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
                 return "1"
             return "0"
 
-        value_as_string = "".join(bool_to_str(pos) for pos in self)
+        value_as_string = "".join(bool_to_str(pos) for pos in reversed(self))
         return "{}({!r})".format(self.__class__.__name__, value_as_string)
+
+    def __int__(self):
+        return sum(2 ** i for i, value in enumerate(self) if value)
 
     def hamming_distance(self, other):
         """
@@ -80,8 +82,16 @@ class Bitstring(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
         return len(tuple(None for (self_pos, other_pos) in zip(
             self, other) if self_pos != other_pos))
 
-    def __int__(self):
-        return sum(2 ** i for i, value in enumerate(reversed(self)) if value)
+    def selected_loci_as_int(self, loci):
+        """
+        Coverts an iterable (loci) into an integer representing the state of
+        the bitstring at those positions.
+        """
+        tally = 0
+        for locus in loci:
+            if self[locus]:
+                tally += 2 ** locus
+        return tally
 
 
 def flip_positions(bitstring_instance, positions_to_flip):
