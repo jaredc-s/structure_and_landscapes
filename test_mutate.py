@@ -2,7 +2,7 @@ from unittest import TestCase as TC
 import mutate
 import bitstring
 import random
-import bitstringLong
+import bitstring_long
 
 class TestModule(TC):
 
@@ -17,7 +17,7 @@ class TestModule(TC):
         self.assertNotEqual(value, mutated_value)
 
     def test_mutate_bitLong(self):
-        value = bitstringLong.Bitstring('1001')
+        value = bitstring_long.Bitstring('1001')
         mutated_value = mutate.mutate_value(value)
         self.assertNotEqual(value, mutated_value)
 
