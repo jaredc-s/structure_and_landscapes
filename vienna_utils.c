@@ -1,6 +1,6 @@
 #include  <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include  <math.h>
 #include  "utils.h"
 #include  "fold.h"
 #include  "part_func.h"
@@ -50,7 +50,7 @@ int get_bp_distance_from_tRNA(const char * seq)
 float partition_distance(const char *seq1, const char *seq2)
 {
    char *struct1,* struct2;
-   float e1, e2, profile_dist;
+   float profile_dist;
    float *pf1, *pf2;
    FLT_OR_DBL *bppm, *bppm2;
 

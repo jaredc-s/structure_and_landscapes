@@ -9,7 +9,7 @@ from structure_population import Structured_Population
 import nk_organism
 from nk_organism import Organism as nk_org
 import nk_model
-import nkmodel_random_jump
+import nk_model_with_genes
 import rna_organism
 
 
@@ -31,7 +31,7 @@ def nk_org_demo():
 
 def nk_gene_demo():
     b = Bitstring("0100000001010101101010100111")
-    nk = nkmodel_random_jump.NKWithGenes(3, 1, 7, 4)
+    nk = nk_model_with_genes.NKWithGenes(3, 1, 7, 4)
     org_list = [nk_org(b, nk) for _ in range(10)]
     pop = Population(org_list)
     run(pop)
@@ -39,7 +39,7 @@ def nk_gene_demo():
 
 def nk_gene_structured_pop_demo():
     b = Bitstring("0100000001010101101010100111")
-    nk = nkmodel_random_jump.NKWithGenes(3, 1, 7, 4)
+    nk = nk_model_with_genes.NKWithGenes(3, 1, 7, 4)
     org_list = [nk_org(b, nk) for _ in range(10)]
     pop_list = [Population(org_list) for _ in range(10)]
     structured_pop = Structured_Population(pop_list, migration_rate=0.5,
