@@ -14,15 +14,63 @@ following with wrapping about ends).
 The outcome of each function is drawn from a  uniformly
 distribution. The mean contribution of each locus is the fitness.
 """
+import collections
+import itertools
 from random import Random
 from bitstring import Bitstring
 module_random_generator = Random()
+
 
 class NKModelFactory(object):
     """
     Returns instances of NK models.
     """
-    pass
+    def __init__(self, random_generator=module_random_generator):
+        self.random_generator = random_generator
+
+    def no_dependancies(self, n):
+        """
+        Returns models of size n with k=0 (no epistatic dependancies)
+        """
+        dep_lists = [[i] for i in range(n)]
+        return self._model_with_uniform_contribution_lookup_table(dep_lists)
+
+    def max_dependancies(self, n):
+        """
+        Returns models of size n with the maximum amount of dependances
+        k = (n - 1)
+        """
+        loci = collections.deque(range(n))
+        deps = []
+        for _ in range(n):
+            deps.append(list(loci))
+            loci.rotate(-1)
+        return self._model_with_uniform_contribution_lookup_table(deps)
+
+    def consecutive_dependancies(self, n, k):
+        """
+        Returns a model with the dependancies of a locus being the locus
+        itself and the next k consecutive loci (with overflow/wrapping).
+        """
+        loci = collections.deque(range(n))
+        deps = []
+        for _ in range(n):
+            deps.append(list(itertools.islice(loci, 0, k + 1)))
+            loci.rotate(-1)
+        return self._model_with_uniform_contribution_lookup_table(deps)
+
+
+    def _model_with_uniform_contribution_lookup_table(self, dependancy_lists):
+        """
+        Fitness is the mean of the contribution of each loci.
+        Each loci has its own lookup table composed of 2 ** (number of dependancies)
+        uniformly distributed entries corresponding to the numerical value of the
+        subbitstring (locus + k neighbors).
+        """
+        clt = [[self.random_generator.random() for _ in range(2 ** len(dep_list))]
+            for dep_list in dependancy_lists]
+        return NKModelSimple(dependancy_lists, clt)
+
 
 class NKModelSimple(object):
     def __init__(self, dependancy_lists,
@@ -50,6 +98,17 @@ class NKModelSimple(object):
             lookup_table = self.contribution_lookup_tables[loci]
             fitness_tally += lookup_table[contribution_index]
         return fitness_tally / float(num_loci)
+
+
+
+
+
+
+
+
+
+
+
 
 
 class NKModel(object):
@@ -164,16 +223,6 @@ def get_substring_with_wrapping(bitstring, k, i):
         return Bitstring(bitstring[i: k + i + 1])
 
 
-def generate_contribution_lookup_table(
-        n, k, random_generator=module_random_generator):
-    """
-    Fitness is the mean of the contribution of each loci.
-    Each loci has its own lookup table composed of 2 ** (k + 1) uniformly
-    distributed entries corresponding to the numerical value of the
-    subbitstring (locus + k neighbors).
-    """
-    return [[random_generator.random() for _ in range(2 ** (k + 1))]
-            for _ in range(n)]
 
 
 
