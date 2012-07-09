@@ -18,6 +18,37 @@ from random import Random
 from bitstring import Bitstring
 module_random_generator = Random()
 
+class NKModelFactory(object):
+    """
+    Returns instances of NK models.
+    """
+    pass
+
+class NKModelSimple(object):
+    def __init__(self, dependancy_lists,
+                 contribution_lookup_tables):
+        """
+        The nk model has the dependancy_lists (for each loci, and ordered
+        list of loci needed to determine the fitness contribution) and a
+        contribution_lookup_tables (for each loci, the fitness
+        contribution of each possible genotype string).
+        """
+        self.dependancy_lists = dependancy_lists
+        self.contribution_lookup_tables = contribution_lookup_tables
+
+    def calculate_fitness(bitstring):
+        """
+        Returns the fitness of a bitstring by tallying the
+        contributions of each loci.
+        """
+        contributions = []
+        for loci in range(len(bitstring)):
+            dependancy_list = self.dependancy_lists[loci]
+            contribution_index = bitstring.loci_as_int(dependancy_list)
+            lookup_table = self.contribution_lookup_tables[loci]
+            contributions.append(lookup_table[contribution_index])
+        return sum(contributions) / float(len(contributions))
+
 
 class NKModel(object):
     """
@@ -103,8 +134,7 @@ def determine_inner_dependencies(n, k):
     depends = []
     for i in range(n):
         positions = [i]
-        #need to remove the initial index so is not dependent on self twice
-        r = range(n)
+        r = list(range(n))
         r.remove(i)
         positions.extend(module_random_generator.sample(r, k))
         depends.append(positions)
