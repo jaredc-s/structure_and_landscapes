@@ -141,9 +141,9 @@ def main():
     #structured_pop_demo()
     #nk_org_demo()
     #nk_gene_demo()
-    #nk_gene_structured_pop_demo()
+    nk_gene_structured_pop_demo()
     #rna_org_demo()
-    rna_org_structured_pop_demo()
+    #rna_org_structured_pop_demo()
 
 
 if __name__ == "__main__":
