@@ -1,11 +1,17 @@
 from unittest import TestCase as TC
 import nk_model
 from nk_model import *
-from random import Random
 from bitstring import Bitstring
 
 
-class TestNKModel(TC):
+class TestSimpleNKModel(TC):
+    def test_calculate_fitness(self):
+        model = NKModelSimple([[0], [1]], [[.2, .3], [.6, .7]])
+        bs = Bitstring("01")
+        expected_fitness = (.3 + .6) / 2.0
+        self.assertAlmostEqual(expected_fitness, model.calculate_fitness(bs))
+
+class NotTestNKModel(object):
     def setUp(self):
         self.clt_smooth = [[.25, .75], [.4, .8]]
         self.smooth = NKModel(2, 0, self.clt_smooth)
@@ -28,7 +34,7 @@ class TestNKModel(TC):
             self.smooth.contribution_lookup_table, self.clt_smooth)
 
     def test_determine_fitness(self):
-        b = Bitstring("10")
+        b = Bitstring("01")
         smooth_fit = self.smooth.determine_fitness(b)
         expected_smooth_fit = (.75 + .4) / 2
         self.assertEqual(smooth_fit, expected_smooth_fit)
@@ -37,13 +43,13 @@ class TestNKModel(TC):
         self.assertEqual(rugged_fit, expected_rugged_fit)
 
     def test_determine_fitness_from_random(self):
-        b = Bitstring("10")
+        b = Bitstring("01")
         rug_fit = self.rugged.determine_fitness_from_random(b)
         expected_rugged_fit = (.1 + .8) / 2
         self.assertEqual(rug_fit, expected_rugged_fit)
 
 
-class TestModuleWitoutGenes(TC):
+class NotTestModuleWitoutGenes(object):
     def test_generate_constribution_lookup_table(self):
         n, k = 10, 2
         clt = generate_contribution_lookup_table(n, k)
@@ -52,7 +58,7 @@ class TestModuleWitoutGenes(TC):
         self.assertEqual(len(clt[-1]), 2 ** (k + 1))
 
     def test_get_substring_with_wrapping(self):
-        b = Bitstring("11100")
+        b = Bitstring("00111")
         sub1 = get_substring_with_wrapping(b, k=3, i=1)
         self.assertEqual(Bitstring("1100"), sub1)
         sub2 = get_substring_with_wrapping(b, k=3, i=2)
@@ -83,7 +89,7 @@ class TestModuleWitoutGenes(TC):
         self.assertEqual(len(l[0]), 3)
         self.assertEqual(l[0][0], 0)
 
-class TestNKWithGenes(TC):
+class NotTestNKWithGenes(object):
     def setUp(self):
         self.list_of_strings = [Bitstring("010"), Bitstring("100"),
                            Bitstring("001")]
@@ -107,7 +113,7 @@ class TestNKWithGenes(TC):
         self.assertEqual(len(divided[0]), 3)
         self.assertEqual(Bitstring("010"), divided[-1])
 
-class TestModuleWithGenes(TC):
+class NotTestModuleWithGenes(object):
     def setUp(self):
         self.depend = generate_dependencies(2, 2, 3, 3)
         self.list_of_strings = [Bitstring("010"), Bitstring("100"),

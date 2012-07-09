@@ -36,18 +36,20 @@ class NKModelSimple(object):
         self.dependancy_lists = dependancy_lists
         self.contribution_lookup_tables = contribution_lookup_tables
 
-    def calculate_fitness(bitstring):
+    def calculate_fitness(self, bitstring):
         """
         Returns the fitness of a bitstring by tallying the
         contributions of each loci.
         """
-        contributions = []
-        for loci in range(len(bitstring)):
+        num_loci = len(bitstring)
+        fitness_tally = 0
+        for loci in range(num_loci):
             dependancy_list = self.dependancy_lists[loci]
-            contribution_index = bitstring.loci_as_int(dependancy_list)
+            contribution_index = bitstring.selected_loci_as_int(
+                dependancy_list)
             lookup_table = self.contribution_lookup_tables[loci]
-            contributions.append(lookup_table[contribution_index])
-        return sum(contributions) / float(len(contributions))
+            fitness_tally += lookup_table[contribution_index]
+        return fitness_tally / float(num_loci)
 
 
 class NKModel(object):
