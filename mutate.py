@@ -6,7 +6,7 @@ random_generator attribute allows MockRandom swapping
 """
 import random
 import bitstring
-import bitstringLong
+import bitstring_long
 random_generator = random.Random()
 
 
@@ -26,7 +26,7 @@ def mutate_value(value, mutation_rate=1.0):
 def _get_mutant_value(value):
     if isinstance(value, int):
         return shift_by_one(value)
-    elif isinstance(value, (bitstring.Bitstring, bitstringLong.Bitstring)):
+    elif isinstance(value, (bitstring.Bitstring, bitstring_long.Bitstring)):
         return flip_single_bit(value)
     elif isinstance(value, str):
         return change_single_base(value)

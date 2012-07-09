@@ -1,8 +1,8 @@
 import unittest
 from unittest import TestCase
 
-import bitstringLong
-from bitstringLong import Bitstring
+import bitstring_long
+from bitstring_long import Bitstring
 
 
 class TestBitstringLong(TestCase):
@@ -24,6 +24,6 @@ class TestBitstringLong(TestCase):
 class TestModule(TestCase):
     def test_mutate_position(self):
         b = Bitstring('1010111')
-        b_mutate = bitstringLong.flip_positions(b , (2,3) )
+        b_mutate = bitstring_long.flip_positions(b, (2,3))
         self.assertEqual(b_mutate.value, 91 )
 
