@@ -16,8 +16,17 @@ class Organism(KeyedHashingMixin):
         self.value = value
 
     def mutate(self):
-        mutated_value = mutate_value(self.value)
-        return Organism(mutated_value)
+        """
+        returns a int organism that is increment
+        or decremented from the current state
+        """
+        new_value = self.value
+        if random.random() < 0.5:
+            new_value += 1
+        else:
+            new_value -= 1
+
+        return Organism(new_value)
 
     @property
     def fitness(self):

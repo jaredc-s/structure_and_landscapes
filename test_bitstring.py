@@ -85,6 +85,10 @@ class TestBitstring(unittest.TestCase):
         pos_1 = b.selected_loci_as_int([1])
         self.assertEqual(1, pos_1)
 
+    def test_single_step_mutant(self):
+        bs = Bitstring("00")
+        mutant = bs.single_step_mutant()
+        self.assertNotEqual(bs, mutant)
 
 class TestModule(unittest.TestCase):
 

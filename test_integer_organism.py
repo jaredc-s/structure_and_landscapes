@@ -14,9 +14,6 @@ class TestOrganism(TC):
         self.value_2 = 2
         self.bad_value = "0"
 
-    def cleanUp(self):
-        mutate.random_generator = random.Random()
-
     def test_init(self):
         organism = Organism(self.value_0)
         self.assertEqual(organism.value, self.value_0)
