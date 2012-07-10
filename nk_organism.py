@@ -12,7 +12,7 @@ class Organism(BOrg):
     @property
     def fitness(self):
         if self.fit is None:
-            self.fit = self.nk_model.determine_fitness(self.value)
+            self.fit = self.nk_model.calculate_fitness(self.value)
         return self.fit
 
     def mutate(self):
