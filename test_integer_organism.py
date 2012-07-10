@@ -3,7 +3,6 @@ from unittest import TestCase as TC
 
 import integer_organism as organism
 from integer_organism import Organism
-import mutate
 import random
 
 

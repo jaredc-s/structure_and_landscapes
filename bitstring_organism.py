@@ -4,7 +4,6 @@ Organisms with genomes represented as bitstrings.
 Immutable class.
 """
 import random
-from mutate import mutate_value
 import bitstring
 from bitstring import Bitstring
 import mixins
@@ -24,10 +23,7 @@ class Organism(mixins.KeyedHashingMixin):
         mutate and returns a new organism with the mutation
         note: original organism is unchanged
         """
-        return Organism(self._mutate_value())
-
-    def _mutate_value(self):
-        return mutate_value(self.value)
+        return Organism(self.value.single_step_mutant())
 
     @property
     def fitness(self):

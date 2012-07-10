@@ -6,7 +6,6 @@ Intended for testing purposes.
 See bitstring_organism.py for more documentation.
 """
 import random
-from mutate import mutate_value
 from mixins import KeyedHashingMixin
 
 
