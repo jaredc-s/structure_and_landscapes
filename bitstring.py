@@ -94,13 +94,12 @@ class Bitstring(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
         return tally
 
 
-def flip_positions(bitstring_instance, positions_to_flip):
+def flip_position(bitstring_instance, position_to_flip):
     """
-    Function takes a bitstring and a list of indicies to
+    Function takes a bitstring and an index to
     flip (True --> False), (False-->True)
     returns a new bitstring with the modification
     """
     values = list(bitstring_instance)
-    for pos in positions_to_flip:
-        values[pos] = not values[pos]
+    values[position_to_flip] = not values[position_to_flip]
     return Bitstring(values)

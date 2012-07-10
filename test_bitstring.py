@@ -88,7 +88,7 @@ class TestBitstring(unittest.TestCase):
 
 class TestModule(unittest.TestCase):
 
-    def test_mutate_positions(self):
+    def test_flip_position(self):
         b = Bitstring("00000")
-        b_mutated = bitstring.flip_positions(b, (0, 3, 4))
-        self.assertEqual(b_mutated, Bitstring("11001"))
+        b_mutated = bitstring.flip_position(b, 0)
+        self.assertEqual(b_mutated, Bitstring("00001"))

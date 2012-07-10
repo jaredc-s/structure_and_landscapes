@@ -49,7 +49,7 @@ def flip_single_bit(bitstring_):
     flips a single position in the bitstring
     """
     position = random_generator.randrange(len(bitstring_))
-    return bitstring.flip_positions(bitstring_, [position])
+    return bitstring.flip_position(bitstring_, position)
 
 
 def change_single_base(sequence):
