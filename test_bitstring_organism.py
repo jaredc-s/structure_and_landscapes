@@ -5,7 +5,6 @@ import bitstring_organism as organism
 from bitstring_organism import Organism
 import bitstring
 from bitstring import Bitstring
-import mutate
 import random
 
 

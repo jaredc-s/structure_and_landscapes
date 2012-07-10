@@ -5,8 +5,6 @@ import nk_organism
 from nk_organism import Organism
 import bitstring
 import random
-import mutate
-
 
 class TestOrganism(TC):
     def setUp(self):

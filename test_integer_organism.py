@@ -3,7 +3,6 @@ from unittest import TestCase as TC
 
 import integer_organism as organism
 from integer_organism import Organism
-import mutate
 import random
 
 
@@ -13,9 +12,6 @@ class TestOrganism(TC):
         self.value_1 = 1
         self.value_2 = 2
         self.bad_value = "0"
-
-    def cleanUp(self):
-        mutate.random_generator = random.Random()
 
     def test_init(self):
         organism = Organism(self.value_0)
