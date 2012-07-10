@@ -28,32 +28,32 @@ class NKModelFactory(object):
     def __init__(self, random_generator=module_random_generator):
         self.random_generator = random_generator
 
-    def no_dependancies(self, n):
+    def no_dependencies(self, n):
         """
-        Returns models of size n with k=0 (no epistatic dependancies)
+        Returns models of size n with k=0 (no epistatic dependencies)
         """
-        deps = self._consecutive_dependancy_lists(n, 0)
+        deps = self._consecutive_dependency_lists(n, 0)
         return self._model_with_uniform_contribution_lookup_table(deps)
 
-    def max_dependancies(self, n):
+    def max_dependencies(self, n):
         """
-        Returns models of size n with the maximum amount of dependances
+        Returns models of size n with the maximum amount of dependences
         k = (n - 1)
         """
-        deps = self._consecutive_dependancy_lists(n, n - 1)
+        deps = self._consecutive_dependency_lists(n, n - 1)
         return self._model_with_uniform_contribution_lookup_table(deps)
 
-    def consecutive_dependancies(self, n, k):
+    def consecutive_dependencies(self, n, k):
         """
-        Returns a model with the dependancies of a locus being the locus
+        Returns a model with the dependencies of a locus being the locus
         itself and the next k consecutive loci (with overflow/wrapping).
         """
-        deps = self._consecutive_dependancy_lists(n, k)
+        deps = self._consecutive_dependency_lists(n, k)
         return self._model_with_uniform_contribution_lookup_table(deps)
 
-    def _consecutive_dependancy_lists(self, n, k):
+    def _consecutive_dependency_lists(self, n, k):
         """
-        Returns a depandancy list for a given n and k, where dependancies
+        Returns a depandancy list for a given n and k, where dependencies
         are consecutive.
         """
         assert(k < n)
@@ -64,7 +64,7 @@ class NKModelFactory(object):
             loci.rotate(-1)
         return deps
 
-    def _non_consecutive_dependancy_lists(self, n, k):
+    def _non_consecutive_dependency_lists(self, n, k):
         """
         Returns dependacy lists where the each locus's k dependacies are
         determined by random sampling (without replacement).
@@ -80,26 +80,26 @@ class NKModelFactory(object):
             deps.append(chosen)
         return deps
 
-    def non_consecutive_dependancies(self, n, k):
-        deps = self._non_consecutive_dependancy_lists(n, k)
+    def non_consecutive_dependencies(self, n, k):
+        deps = self._non_consecutive_dependency_lists(n, k)
         return self._model_with_uniform_contribution_lookup_table(deps)
 
-    def consecutive_dependancies_multigene(self, n_per_gene, number_of_genes,
+    def consecutive_dependencies_multigene(self, n_per_gene, number_of_genes,
         k_intra_gene, k_inter_gene):
         """
-        Returns a multigene model with regular dependancies
+        Returns a multigene model with regular dependencies
         n_per_gene = the number of loci per gene
         number_of_genes = the number of subdivisions of the bitstring genome
-        k_intra_gene = the number of dependancies within a gene per loci
-        k_inter_gene = the number of dependancies between genes per loci, the
-            dependancies will have the same index as the locus, but on
+        k_intra_gene = the number of dependencies within a gene per loci
+        k_inter_gene = the number of dependencies between genes per loci, the
+            dependencies will have the same index as the locus, but on
             consecutive genes
         """
         assert(k_intra_gene < n_per_gene)
         assert(k_inter_gene < number_of_genes)
-        intra_deps = self._consecutive_dependancy_lists(
+        intra_deps = self._consecutive_dependency_lists(
             n_per_gene, k_intra_gene)
-        inter_deps = self._consecutive_dependancy_lists(
+        inter_deps = self._consecutive_dependency_lists(
             number_of_genes, k_inter_gene)
 
         deps = []
@@ -115,15 +115,15 @@ class NKModelFactory(object):
                 deps.append(loci_deps)
         return self._model_with_uniform_contribution_lookup_table(deps)
 
-    def non_consecutive_dependancies_multigene(self, n_per_gene, number_of_genes,
+    def non_consecutive_dependencies_multigene(self, n_per_gene, number_of_genes,
         k_intra_gene, k_total):
         """
-        Returns a multigene model with regular dependancies
+        Returns a multigene model with regular dependencies
         n_per_gene = the number of loci per gene
         number_of_genes = the number of subdivisions of the bitstring genome
-        k_intra_gene = the number of dependancies within a gene per loci
-        k_total = the number of total dependancies, the not k_intra
-            dependancies are uniformly drawn from all not-already-included-loci
+        k_intra_gene = the number of dependencies within a gene per loci
+        k_total = the number of total dependencies, the not k_intra
+            dependencies are uniformly drawn from all not-already-included-loci
         """
         assert(k_intra_gene < n_per_gene)
         assert(k_total < (n_per_gene * number_of_genes))
@@ -131,7 +131,7 @@ class NKModelFactory(object):
         deps = []
         for gene in range(number_of_genes):
             offset = gene * n_per_gene
-            gene_intra_deps = self._non_consecutive_dependancy_lists(n_per_gene, k_intra_gene)
+            gene_intra_deps = self._non_consecutive_dependency_lists(n_per_gene, k_intra_gene)
             for intra_locus in range(n_per_gene):
                 loci_intra_deps = gene_intra_deps[intra_locus]
                 loci_deps = [locus + offset for locus in loci_intra_deps]
@@ -144,28 +144,28 @@ class NKModelFactory(object):
                 deps.append(loci_deps)
         return self._model_with_uniform_contribution_lookup_table(deps)
 
-    def _model_with_uniform_contribution_lookup_table(self, dependancy_lists):
+    def _model_with_uniform_contribution_lookup_table(self, dependency_lists):
         """
         Fitness is the mean of the contribution of each loci.
-        Each loci has its own lookup table composed of 2 ** (number of dependancies)
+        Each loci has its own lookup table composed of 2 ** (number of dependencies)
         uniformly distributed entries corresponding to the numerical value of the
         subbitstring (locus + k neighbors).
         """
         clt = [[self.random_generator.random() for _ in range(2 ** len(dep_list))]
-            for dep_list in dependancy_lists]
-        return NKModelSimple(dependancy_lists, clt)
+            for dep_list in dependency_lists]
+        return NKModelSimple(dependency_lists, clt)
 
 
 class NKModelSimple(object):
-    def __init__(self, dependancy_lists,
+    def __init__(self, dependency_lists,
                  contribution_lookup_tables):
         """
-        The nk model has the dependancy_lists (for each loci, and ordered
+        The nk model has the dependency_lists (for each loci, and ordered
         list of loci needed to determine the fitness contribution) and a
         contribution_lookup_tables (for each loci, the fitness
         contribution of each possible genotype string).
         """
-        self.dependancy_lists = dependancy_lists
+        self.dependency_lists = dependency_lists
         self.contribution_lookup_tables = contribution_lookup_tables
 
     def calculate_fitness(self, bitstring):
@@ -174,13 +174,13 @@ class NKModelSimple(object):
         contributions of each loci.
         """
         num_loci = len(bitstring)
-        assert(num_loci <= len(self.dependancy_lists) and
+        assert(num_loci <= len(self.dependency_lists) and
             num_loci <= len(self.contribution_lookup_tables))
         fitness_tally = 0.0
         for loci in range(num_loci):
-            dependancy_list = self.dependancy_lists[loci]
+            dependency_list = self.dependency_lists[loci]
             contribution_index = bitstring.selected_loci_as_int(
-                dependancy_list)
+                dependency_list)
             lookup_table = self.contribution_lookup_tables[loci]
             fitness_tally += lookup_table[contribution_index]
         return fitness_tally / num_loci
