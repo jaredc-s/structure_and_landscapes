@@ -3,7 +3,7 @@ This module implements a crude Bitstring with boolean values
 in python tuples. Bitstring instances are immutable.
 """
 import mixins
-
+import random
 
 class Bitstring(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
 
@@ -93,14 +93,20 @@ class Bitstring(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
                 tally += (2 ** i)
         return tally
 
+    def single_step_mutant(self):
+        """
+        returns a otherwise identical bitstring except
+        one randomly determined bit is flipped
+        """
+        position = random.randrange(len(self))
+        return flip_position(self, position)
 
-def flip_positions(bitstring_instance, positions_to_flip):
+def flip_position(bitstring_instance, position_to_flip):
     """
-    Function takes a bitstring and a list of indicies to
+    Function takes a bitstring and an index to
     flip (True --> False), (False-->True)
     returns a new bitstring with the modification
     """
     values = list(bitstring_instance)
-    for pos in positions_to_flip:
-        values[pos] = not values[pos]
+    values[position_to_flip] = not values[position_to_flip]
     return Bitstring(values)

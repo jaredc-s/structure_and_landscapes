@@ -14,6 +14,12 @@ class TestOrganism(TC):
         org2 = self.organism.mutate()
         self.assertNotEqual(self.organism.value, org2.value)
 
+    def test_mutate_many(self):
+        org = self.organism
+        for _ in range(100):
+            org = org.mutate()
+        self.assertTrue(set(org.value) <= set("ATCG"))
+
     def test_fitness(self):
         self.assertAlmostEqual(self.organism.fitness, 1)
         all_As = "".join('A' for _ in self.organism.value)

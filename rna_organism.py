@@ -2,7 +2,6 @@
 Organism where the genome is represented by RNA
 """
 import mixins
-import mutate
 import vienna_distance
 import random
 
@@ -25,7 +24,16 @@ class Organism(mixins.KeyedHashingMixin):
         return self.value[key]
 
     def mutate(self):
-        new_seq = mutate.mutate_value(self.value)
+        """
+        returns a new rna organism except
+        its a different base at one position.
+        """
+        possibilities = ['G', 'C', 'A', 'T']
+        sequence = self.value
+        position = random.randrange(len(sequence))
+        possibilities.remove(sequence[position])
+        mutate_to = random.choice(possibilities)
+        new_seq = sequence[:position] + mutate_to + sequence[position + 1:]
         return Organism(new_seq)
 
     @property

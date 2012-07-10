@@ -21,4 +21,4 @@ class Organism(BOrg):
         mutate and returns a new organism with the mutation
         note: original organism is unchanged
         """
-        return Organism(self._mutate_value(), self.nk_model)
+        return Organism(self.value.single_step_mutant(), self.nk_model)
