@@ -32,19 +32,15 @@ class NKModelFactory(object):
         """
         Returns models of size n with k=0 (no epistatic dependancies)
         """
-        dep_lists = [[i] for i in range(n)]
-        return self._model_with_uniform_contribution_lookup_table(dep_lists)
+        deps = self._consecutive_dependancy_lists(n, 0)
+        return self._model_with_uniform_contribution_lookup_table(deps)
 
     def max_dependancies(self, n):
         """
         Returns models of size n with the maximum amount of dependances
         k = (n - 1)
         """
-        loci = collections.deque(range(n))
-        deps = []
-        for _ in range(n):
-            deps.append(list(loci))
-            loci.rotate(-1)
+        deps = self._consecutive_dependancy_lists(n, n - 1)
         return self._model_with_uniform_contribution_lookup_table(deps)
 
     def consecutive_dependancies(self, n, k):
@@ -52,13 +48,101 @@ class NKModelFactory(object):
         Returns a model with the dependancies of a locus being the locus
         itself and the next k consecutive loci (with overflow/wrapping).
         """
+        deps = self._consecutive_dependancy_lists(n, k)
+        return self._model_with_uniform_contribution_lookup_table(deps)
+
+    def _consecutive_dependancy_lists(self, n, k):
+        """
+        Returns a depandancy list for a given n and k, where dependancies
+        are consecutive.
+        """
+        assert(k < n)
         loci = collections.deque(range(n))
         deps = []
         for _ in range(n):
             deps.append(list(itertools.islice(loci, 0, k + 1)))
             loci.rotate(-1)
+        return deps
+
+    def _non_consecutive_dependancy_lists(self, n, k):
+        """
+        Returns dependacy lists where the each locus's k dependacies are
+        determined by random sampling (without replacement).
+        """
+        assert(k < n)
+        deps = []
+        for locus in range(n):
+            chosen = [locus]
+            potential_dependacies = list(range(n))
+            potential_dependacies.remove(locus)
+            chosen.extend(self.random_generator.sample(
+                potential_dependacies, k))
+            deps.append(chosen)
+        return deps
+
+    def non_consecutive_dependancies(self, n, k):
+        deps = self._non_consecutive_dependancy_lists(n, k)
         return self._model_with_uniform_contribution_lookup_table(deps)
 
+    def consecutive_dependancies_multigene(self, n_per_gene, number_of_genes,
+        k_intra_gene, k_inter_gene):
+        """
+        Returns a multigene model with regular dependancies
+        n_per_gene = the number of loci per gene
+        number_of_genes = the number of subdivisions of the bitstring genome
+        k_intra_gene = the number of dependancies within a gene per loci
+        k_inter_gene = the number of dependancies between genes per loci, the
+            dependancies will have the same index as the locus, but on
+            consecutive genes
+        """
+        assert(k_intra_gene < n_per_gene)
+        assert(k_inter_gene < number_of_genes)
+        intra_deps = self._consecutive_dependancy_lists(
+            n_per_gene, k_intra_gene)
+        inter_deps = self._consecutive_dependancy_lists(
+            number_of_genes, k_inter_gene)
+
+        deps = []
+        for gene in range(number_of_genes):
+            offset = gene * n_per_gene
+            gene_inter_deps = inter_deps[gene]
+            for intra_locus in range(n_per_gene):
+                loci_intra_deps = intra_deps[intra_locus]
+                loci_deps = [locus + offset for locus in loci_intra_deps]
+                loci_inter_deps = [(gene * n_per_gene) + intra_locus
+                    for gene in gene_inter_deps]
+                loci_deps.extend(loci_inter_deps[1:]) # don't double count locus
+                deps.append(loci_deps)
+        return self._model_with_uniform_contribution_lookup_table(deps)
+
+    def non_consecutive_dependancies_multigene(self, n_per_gene, number_of_genes,
+        k_intra_gene, k_total):
+        """
+        Returns a multigene model with regular dependancies
+        n_per_gene = the number of loci per gene
+        number_of_genes = the number of subdivisions of the bitstring genome
+        k_intra_gene = the number of dependancies within a gene per loci
+        k_total = the number of total dependancies, the not k_intra
+            dependancies are uniformly drawn from all not-already-included-loci
+        """
+        assert(k_intra_gene < n_per_gene)
+        assert(k_total < (n_per_gene * number_of_genes))
+
+        deps = []
+        for gene in range(number_of_genes):
+            offset = gene * n_per_gene
+            gene_intra_deps = self._non_consecutive_dependancy_lists(n_per_gene, k_intra_gene)
+            for intra_locus in range(n_per_gene):
+                loci_intra_deps = gene_intra_deps[intra_locus]
+                loci_deps = [locus + offset for locus in loci_intra_deps]
+                all_loci = set(range(n_per_gene * number_of_genes))
+                potential_deps = all_loci - set(loci_deps)
+                while len(loci_deps) < k_total + 1:
+                    chosen = self.random_generator.choice(list(potential_deps))
+                    loci_deps.append(chosen)
+                    potential_deps.remove(chosen)
+                deps.append(loci_deps)
+        return self._model_with_uniform_contribution_lookup_table(deps)
 
     def _model_with_uniform_contribution_lookup_table(self, dependancy_lists):
         """
@@ -90,277 +174,13 @@ class NKModelSimple(object):
         contributions of each loci.
         """
         num_loci = len(bitstring)
-        fitness_tally = 0
+        assert(num_loci <= len(self.dependancy_lists) and
+            num_loci <= len(self.contribution_lookup_tables))
+        fitness_tally = 0.0
         for loci in range(num_loci):
             dependancy_list = self.dependancy_lists[loci]
             contribution_index = bitstring.selected_loci_as_int(
                 dependancy_list)
             lookup_table = self.contribution_lookup_tables[loci]
             fitness_tally += lookup_table[contribution_index]
-        return fitness_tally / float(num_loci)
-
-
-
-
-
-
-
-
-
-
-
-
-
-class NKModel(object):
-    """
-    Class which is used to evaluate the fitness of a bitstring.
-    """
-    def __init__(self, n=2, k=0, contribution_lookup_table=None,
-                 inner_dependencies=None):
-        """
-        NKModel instances default to a simple smooth landscape (n=2, k=0),
-        and using the module's random number generator (seeded by time).
-        """
-        self.n = n
-        self.k = k
-        if contribution_lookup_table is None:
-            contribution_lookup_table = generate_contribution_lookup_table(
-                self.n, self.k)
-
-        self.contribution_lookup_table = contribution_lookup_table
-
-        if inner_dependencies is None:
-            inner_dependencies = determine_inner_dependencies(self.n, self.k)
-
-        self.inner_dependencies = inner_dependencies
-
-    def determine_fitness(self, bitstring):
-        """
-        Takes a bitstring and computes a floating point fitness
-        """
-        contribs = [table[int(sub)] for sub, table in zip(
-            deconstruct_bitstring(bitstring, self.k),
-            self.contribution_lookup_table)]
-        return sum(contribs) / float(len(contribs))
-
-    def determine_fitness_from_random(self, bitstring):
-        """
-        Takes a bitstring and computes floating point fitness
-        from a subset of random bitstrings of length k+1
-        """
-        contribs = [table[int(sub)] for sub, table in zip(
-                    decontruct_random_bitstring(bitstring, self.inner_dependencies),
-                                                self.contribution_lookup_table)]
-        return sum(contribs) / float(len(contribs))
-
-
-def deconstruct_bitstring(bitstring, k):
-    """
-    Takes a bitstring and breaks into a list of sub bitstrings
-    with each item starting at a given locus and including the next
-    k elements.
-    """
-    return [get_substring_with_wrapping(
-        bitstring, k, i) for i in range(len(bitstring))]
-
-
-def decontruct_random_bitstring(bitstring, dependencies):
-    """
-    For use when k loci are not spacially attatched
-    Breaks bitstring into a list of sub bitstrings
-    where the next k elements are randomly separated
-    around bitstring
-    """
-    return [get_random_substring(bitstring, i, dependencies)
-            for i in range(len(bitstring))]
-
-
-def get_random_substring(bitstring, i, dependencies):
-    """
-    Takes a bitstring, k and an index, breaks the bitstring
-    into a list of length k+1 where the first index is the
-    value found at i and the remaining k values are chosen
-    at random from remainder of bitstring
-    """
-    bitstring_as_list = list(bitstring)
-    bit_values = [bitstring_as_list[locus] for locus in dependencies[i]]
-    return Bitstring(bit_values)
-
-
-def determine_inner_dependencies(n, k):
-    """
-    Returns related loci within a bitstring for use with a random
-    model
-    """
-    depends = []
-    for i in range(n):
-        positions = [i]
-        r = list(range(n))
-        r.remove(i)
-        positions.extend(module_random_generator.sample(r, k))
-        depends.append(positions)
-    return depends
-
-
-def get_substring_with_wrapping(bitstring, k, i):
-    """
-    Takes a bitstring, k and index, breaking the bitstring into a sub
-    bitstring by the index to index + k. If neighbors go past the end
-    it wraps to the beginning of the bitstring.
-
-    ex.
-    bitstring = '11100'
-    k = 3
-    i = 2
-    returns '1001'
-    """
-    if i + k >= len(bitstring):
-        bitstring_as_list = list(bitstring[i:])
-        postwrap = list(bitstring[:(i + k) - len(bitstring) + 1])
-        bitstring_as_list.extend(postwrap)
-        return Bitstring(bitstring_as_list)
-    else:
-        return Bitstring(bitstring[i: k + i + 1])
-
-
-
-
-
-"""
-A nested NK model. Will fuction like a NK model
-but in addition a k is specified forthe number of
-loci used from any gene within an organism.
-
-A genome is composed of a bitstring broken up into multiple genes.
-k_intra specifies the number of neighbors within the same gene
-k_jump specifies the number of positions to randomly choose within an organism
-length_of_gene indicates the length of the subbitstring
-number_of_genes specifies the number of subbitstrings within a organism
-
-A contribution_lookup_table is a randomly generated list of list of floats
-used to score the fitness of subbitstrings
-"""
-
-class NKWithGenes(object):
-
-    def __init__(self, k_intra, k_jump, length_of_gene,
-                 number_of_genes, contribution_lookup_table=None):
-        """
-        Takes a k for neighbors within a starting gene, a k for any gene,
-        a length of gene, the number of genes and a contribution lookuptable.
-        """
-
-        self.k_intra = k_intra
-        self.k_jump = k_jump
-        self.length_of_gene = length_of_gene
-        self.number_of_genes = number_of_genes
-        self.length_of_genome = self.length_of_gene * self.number_of_genes
-        if contribution_lookup_table is None:
-            self.contribution_lookup_table = generate_contribution_lookup_table(
-                self.length_of_genome, self.k_intra + self.k_jump)
-        else:
-            self.contribution_lookup_table = contribution_lookup_table
-
-        self.dependencies = generate_dependencies(self.k_intra, self.k_jump,
-                                                  self.number_of_genes,
-                                                  self.length_of_gene)
-
-    def determine_fitness(self, bitstring):
-        """
-        grab value at each k+1 loci
-        look in dependency table for the allied loci
-        look in bitstring for values at loci
-        append values
-        look in contrib table to determine fitness
-        """
-        genes = self.divide_to_genes(bitstring)
-        contribs = []
-        each_org = []
-        sub_bits = generate_sub_bitstring(genes, self.dependencies,
-                                          self.k_intra)
-        for orgs in sub_bits:
-            each_org.extend(orgs)
-        for sub, table in zip(each_org, self.contribution_lookup_table):
-            contribs.extend([table[int(sub)]])
-        return sum(contribs) / float(len(contribs))
-
-    def divide_to_genes(self, whole_bitstring):
-        gene_holder = []
-        for i in range(len(whole_bitstring) / self.length_of_gene):
-            gene_holder.append(Bitstring(whole_bitstring[i *
-                               self.length_of_gene:(i + 1) *
-                               self.length_of_gene]))
-        return gene_holder
-
-
-def generate_dependencies(k_intra, k_jump, number_of_genes, length_of_gene):
-    """
-    Function takes in each independent gene and returns
-    a list of dependencies based off locus for each gene
-    Random gene and random loci
-    """
-    dependencies = []
-    for i in range(number_of_genes):
-        dependencies.append([])
-        for j in range(length_of_gene):
-            dependencies[i].append([])
-            for _ in range(k_jump):
-                location = (module_random_generator.randrange(number_of_genes),
-                            module_random_generator.randrange(length_of_gene))
-                while location in dependencies[i][j]:
-                    location = (module_random_generator.randrange(number_of_genes),
-                                module_random_generator.randrange(length_of_gene))
-                dependencies[i][j].append(location)
-
-    return dependencies
-
-
-def generate_sub_bitstring(bitstrings, dependencies, k_intra):
-    """
-    Chooses k_intra random bits from any bitstring (including own)
-    and appends them onto the normal nk model sub-bit
-    """
-    basic_strings = [deconstruct_bitstring(single_bit, k_intra)
-                     for single_bit in bitstrings]
-    complex_strings = []
-    for i in range(len(basic_strings)):
-        subbit = []
-        for j in range(len(basic_strings[i])):
-            orglist = list(basic_strings[i][j])
-            dependent = dependencies[i][j]
-            for org, pos in dependent:
-                hold = bitstrings[org][pos]
-                orglist.append(hold)
-
-            subbit.append(Bitstring(orglist))
-        complex_strings.append(subbit)
-    return complex_strings
-
-
-def generate_linear_bistring(bitstrings, k_intra, k_jump):
-    """
-    Generates standard nk model and appends value at starting locus
-    in the next k_intra genes
-
-    ex. n = 3 genes = 3 k_in = 2 k_out = 2
-    gene1:101 gene2:010 gene3:100
-
-    bitstring1: 10101
-    bitstring2: 01110
-    bitstring3: 11000
-    """
-    basic_strings = [deconstruct_bitstring(single_bit, k_intra)
-                     for single_bit in bitstrings]
-
-    complex_strings = []
-    for i in range(len(basic_strings)):
-        subbit = []
-        for j in range(len(basic_strings[i])):
-            orglist = list(basic_strings[i][j])
-            toadd = []
-            for org in range(i + 1, i + k_jump + 1):
-                toadd.append(bitstrings[org%len(bitstrings)][j])
-            orglist.extend(toadd)
-            subbit.append(Bitstring(orglist))
-        complex_strings.append(subbit)
-    return complex_strings
+        return fitness_tally / num_loci

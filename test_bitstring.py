@@ -81,7 +81,9 @@ class TestBitstring(unittest.TestCase):
         pos_0 = b.selected_loci_as_int([0])
         self.assertEqual(0, pos_0)
         pos_123 = b.selected_loci_as_int([1,2,3])
-        self.assertEqual(6, pos_123)
+        self.assertEqual(3, pos_123)
+        pos_1 = b.selected_loci_as_int([1])
+        self.assertEqual(1, pos_1)
 
 
 class TestModule(unittest.TestCase):

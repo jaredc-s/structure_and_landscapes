@@ -88,9 +88,9 @@ class Bitstring(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
         the bitstring at those positions.
         """
         tally = 0
-        for locus in loci:
+        for i, locus in enumerate(loci):
             if self[locus]:
-                tally += 2 ** locus
+                tally += (2 ** i)
         return tally
 
 
