@@ -66,17 +66,17 @@ class NKModelFactory(object):
 
     def _non_consecutive_dependency_lists(self, n, k):
         """
-        Returns dependacy lists where the each locus's k dependacies are
+        Returns dependacy lists where the each locus's k dependencies are
         determined by random sampling (without replacement).
         """
         assert(k < n)
         deps = []
         for locus in range(n):
             chosen = [locus]
-            potential_dependacies = list(range(n))
-            potential_dependacies.remove(locus)
+            potential_dependencies = list(range(n))
+            potential_dependencies.remove(locus)
             chosen.extend(self.random_generator.sample(
-                potential_dependacies, k))
+                potential_dependencies, k))
             deps.append(chosen)
         return deps
 
@@ -127,7 +127,7 @@ class NKModelFactory(object):
         """
         assert(k_intra_gene < n_per_gene)
         assert(k_total < (n_per_gene * number_of_genes))
-
+        assert(k_total >= k_intra_gene)
         deps = []
         for gene in range(number_of_genes):
             offset = gene * n_per_gene
@@ -174,6 +174,7 @@ class NKModelSimple(object):
         contributions of each loci.
         """
         num_loci = len(bitstring)
+        
         assert(num_loci <= len(self.dependency_lists) and
             num_loci <= len(self.contribution_lookup_tables))
         fitness_tally = 0.0
