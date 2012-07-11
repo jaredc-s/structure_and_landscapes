@@ -49,6 +49,12 @@ class TestOrganism(TC):
         g_ = g0.mutate()
         self.assertNotEqual(g0, g_)
 
+    def test_mutate_many(self):
+        org = Organism(self.value_0)
+        for _ in range(100):
+            org = org.mutate()
+        self.assertTrue(isinstance(org, Organism))
+
     def test_fitness(self):
         g0 = Organism(self.value_0)
         self.assertAlmostEqual(0, g0.fitness)
