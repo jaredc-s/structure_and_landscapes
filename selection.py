@@ -9,9 +9,7 @@ Moran: Random death, among neighbors (well mixed for everyone) pick org
 to give birth into that slot do it 1,000 times for a population size of 1,000.
 This is termed a "generation"
 """
-
 import random
-random_generator = random.Random()
 
 
 def select(organisms, number_of_draws):
@@ -20,7 +18,7 @@ def select(organisms, number_of_draws):
     already_added = object()
     for n in range(number_of_draws):
         for (i, (org, cum_fit)) in enumerate(numberlined):
-            if random_generator.random() < cum_fit:
+            if random.random() < cum_fit:
                 if org is not already_added:
                     new_population.append(org)
                     numberlined[i][0] = already_added
@@ -67,5 +65,5 @@ def fecundity_birth_selection(orgs):
     to replace death organism"""
     numberlined = numberline(orgs)
     for (i, (org, cum_fit)) in enumerate(numberlined):
-        if random_generator.random() < cum_fit:
+        if random.random() < cum_fit:
             return org
