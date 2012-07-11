@@ -1,11 +1,13 @@
-from bitstring_organism import Organism as bit_organism
+from bitstring.bitstring_organism import Organism as bit_organism
 from integer_organism import Organism as int_organism
-from bitstring import Bitstring
+from bitstring.bitstring import Bitstring
 import population
 from population import Population
 from basic_plot import average
 from structure_population import Structured_Population
-import nk_model
+import bitstring.nk_model as nk_model
+import bitstring as bs
+import bitstring.nk_organism
 import rna.rna_organism as rna_organism
 
 
@@ -18,8 +20,10 @@ def int_org_demo():
 
 def nk_org_demo():
     b = Bitstring("11010")
-    nk = nk_model.NKModel(n=5, k=2)
-    org_list = [nk_org(b, nk) for _ in range(1, 5)]
+    nk_fac = bs.nk_model.NKModelFactory()
+    nk_org = bs.nk_organism.Organism(b, nk_fac.consecutive_dependencies(n=5, k=2))
+
+    org_list = [nk_org for _ in range(1, 5)]
 
     pop = Population(org_list)
     run(pop)
@@ -135,10 +139,10 @@ def main():
     #bit_org_demo()
     #int_org_demo()
     #structured_pop_demo()
-    #nk_org_demo()
+    nk_org_demo()
     #nk_gene_demo()
     #nk_gene_structured_pop_demo()
-    rna_org_demo()
+    #rna_org_demo()
     #rna_org_structured_pop_demo()
 
 
