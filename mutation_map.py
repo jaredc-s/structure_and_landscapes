@@ -4,6 +4,7 @@ import bitstring
 #import nk_organism
 #import rna_organism
 
+
 def bitstring_organsism_mutation_map(organism):
     """
     mutates every possible single step mutation from a intial

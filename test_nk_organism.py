@@ -6,6 +6,7 @@ from nk_organism import Organism
 import bitstring
 import random
 
+
 class TestOrganism(TC):
     def setUp(self):
         self.value = bitstring.Bitstring("100")

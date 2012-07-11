@@ -80,7 +80,7 @@ class TestBitstring(unittest.TestCase):
         b = Bitstring('110110')
         pos_0 = b.selected_loci_as_int([0])
         self.assertEqual(0, pos_0)
-        pos_123 = b.selected_loci_as_int([1,2,3])
+        pos_123 = b.selected_loci_as_int([1, 2, 3])
         self.assertEqual(3, pos_123)
         pos_1 = b.selected_loci_as_int([1])
         self.assertEqual(1, pos_1)
@@ -89,6 +89,7 @@ class TestBitstring(unittest.TestCase):
         bs = Bitstring("00")
         mutant = bs.single_step_mutant()
         self.assertNotEqual(bs, mutant)
+
 
 class TestModule(unittest.TestCase):
 

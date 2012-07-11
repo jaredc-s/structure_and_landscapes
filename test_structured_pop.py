@@ -85,4 +85,4 @@ class TestPopulation(TC):
         self.struct.migrate()
 
     def test_get(self):
-        self.assertEqual(self.struct[1],self.pops[1])
+        self.assertEqual(self.struct[1], self.pops[1])
