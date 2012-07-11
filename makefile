@@ -22,26 +22,29 @@ style:
 	pep8 *.py
 
 clean: clean_cython
-	-rm *.pyc *.o *.so profiledata
+	-find . -name \*.pyc | xargs rm 
+	-rm profiledata
 	-rm -r .coverage
 
 clean_cython:
-	-rm vienna_distance.c
+	-rm rna/vienna_distance.c
+	-rm rna/*.o
+	-rm rna/*.so
 
 analysis:
 	pip install numpy 
 	pip install matplotlib
 
-cython_compile: vienna_distance.so
+cython_compile: rna/vienna_distance.so
 
-vienna_distance.so: vienna_distance.c vienna_utils.o
-	$(CC) $(CFLAGS) -o $@ vienna_distance.c vienna_utils.o $(LFLAGS)
+rna/vienna_distance.so: rna/vienna_distance.c rna/vienna_utils.o
+	$(CC) $(CFLAGS) -o $@ rna/vienna_distance.c rna/vienna_utils.o $(LFLAGS)
 	
-vienna_distance.c: vienna_distance.pyx
-	cython vienna_distance.pyx
+rna/vienna_distance.c: rna/vienna_distance.pyx
+	cython rna/vienna_distance.pyx -o $@
 
-vienna_utils.o: vienna_utils.c vienna_utils.h
-	$(CC) $(CFLAGS) -c vienna_utils.c -o $@ $(LFLAGS)
+rna/vienna_utils.o: rna/vienna_utils.c rna/vienna_utils.h
+	$(CC) $(CFLAGS) -c rna/vienna_utils.c -o $@ $(LFLAGS)
 
 profile: .profiledata 
 	runsnake $<

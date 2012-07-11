@@ -1,16 +1,12 @@
 from bitstring_organism import Organism as bit_organism
 from integer_organism import Organism as int_organism
 from bitstring import Bitstring
-import mutate
 import population
 from population import Population
 from basic_plot import average
 from structure_population import Structured_Population
-import nk_organism
-from nk_organism import Organism as nk_org
 import nk_model
-import nk_model_with_genes
-import rna_organism
+import rna.rna_organism as rna_organism
 
 
 def int_org_demo():
@@ -141,8 +137,8 @@ def main():
     #structured_pop_demo()
     #nk_org_demo()
     #nk_gene_demo()
-    nk_gene_structured_pop_demo()
-    #rna_org_demo()
+    #nk_gene_structured_pop_demo()
+    rna_org_demo()
     #rna_org_structured_pop_demo()
 
 

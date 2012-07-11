@@ -38,7 +38,7 @@ Optional
 * Matplotlib
 
 Install
-+++++++
+=======
 1)github: https://github.com/jhmarcus/structure-and-landscapes
 2)downloads https://github.com/jhmarcus/structure-and-landscapes/downloads
 3)download as zip using the defult archive manager
@@ -52,12 +52,14 @@ Install
 9) pip version (1.0-1build1)
 
 Runsnakerun
++++++++++++
 http://www.vrplumber.com/programming/runsnakerun/
 
 depedencies for runsnakerun
 apt-get install python-profiler python-wxgtk2.8 python-setuptools
 
 ViennaRNA
++++++++++
 http://www.tbi.univie.ac.at/~ivo/RNA/
 http://www.tbi.univie.ac.at/~ronny/RNA/vrna2_source.html
 
@@ -67,5 +69,10 @@ make
 sudo make install
 
 version 2.0.7
-download source code and use the defult archive manager!
+download source code and use the default archive manager!
 
+Add this package to PYTHONPATH
+++++++++++++++++++++++++++++++
+Add this line to ~/.bashrc::
+
+export PYTHONPATH=$PYTHONPATH:$PATH_TO_DIRECTORY_CONTAINING_structure_and_landscape
