@@ -89,4 +89,4 @@ class TestMoran(TC):
 
     def test_mutation_rate(self):
         moran_death_birth(self.pop, -1)
-        self.assertEqual(self.pop[0].identifier, 'A')
+        self.assertNotEqual(self.pop[0].identifier[-1], "'")
