@@ -7,7 +7,6 @@ Updates should:
 """
 
 import random
-import bitstring_organism
 import selection
 
 
