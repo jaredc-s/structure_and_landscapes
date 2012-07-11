@@ -12,14 +12,13 @@ import selection
 
 
 class Population(object):
-    def __init__(self, init_pop, max_size=None):
+    def __init__(self, init_pop, max_size=None, mutation_rate=1.0):
         self.population = list(init_pop)
-
         if max_size is None:
             self.maxsize = len(self.population)
-
         else:
             self.maxsize = max_size
+        self.mutation_rate = mutation_rate
 
     def __iter__(self):
         return iter(self.population)
@@ -37,9 +36,12 @@ class Population(object):
         return len(self.population) == self.maxsize
 
     def replicate(self):
-        xmen = [org.mutate() for org in self.population]
-
-        self.population += xmen
+        """
+        Creates one mutant for every member of the population
+        and adds them to the population
+        """
+        mutants = [org.mutate() for org in self.population]
+        self.population += mutants
 
     def remove_at_random(self):
         """
@@ -59,7 +61,7 @@ class Population(object):
         self.population = selection.select(self.population, self.maxsize)
 
     def moran_selection(self):
-        self.population = selection.moran_death_birth(self.population)
+        self.population = selection.moran_death_birth(self.population, self.mutation_rate)
 
     def advance_generation(self):
         self.moran_selection()

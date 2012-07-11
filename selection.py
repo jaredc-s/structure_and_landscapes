@@ -49,14 +49,16 @@ def normalize(nums):
     return [(num / total) for num in nums]
 
 
-def moran_death_birth(orgs):
+def moran_death_birth(orgs, mutation_rate):
     """Method to execute the replacement of organism in a death-birth
     fashion using fecundity to replace the randomly seleted death organism
     """
     for _ in range(len(orgs)):
         index_to_kill = random.randrange(len(orgs))
         chosen_to_give_birth = fecundity_birth_selection(orgs)
-        orgs[index_to_kill] = chosen_to_give_birth.mutate()
+        if random.random() < mutation_rate:
+            chosen_to_give_birth = chosen_to_give_birth.mutate()
+        orgs[index_to_kill] = chosen_to_give_birth
     return orgs
 
 
