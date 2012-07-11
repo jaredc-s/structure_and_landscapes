@@ -1,10 +1,9 @@
 from bitstring.bitstring_organism import Organism as bit_organism
 from integer_organism import Organism as int_organism
 from bitstring.bitstring import Bitstring
-import population
-from population import Population
+from population.population import Population
 from basic_plot import average
-from structure_population import Structured_Population
+from population.structure_population import Structured_Population
 import bitstring.nk_model as nk_model
 import bitstring as bs
 import bitstring.nk_organism
