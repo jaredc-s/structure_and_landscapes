@@ -22,13 +22,12 @@ style:
 	pep8 *.py
 
 clean: clean_cython
-	-rm *.pyc 
+	-find . -name \*.pyc | xargs rm 
 	-rm profiledata
 	-rm -r .coverage
 
 clean_cython:
 	-rm rna/vienna_distance.c
-	-rm rna/*.pyc
 	-rm rna/*.o
 	-rm rna/*.so
 
