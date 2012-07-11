@@ -4,6 +4,9 @@ import bitstring
 import nk_organism
 #import rna_organism
 import nk_model
+import random
+import population
+import structure_population
 
 def bitstring_organsism_mutation_map(organism):
     """
@@ -30,15 +33,47 @@ def nk_org_mutation_map(organism, nk):
             perturbed_organism = nk_organism.Organism(perturbed_bitstring, nk)
             bitstring_org_mutation_map[perturbed_organism.fitness] = perturbed_organism
         count += 1
-        print count
         if organism.fitness < max(bitstring_org_mutation_map):
             organism = bitstring_org_mutation_map[max(bitstring_org_mutation_map)]
         else:
             break
-    return bitstring_org_mutation_map, organism.fitness
+    print count
+    return organism.fitness
 
+len_desired_genome = 16
+k_intra = 4
+k_total = 6
+bit = bin(random.getrandbits(len_desired_genome))[2:]
+bit = bit.rjust(len_desired_genome, '0')
 nk = nk_model.NKModelFactory()
-simple_nk = nk.non_consecutive_dependencies_multigene(5, 2, 3, 5)
-init_bitstring = bitstring.Bitstring('1011001101')
-bitstring_org = nk_organism.Organism(init_bitstring, simple_nk)
-print nk_org_mutation_map(bitstring_org, simple_nk)
+use_model = nk.non_consecutive_dependencies_multigene(8, 2, k_intra, k_total)
+
+org = nk_organism.Organism(bitstring.Bitstring(bit), use_model)
+
+pop = population.Population([org for _ in range(50)], 0.05)
+struct = structure_population.Structured_Population([pop for _ in range(50)],
+                                                    0.2, 0.1)
+
+struct_avg = []
+for gen in range(250):
+    sum = 0
+    struct_sum = 0
+    #for org in only_pop:
+    #    sum += org.fitness
+    #avg.append(sum/500.0)
+    for pop in struct:
+        for org in pop:
+            struct_sum += org.fitness
+    struct_avg.append(struct_sum / 2500.0)
+    struct.advance_generation()
+    #only_pop.advance_generation()
+    print "Gen: {}".format(gen)
+
+print struct_avg[-1]
+fin_dom_fit = 0
+for i in range(1000):
+    fin_dom_fit += nk_org_mutation_map(org, use_model)
+
+print fin_dom_fit/1000.0
+
+
