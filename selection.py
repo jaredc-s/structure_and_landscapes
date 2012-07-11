@@ -11,19 +11,13 @@ This is termed a "generation"
 """
 
 import random
-
-
 random_generator = random.Random()
 
 
 def select(organisms, number_of_draws):
-
     new_population = []
-
     numberlined = numberline(organisms)
-
     already_added = object()
-
     for n in range(number_of_draws):
         for (i, (org, cum_fit)) in enumerate(numberlined):
             if random_generator.random() < cum_fit:
@@ -31,7 +25,6 @@ def select(organisms, number_of_draws):
                     new_population.append(org)
                     numberlined[i][0] = already_added
                 break
-
     return new_population
 
 
@@ -42,15 +35,11 @@ def numberline(orgs):
     normalized fitness
     """
     fitnesses = [org.fitness for org in orgs]
-
     norm_fits = normalize(fitnesses)
-
     probs = [sum(norm_fits[:i + 1]) for i in range(len(fitnesses))]
     pairs = zip(orgs, probs)
-
     result = [[org, prob] for org, prob in pairs]
     result[-1][-1] = 1.0
-
     return result
 
 
@@ -59,7 +48,6 @@ def normalize(nums):
     Normalizes a list of numbers so they sum to 1
     """
     total = float(sum(nums))
-
     return [(num / total) for num in nums]
 
 
@@ -71,7 +59,6 @@ def moran_death_birth(orgs):
         index_to_kill = random.randrange(len(orgs))
         chosen_to_give_birth = fecundity_birth_selection(orgs)
         orgs[index_to_kill] = chosen_to_give_birth.mutate()
-
     return orgs
 
 
@@ -79,7 +66,6 @@ def fecundity_birth_selection(orgs):
     """Method to select an organism based off its fitness
     to replace death organism"""
     numberlined = numberline(orgs)
-
     for (i, (org, cum_fit)) in enumerate(numberlined):
         if random_generator.random() < cum_fit:
             return org
