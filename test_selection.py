@@ -20,7 +20,7 @@ class MockOrganism(object):
         return self.fitness
 
     def mutate(self):
-        return self
+        return MockOrganism(self.fitness, self.identifier + "'")
 
 
 class TestSelection(TC):
@@ -80,9 +80,13 @@ class TestMoran(TC):
                     MockOrganism(2, 'C')]
 
     def test_moran_len(self):
-        moran_death_birth(self.pop)
+        moran_death_birth(self.pop, .5)
         self.assertEqual(3, len(self.pop))
 
     def test_fecundity(self):
         new_org = fecundity_birth_selection(self.pop)
         self.assertIsInstance(new_org, MockOrganism)
+
+    def test_mutation_rate(self):
+        moran_death_birth(self.pop, -1)
+        self.assertNotEqual(self.pop[0].identifier[-1], "'")
