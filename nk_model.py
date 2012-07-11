@@ -85,7 +85,7 @@ class NKModelFactory(object):
         return self._model_with_uniform_contribution_lookup_table(deps)
 
     def consecutive_dependencies_multigene(self, n_per_gene, number_of_genes,
-        k_intra_gene, k_inter_gene):
+                                           k_intra_gene, k_inter_gene):
         """
         Returns a multigene model with regular dependencies
         n_per_gene = the number of loci per gene
@@ -110,13 +110,14 @@ class NKModelFactory(object):
                 loci_intra_deps = intra_deps[intra_locus]
                 loci_deps = [locus + offset for locus in loci_intra_deps]
                 loci_inter_deps = [(gene * n_per_gene) + intra_locus
-                    for gene in gene_inter_deps]
-                loci_deps.extend(loci_inter_deps[1:]) # don't double count locus
+                                   for gene in gene_inter_deps]
+                loci_deps.extend(loci_inter_deps[1:])  # don't double count
                 deps.append(loci_deps)
         return self._model_with_uniform_contribution_lookup_table(deps)
 
-    def non_consecutive_dependencies_multigene(self, n_per_gene, number_of_genes,
-        k_intra_gene, k_total):
+    def non_consecutive_dependencies_multigene(self, n_per_gene,
+                                               number_of_genes,
+                                               k_intra_gene, k_total):
         """
         Returns a multigene model with regular dependencies
         n_per_gene = the number of loci per gene
@@ -131,7 +132,8 @@ class NKModelFactory(object):
         deps = []
         for gene in range(number_of_genes):
             offset = gene * n_per_gene
-            gene_intra_deps = self._non_consecutive_dependency_lists(n_per_gene, k_intra_gene)
+            gene_intra_deps = self._non_consecutive_dependency_lists(n_per_gene,
+                                                                     k_intra_gene)
             for intra_locus in range(n_per_gene):
                 loci_intra_deps = gene_intra_deps[intra_locus]
                 loci_deps = [locus + offset for locus in loci_intra_deps]
@@ -147,12 +149,13 @@ class NKModelFactory(object):
     def _model_with_uniform_contribution_lookup_table(self, dependency_lists):
         """
         Fitness is the mean of the contribution of each loci.
-        Each loci has its own lookup table composed of 2 ** (number of dependencies)
-        uniformly distributed entries corresponding to the numerical value of the
-        subbitstring (locus + k neighbors).
+        Each loci has its own lookup table composed of
+        2 ** (number of dependencies) uniformly distributed entries
+        corresponding to the numerical value of the subbitstring
+        (locus + k neighbors).
         """
-        clt = [[self.random_generator.random() for _ in range(2 ** len(dep_list))]
-            for dep_list in dependency_lists]
+        clt = [[self.random_generator.random() for _ in range(
+                    2 ** len(dep_list))] for dep_list in dependency_lists]
         return NKModelSimple(dependency_lists, clt)
 
 
@@ -174,9 +177,9 @@ class NKModelSimple(object):
         contributions of each loci.
         """
         num_loci = len(bitstring)
-        
+
         assert(num_loci <= len(self.dependency_lists) and
-            num_loci <= len(self.contribution_lookup_tables))
+               num_loci <= len(self.contribution_lookup_tables))
         fitness_tally = 0.0
         for loci in range(num_loci):
             dependency_list = self.dependency_lists[loci]

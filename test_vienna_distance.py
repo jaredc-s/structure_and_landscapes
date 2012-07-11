@@ -27,4 +27,3 @@ class TestModule(TC):
         seq = "ACTGAAATTGACCCTGTTAAAACTCGCTCGCTAGCTAGCTC"
         struc = vienna_distance.fold(seq)
         self.assertEqual(len(struc), len(seq))
-

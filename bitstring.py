@@ -5,6 +5,7 @@ in python tuples. Bitstring instances are immutable.
 import mixins
 import random
 
+
 class Bitstring(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
 
     def __init__(self, iterable):
@@ -36,10 +37,10 @@ class Bitstring(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
 
     def __getitem__(self, key):
         """
-        bitstrings can be accessed by index
+        bitstrings can be accessed by index in reversed order
         for example:
-            Bitstring("101")[0] = True
-            Bitstring("101")[1] = False
+            Bitstring("100")[0] = False
+            Bitstring("100")[2] = True
         """
         return self._value[key]
 
@@ -100,6 +101,7 @@ class Bitstring(mixins.KeyedComparisonMixin, mixins.KeyedHashingMixin):
         """
         position = random.randrange(len(self))
         return flip_position(self, position)
+
 
 def flip_position(bitstring_instance, position_to_flip):
     """

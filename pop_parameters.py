@@ -16,17 +16,27 @@ use_model = nk.non_consecutive_dependencies_multigene(8, 2, k_intra, k_intra)
 org = nk_organism.Organism(Bitstring(bit), use_model)
 
 pop = population.Population([org for _ in range(50)])
-struct = structure_population.Structured_Population([pop for _ in range(10)], 0.5, 0.5)
+struct = structure_population.Structured_Population([pop for _ in range(10)],
+                                                    0.5, 0.5)
 
 only_pop = population.Population([org for _ in range(500)])
 avg = []
+struct_avg = []
 for gen in range(250):
     sum = 0
-    for org in only_pop:
-        sum += org.fitness
-    avg.append(sum/50.0)
-    #struct.advance_generation()
-    only_pop.advance_generation()
+    struct_sum = 0
+    #for org in only_pop:
+    #    sum += org.fitness
+    #avg.append(sum/500.0)
+    for pop in struct:
+        for org in pop:
+            struct_sum += org.fitness
+    struct_avg.append(struct_sum / 500.0)
+    struct.advance_generation()
+    #only_pop.advance_generation()
     print "Gen: {}".format(gen)
 
-print avg
+#print avg
+print
+print
+print struct_avg
