@@ -8,7 +8,7 @@ Updates should:
 
 import random
 import bitstring_organism
-from selection import *
+import selection
 
 
 class Population(object):
@@ -56,11 +56,10 @@ class Population(object):
         Need to find way to choose based off of weighing the fitness values
         then can remove the sorting of tuples
         """
-
-        self.population = select(self.population, self.maxsize)
+        self.population = selection.select(self.population, self.maxsize)
 
     def moran_selection(self):
-        self.population = moran_death_birth(self.population)
+        self.population = selection.moran_death_birth(self.population)
 
     def advance_generation(self):
         self.moran_selection()
