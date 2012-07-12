@@ -6,7 +6,7 @@ Intended for testing purposes.
 See bitstring_organism.py for more documentation.
 """
 import random
-from mixins import KeyedHashingMixin
+from ..utility.mixins import KeyedHashingMixin
 
 
 class Organism(KeyedHashingMixin):

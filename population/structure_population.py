@@ -13,7 +13,7 @@ population swapped in each migration event
 """
 
 import random
-from selection import select
+from ..utility.selection import select
 from population import Population
 
 

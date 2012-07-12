@@ -1,7 +1,7 @@
 """
 Organism where the genome is represented by RNA
 """
-import mixins
+from ..utility import mixins as mixins
 import vienna_distance
 import random
 
