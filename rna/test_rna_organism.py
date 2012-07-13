@@ -31,6 +31,9 @@ class TestOrganism(TC):
         self.assertEqual(self.organism[0], 'G')
         self.assertEqual(self.organism, rna_organism.default_organism)
 
+    def test_change_base(self):
+        org_list = self.organism.change_base(0)
+        self.assertNotIn(self.organism.value, org_list)
 
 class TestModule(TC):
     def test_default(self):

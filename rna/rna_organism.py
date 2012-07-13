@@ -36,11 +36,21 @@ class Organism(mixins.KeyedHashingMixin):
         new_seq = sequence[:position] + mutate_to + sequence[position + 1:]
         return Organism(new_seq)
 
-#def flip_base(self, position):
-#    """
-#    returns a list of tuples where each tuple is a rna organism's
-#    sequence and fitness.
-#   """
+    def change_base(self, position):
+        """
+        Permutates a base at a given index. Returns a list of tuples
+        where each tuple is a rna organism's sequence and fitness.
+        """
+        possibilites = ['G', 'C', 'A', 'T']
+        sequence = self.value
+        possibilites.remove(sequence[position])
+        permutation_orgs = []
+        for base in possibilites:
+            new_seq = sequence[:position] + base + sequence[position + 1:]
+            mutated_org = Organism(new_seq)
+            permutation_orgs.append(mutated_org)
+
+        return permutation_orgs
 
     @property
     def fitness(self):
@@ -50,6 +60,9 @@ class Organism(mixins.KeyedHashingMixin):
         """
         num_diffs = vienna_distance.get_distance_from_tRNA_sequence(self.value)
         return (len(self.value) - num_diffs) / float(len(self.value))
+
+    def __repr__(self):
+        return str(self.value)
 
 default_organism = Organism(OPTIMAL_RNA_SEQUENCE)
 
