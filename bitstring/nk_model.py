@@ -85,16 +85,18 @@ class NKModelFactory(object):
         return self._model_with_uniform_contribution_lookup_table(deps)
 
     def consecutive_dependencies_multigene(self, n_per_gene, number_of_genes,
-                                           k_intra_gene, k_inter_gene):
+                                           k_intra_gene, k_total):
         """
         Returns a multigene model with regular dependencies
         n_per_gene = the number of loci per gene
         number_of_genes = the number of subdivisions of the bitstring genome
         k_intra_gene = the number of dependencies within a gene per loci
-        k_inter_gene = the number of dependencies between genes per loci, the
+        k_total = the total number of dependencies 
+        k_inter = k_total- k_intra_gene between genes per loci, the
             dependencies will have the same index as the locus, but on
             consecutive genes
         """
+        k_inter_gene = k_total - k_intra_gene
         assert(k_intra_gene < n_per_gene)
         assert(k_inter_gene < number_of_genes)
         intra_deps = self._consecutive_dependency_lists(
