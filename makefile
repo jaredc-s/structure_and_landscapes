@@ -4,10 +4,12 @@ LD=gcc
 CFLAGS=-shared -fopenmp -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing -I/usr/include/python2.7 -I/usr/local/include/ViennaRNA
 LFLAGS=-L/usr/local/lib/ViennaRNA -lRNA 
 
-.PHONY: test coverage run install style profile clean clean_cython analysis cython_compile
+.PHONY: test coverage run install style profile clean clean_cython analysis cython_compile all
 
-test: clean cython_compile
+test: all
 	nosetests --
+
+all: clean cython_compile
 
 coverage: clean cython_compile
 	nosetests --with-coverage --
