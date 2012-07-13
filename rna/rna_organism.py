@@ -62,7 +62,7 @@ class Organism(mixins.KeyedHashingMixin):
         return (len(self.value) - num_diffs) / float(len(self.value))
 
     def __repr__(self):
-        return str(self.value)
+        return "Organism('{}')".format(self.value)
 
 default_organism = Organism(OPTIMAL_RNA_SEQUENCE)
 

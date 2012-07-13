@@ -35,6 +35,11 @@ class TestOrganism(TC):
         org_list = self.organism.change_base(0)
         self.assertNotIn(self.organism.value, org_list)
 
+    def test_repr(self):
+        org = Organism('AATA')
+        expected = "Organism('AATA')"
+        self.assertEqual(repr(org), expected)
+
 class TestModule(TC):
     def test_default(self):
         def_org = rna_organism.default_organism
