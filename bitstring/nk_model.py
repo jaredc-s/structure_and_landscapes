@@ -18,15 +18,15 @@ import collections
 import itertools
 from random import Random
 from bitstring import Bitstring
-module_random_generator = Random()
 
 
 class NKModelFactory(object):
     """
     Returns instances of NK models.
     """
-    def __init__(self, random_generator=module_random_generator):
-        self.random_generator = random_generator
+    def __init__(self, random_generator=None):
+        if random_generator is None:
+            self.random_generator = Random()
 
     def no_dependencies(self, n):
         """
