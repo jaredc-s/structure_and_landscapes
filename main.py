@@ -1,5 +1,5 @@
 from bitstring.bitstring_organism import Organism as bit_organism
-from integer_organism import Organism as int_organism
+from integer.integer_organism import Organism as int_organism
 from bitstring.bitstring import Bitstring
 from population.population import Population
 from basic_plot import average

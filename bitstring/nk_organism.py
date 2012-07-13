@@ -1,4 +1,4 @@
-from ..utility import mixins
+from structure_and_landscapes.utility import mixins
 from bitstring_organism import Organism as BOrg
 import bitstring_organism
 
