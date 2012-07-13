@@ -26,10 +26,6 @@ all: cython_compile
 coverage: clean cython_compile
 	nosetests --with-coverage --
 
-# Runs the main.py module
-run: clean cython_compile
-	python2.7 main.py
-
 # Installs the needed dependancies
 install-dependancies: 
 	pip install nose coverage pep8 cython RunSnakeRun numpy matplotlib

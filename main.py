@@ -108,18 +108,3 @@ def run(pop):
         fit_list.append(one_gen)
         pop.advance_generation()
     print(fit_list)
-
-
-def main():
-    #bit_org_demo()
-    #int_org_demo()
-    #structured_pop_demo()
-    nk_org_demo()
-    #nk_gene_demo()
-    #nk_gene_structured_pop_demo()
-    #rna_org_demo()
-    #rna_org_structured_pop_demo()
-
-
-if __name__ == "__main__":
-    main()
