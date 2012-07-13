@@ -7,7 +7,11 @@ LFLAGS=-L/usr/local/lib/ViennaRNA -lRNA
 .PHONY: test coverage run install style profile clean clean_cython analysis cython_compile all
 
 test: all
+	nosetests -a '!slow' -- 
+
+test-all: all
 	nosetests --
+
 
 all: clean cython_compile
 
