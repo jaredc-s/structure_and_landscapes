@@ -1,9 +1,9 @@
-import structure_population
-import population
-import nk_organism
-import nk_model
+from structure_and_landscapes.population import structure_population
+from structure_and_landscapes.population import population
+from structure_and_landscapes.bitstring import nk_organism
+from structure_and_landscapes.bitstring import nk_model
 import random
-from bitstring import Bitstring
+from structure_and_landscapes.bitstring.bitstring import Bitstring
 
 len_desired_genome = 16
 k_intra = 4

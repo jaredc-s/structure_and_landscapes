@@ -72,7 +72,7 @@ class TestNKModelFactory(TC):
         self.assertEqual(deps[-1][0], 5)
 
     def test_consecutive_dependencies_multigene(self):
-        model = self.factory.consecutive_dependencies_multigene(3, 4, 2, 3)
+        model = self.factory.consecutive_dependencies_multigene(3, 4, 2, 5)
         deps = model.dependency_lists
         self.assertEqual(3 * 4, len(deps))
         self.assertEqual(deps[0], [0, 1, 2, 3, 6, 9])
