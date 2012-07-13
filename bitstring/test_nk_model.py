@@ -40,7 +40,8 @@ class TestNKModelFactory(TC):
 
     def test_model_with_uniform_contribution_lookup_table(self):
         dep_lists = [[0, 1], [1, 2, 3], [4]]
-        model = self.factory._model_with_uniform_contribution_lookup_table(dep_lists)
+        model = self.factory._model_with_uniform_contribution_lookup_table(
+            dep_lists)
         clt = model.contribution_lookup_tables
         self.assertEqual(len(clt), 3)
         self.assertEqual(len(clt[0]), 4)
@@ -78,7 +79,8 @@ class TestNKModelFactory(TC):
         self.assertEqual(deps[-1], [11, 9, 10, 2, 5, 8])
 
     def test_non_consecutive_dependencies_multigene(self):
-        model = self.factory.non_consecutive_dependencies_multigene(6, 3, 2, 10)
+        model = self.factory.non_consecutive_dependencies_multigene(
+            6, 3, 2, 10)
         deps = model.dependency_lists
         self.assertEqual(18, len(deps))
         len_of_deps_is_11 = [len(dep_list) == 11 for dep_list in deps]

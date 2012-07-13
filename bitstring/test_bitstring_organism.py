@@ -1,7 +1,5 @@
-import unittest
 from unittest import TestCase as TC
-
-import bitstring_organism as organism
+import bitstring_organism
 from bitstring_organism import Organism
 import bitstring
 from bitstring import Bitstring
@@ -61,4 +59,4 @@ class TestOrganism(TC):
 
 class TestModule(TC):
     def test_default_organism(self):
-        org = organism.default_organism
+        org = bitstring_organism.default_organism
