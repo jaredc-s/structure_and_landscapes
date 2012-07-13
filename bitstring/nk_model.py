@@ -132,8 +132,8 @@ class NKModelFactory(object):
         deps = []
         for gene in range(number_of_genes):
             offset = gene * n_per_gene
-            gene_intra_deps = self._non_consecutive_dependency_lists(n_per_gene,
-                                                                     k_intra_gene)
+            gene_intra_deps = self._non_consecutive_dependency_lists(
+                n_per_gene, k_intra_gene)
             for intra_locus in range(n_per_gene):
                 loci_intra_deps = gene_intra_deps[intra_locus]
                 loci_deps = [locus + offset for locus in loci_intra_deps]
@@ -155,7 +155,7 @@ class NKModelFactory(object):
         (locus + k neighbors).
         """
         clt = [[self.random_generator.random() for _ in range(
-                    2 ** len(dep_list))] for dep_list in dependency_lists]
+            2 ** len(dep_list))] for dep_list in dependency_lists]
         return NKModelSimple(dependency_lists, clt)
 
 

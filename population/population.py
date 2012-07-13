@@ -60,7 +60,8 @@ class Population(object):
         self.population = selection.select(self.population, self.maxsize)
 
     def moran_selection(self):
-        self.population = selection.moran_death_birth(self.population, self.mutation_rate)
+        self.population = selection.moran_death_birth(
+            self.population, self.mutation_rate)
 
     def advance_generation(self):
         self.moran_selection()

@@ -20,7 +20,8 @@ def int_org_demo():
 def nk_org_demo():
     b = Bitstring("11010")
     nk_fac = bs.nk_model.NKModelFactory()
-    nk_org = bs.nk_organism.Organism(b, nk_fac.consecutive_dependencies(n=5, k=2))
+    nk_org = bs.nk_organism.Organism(
+        b, nk_fac.consecutive_dependencies(n=5, k=2))
 
     org_list = [nk_org for _ in range(1, 5)]
 

@@ -21,7 +21,7 @@ install:
 	pip install nose coverage pep8 cython RunSnakeRun
 
 style:
-	pep8 *.py
+	find . -name \*.py | xargs pep8
 
 clean: clean_cython
 	-find . -name \*.pyc | xargs rm 
