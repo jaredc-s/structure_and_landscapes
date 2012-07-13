@@ -2,7 +2,7 @@
 This module implements a crude Bitstring with boolean values
 in python tuples. Bitstring instances are immutable.
 """
-import mixins
+from ..utility import mixins
 import random
 
 

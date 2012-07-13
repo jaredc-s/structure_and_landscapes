@@ -7,7 +7,7 @@ Updates should:
 """
 
 import random
-import selection
+from ..utility import selection
 
 
 class Population(object):
