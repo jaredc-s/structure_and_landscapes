@@ -1,9 +1,9 @@
-import structure_population
-import population
-import nk_organism
-import nk_model
+from structure_and_landscapes.population import structure_population
+from structure_and_landscapes.population import population
+from structure_and_landscapes.bitstring import nk_organism
+from structure_and_landscapes.bitstring import nk_model
 import random
-from bitstring import Bitstring
+from structure_and_landscapes.bitstring.bitstring import Bitstring
 
 len_desired_genome = 16
 k_intra = 4
@@ -27,7 +27,7 @@ for gen in range(250):
     struct_sum = 0
     for org in only_pop:
         sum += org.fitness
-    avg.append(sum/2500.0)
+    avg.append(sum / 2500.0)
     for pop in struct:
         for org in pop:
             struct_sum += org.fitness

@@ -1,10 +1,10 @@
-from nk_organism import Organism
-import bitstring_organism
+from structure_and_landscapes.bitstring.nk_organism import Organism
+from structure_and_landscapes.bitstring import bitstring_organism
 import numpy
 import random
 import matplotlib.pyplot as plot
-from bitstring import Bitstring
-import nk_model
+from structure_and_landscapes.bitstring.bitstring import Bitstring
+from structure_and_landscapes.bitstring import nk_model
 
 final_fit = []
 orig_fit = []

@@ -31,6 +31,7 @@ def bitstring_organism_mutation_map(organism):
 #bit_org = bitstring_organism.Organism(bit)
 #print bitstring_organism_mutation_map(bit_org)
 
+
 def nk_organism_mutation_map(organism, nk):
     """
     mutates every possible single step mutation from a intial
@@ -59,6 +60,7 @@ def nk_organism_mutation_map(organism, nk):
 
 #print nk_organism_mutation_map(nk_org, use_model)
 
+
 def rna_organism_mutation_map(organism):
     """
     mutates every possible single step mutation from a intial
@@ -83,3 +85,4 @@ print rna_organism_mutation_map(rna_org)
 
 
 
+>>>>>>> joe/master

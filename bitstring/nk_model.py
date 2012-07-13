@@ -18,15 +18,15 @@ import collections
 import itertools
 from random import Random
 from bitstring import Bitstring
-module_random_generator = Random()
 
 
 class NKModelFactory(object):
     """
     Returns instances of NK models.
     """
-    def __init__(self, random_generator=module_random_generator):
-        self.random_generator = random_generator
+    def __init__(self, random_generator=None):
+        if random_generator is None:
+            self.random_generator = Random()
 
     def no_dependencies(self, n):
         """
@@ -85,16 +85,19 @@ class NKModelFactory(object):
         return self._model_with_uniform_contribution_lookup_table(deps)
 
     def consecutive_dependencies_multigene(self, n_per_gene, number_of_genes,
-                                           k_intra_gene, k_inter_gene):
+                                           k_intra_gene, k_total):
         """
         Returns a multigene model with regular dependencies
         n_per_gene = the number of loci per gene
         number_of_genes = the number of subdivisions of the bitstring genome
         k_intra_gene = the number of dependencies within a gene per loci
-        k_inter_gene = the number of dependencies between genes per loci, the
+        k_total = the total number of dependencies
+        k_inter = k_total- k_intra_gene
+            is also the number of between genes per loci, the
             dependencies will have the same index as the locus, but on
             consecutive genes
         """
+        k_inter_gene = k_total - k_intra_gene
         assert(k_intra_gene < n_per_gene)
         assert(k_inter_gene < number_of_genes)
         intra_deps = self._consecutive_dependency_lists(
@@ -132,8 +135,8 @@ class NKModelFactory(object):
         deps = []
         for gene in range(number_of_genes):
             offset = gene * n_per_gene
-            gene_intra_deps = self._non_consecutive_dependency_lists(n_per_gene,
-                                                                     k_intra_gene)
+            gene_intra_deps = self._non_consecutive_dependency_lists(
+                n_per_gene, k_intra_gene)
             for intra_locus in range(n_per_gene):
                 loci_intra_deps = gene_intra_deps[intra_locus]
                 loci_deps = [locus + offset for locus in loci_intra_deps]
@@ -155,7 +158,7 @@ class NKModelFactory(object):
         (locus + k neighbors).
         """
         clt = [[self.random_generator.random() for _ in range(
-                    2 ** len(dep_list))] for dep_list in dependency_lists]
+            2 ** len(dep_list))] for dep_list in dependency_lists]
         return NKModelSimple(dependency_lists, clt)
 
 
