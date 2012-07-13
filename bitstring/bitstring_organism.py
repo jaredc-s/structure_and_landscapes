@@ -6,7 +6,7 @@ Immutable class.
 import random
 import bitstring
 from bitstring import Bitstring
-from ..utility import mixins
+from structure_and_landscapes.utility import mixins
 
 
 class Organism(mixins.KeyedHashingMixin):
