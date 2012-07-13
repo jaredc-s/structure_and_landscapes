@@ -30,7 +30,7 @@ def nk_gene_demo():
     nk_fac = bs.nk_model.NKModelFactory()
     nk_org = bs.nk_organism.Organism(
         b, nk_fac.consecutive_dependencies_multigene(
-            n_per_gene=3, number_of_genes=3, k_intra_gene=1, k_inter_gene=1))
+            n_per_gene=3, number_of_genes=3, k_intra_gene=1, k_total=2))
     org_list = [nk_org for _ in range(10)]
     pop = Population(org_list)
     run(pop)
@@ -41,7 +41,7 @@ def nk_gene_structured_pop_demo():
     nk_fac = bs.nk_model.NKModelFactory()
     nk_org = bs.nk_organism.Organism(
         b, nk_fac.consecutive_dependencies_multigene(
-            n_per_gene=3, number_of_genes=3, k_intra_gene=1, k_inter_gene=1))
+            n_per_gene=3, number_of_genes=3, k_intra_gene=1, k_total=2))
     org_list = [nk_org for _ in range(10)]
     pop_list = [Population(org_list) for _ in range(10)]
     structured_pop = Structured_Population(pop_list, migration_rate=0.5,
