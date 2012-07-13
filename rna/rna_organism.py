@@ -36,6 +36,12 @@ class Organism(mixins.KeyedHashingMixin):
         new_seq = sequence[:position] + mutate_to + sequence[position + 1:]
         return Organism(new_seq)
 
+#def flip_base(self, position):
+#    """
+#    returns a list of tuples where each tuple is a rna organism's
+#    sequence and fitness.
+#   """
+
     @property
     def fitness(self):
         """
