@@ -63,6 +63,7 @@ def rna_org_demo():
     pop = Population([starting_org for _ in range(5)])
     run(pop)
 
+
 def rna_org_structured_pop_demo():
     org = rna_organism.default_organism
     org_list = [org for _ in range(5)]
@@ -70,7 +71,6 @@ def rna_org_structured_pop_demo():
     structured_pop = Structured_Population(pop_list, migration_rate=0.5,
                                            proportion_of_pop_swapped=0.5)
     run_struc(structured_pop)
-
 
 
 def structured_pop_demo():
@@ -91,6 +91,7 @@ def average_fitness_of_structured_population(structured_population):
                          structured_population for org in pop]
     return sum(list_of_fitnesses) / float(len(list_of_fitnesses))
 
+
 def run_struc(struc_pop):
     fit_list = []
     for gen in range(5):
@@ -98,6 +99,7 @@ def run_struc(struc_pop):
         fit_list.append(one_gen)
         pop.advance_generation()
     print(fit_list)
+
 
 def run(pop):
     fit_list = []

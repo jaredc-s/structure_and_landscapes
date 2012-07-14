@@ -27,7 +27,7 @@ for gen in range(250):
     struct_sum = 0
     for org in only_pop:
         sum += org.fitness
-    avg.append(sum/2500.0)
+    avg.append(sum / 2500.0)
     for pop in struct:
         for org in pop:
             struct_sum += org.fitness

@@ -5,6 +5,7 @@ from population.structure_population import Structured_Population
 from population.population import Population
 from integer.integer_organism import Organism
 
+
 @attr('slow')
 class TestModule(TC):
     def test_int_org_demo(self):

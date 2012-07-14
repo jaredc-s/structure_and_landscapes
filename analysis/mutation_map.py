@@ -31,6 +31,7 @@ def bitstring_organism_mutation_map(organism):
 #bit_org = bitstring_organism.Organism(bit)
 #print bitstring_organism_mutation_map(bit_org)
 
+
 def nk_organism_mutation_map(organism, nk):
     bitstring_value = organism.value
     nk_organism_mutation_map = []
@@ -52,11 +53,8 @@ def nk_organism_mutation_map(organism, nk):
 
 #print nk_organism_mutation_map(nk_org, use_model)
 
+
 def rna_organism_mutation_map(organism):
     rna_seq = organism.value
     rna_organism_mutation_map = []
     for i in range(len(ran_seq)):
-
-
-
-
