@@ -91,7 +91,7 @@ class NKModelFactory(object):
         n_per_gene = the number of loci per gene
         number_of_genes = the number of subdivisions of the bitstring genome
         k_intra_gene = the number of dependencies within a gene per loci
-        k_total = the total number of dependencies 
+        k_total = the total number of dependencies
         k_inter = k_total- k_intra_gene between genes per loci, the
             dependencies will have the same index as the locus, but on
             consecutive genes
