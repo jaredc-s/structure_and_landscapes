@@ -3,7 +3,7 @@ from structure_and_landscapes.bitstring import bitstring_organism
 from structure_and_landscapes.bitstring import bitstring
 from structure_and_landscapes.bitstring import nk_organism
 from structure_and_landscapes.bitstring import nk_model
-
+from structure_and_landscapes.rna import rna_organism
 
 #import integer_organism
 #import nk_organism
@@ -15,7 +15,7 @@ def bitstring_organism_mutation_map(organism):
     """
     mutates every possible single step mutation from a intial
     organism of the correct type passed in. Returns a
-    list of tuples where each pair is a bitstring and its
+    list of tuples where each pair is a bitstring_organism and its
     corresponding fitness.
     """
     bitstring_value = organism.value
@@ -33,6 +33,13 @@ def bitstring_organism_mutation_map(organism):
 
 
 def nk_organism_mutation_map(organism, nk):
+    """
+    mutates every possible single step mutation from a intial
+    organism of the correct type passed in. Returns a
+    list of tuples where each tuple is a nk_organism and its
+    corresponding fitness.
+    """
+
     bitstring_value = organism.value
     nk_organism_mutation_map = []
     for i in range(len(bitstring_value)):
@@ -55,6 +62,27 @@ def nk_organism_mutation_map(organism, nk):
 
 
 def rna_organism_mutation_map(organism):
+    """
+    mutates every possible single step mutation from a intial
+    organism of the correct type passed in. Returns a
+    list of lists of tuples where each tuple is an rna_organism and its
+    corresponding fitness.
+    """
     rna_seq = organism.value
     rna_organism_mutation_map = []
-    for i in range(len(ran_seq)):
+    for i in range(len(rna_seq)):
+        perturbed_org_list = organism.change_base(i)
+        for org in perturbed_org_list:
+            rna_organism_mutation_map.append((org, org.fitness))
+
+    return rna_organism_mutation_map
+
+rna_org = rna_organism.random_organism()
+print rna_organism_mutation_map(rna_org)
+
+
+
+
+
+
+>>>>>>> joe/master
