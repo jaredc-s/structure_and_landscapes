@@ -16,6 +16,7 @@ class Organism(mixins.KeyedHashingMixin):
         composed of "AGCU".
         """
         self.value = value
+        self._fitness = None
 
     def __key__(self):
         return self.value
@@ -58,8 +59,10 @@ class Organism(mixins.KeyedHashingMixin):
         This is where calls to vienna RNA will have to come in folding it to
         a predefined structure or seeing it's distance from tRNA
         """
-        num_diffs = vienna_distance.get_distance_from_tRNA_sequence(self.value)
-        return (len(self.value) - num_diffs) / float(len(self.value))
+        if self._fitness is None:
+            num_diffs = vienna_distance.get_distance_from_tRNA_sequence(self.value)
+            self._fitness = (len(self.value) - num_diffs) / float(len(self.value))
+        return self._fitness
 
     def __repr__(self):
         return str(self.value)

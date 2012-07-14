@@ -6,14 +6,14 @@ import bitstring_organism
 class Organism(BOrg):
     def __init__(self, value, nk_model):
         self.nk_model = nk_model
-        self.fit = None
+        self._fitness = None
         super(Organism, self).__init__(value)
 
     @property
     def fitness(self):
-        if self.fit is None:
-            self.fit = self.nk_model.calculate_fitness(self.value)
-        return self.fit
+        if self._fitness is None:
+            self._fitness = self.nk_model.calculate_fitness(self.value)
+        return self._fitness
 
     def mutate(self):
         """

@@ -13,6 +13,7 @@ class Organism(KeyedHashingMixin):
     def __init__(self, value):
         assert(isinstance(value, int))
         self.value = value
+        self._fitness = None
 
     def mutate(self):
         """
@@ -29,7 +30,9 @@ class Organism(KeyedHashingMixin):
 
     @property
     def fitness(self):
-        return float(abs(self.value))
+        if self._fitness is None:
+            self._fitness = float(abs(self.value))
+        return self._fitness
 
     def __key__(self):
         """
