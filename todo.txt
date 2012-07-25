@@ -1,0 +1,19 @@
+Stats in Python:
+*t-test
+*std error
+*anovas 
+*correlation 
+
+Visualizations:
+*line graphs
+*bar charts
+*heat maps
+*3d figures --> contour map embed legends etc... 
+*embed images into figures --> compact figures
+*output visualizations in a variety of formats png, pdf, bmp
+
+Data Output:
+*pickles ! 
+*other ways of storing python objects ...
+*csv...
+
