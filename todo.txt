@@ -13,7 +13,19 @@ Visualizations:
 *output visualizations in a variety of formats png, pdf, bmp
 
 Data Output:
-*pickles ! 
+*pickles ! and shelve
 *other ways of storing python objects ...
 *csv...
+
+What to save:
+*all params
+*version program - evaluation
+*data itself - organisms that exist in a population over time...
+*time stamp - uniqueness in results object key!!!
+*replicate number... - refer to a paticular run...
+
+What to add:
+*mean
+*std error population fitness @ every generation (some interval)
+*max fitness over same interval 
 
