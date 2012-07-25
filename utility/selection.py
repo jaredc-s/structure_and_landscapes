@@ -36,10 +36,8 @@ def numberline(orgs):
     fitnesses = [org.fitness for org in orgs]
     norm_fits = normalize(fitnesses)
     probs.append(norm_fits[0])
-    print norm_fits
     for i in range(1, len(fitnesses)):
         probs.append(probs[-1] + norm_fits[i])
-    print probs
     pairs = zip(orgs, probs)
     result = [[org, prob] for org, prob in pairs]
     result[-1][-1] = 1.0
