@@ -2,7 +2,7 @@
 Organism where the genome is represented by RNA
 """
 from structure_and_landscapes.utility import mixins as mixins
-import vienna_distance
+from structure_and_landscapes.rna import vienna_distance
 import random
 
 OPTIMAL_RNA_SEQUENCE = vienna_distance.get_tRNA_sequence()
@@ -61,7 +61,8 @@ class Organism(mixins.KeyedHashingMixin):
         """
         if self._fitness is None:
             num_diffs = vienna_distance.get_distance_from_tRNA_sequence(self.value)
-            self._fitness = (len(self.value) - num_diffs) / float(len(self.value))
+            normalized_fitness = 2**(len(self.value) - num_diffs)
+            self._fitness = (normalized_fitness)
         return self._fitness
 
     def __repr__(self):

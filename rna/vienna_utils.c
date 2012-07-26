@@ -12,6 +12,7 @@ const char* tRNA_sequence()
 {
     // >gi|7276232:c443271-443198 Saccharomyces cerevisiae tRNA-Ile
     return "GGTCTCTTGGCCCAGTTGGTTAAGGCACCGTGCTAATAACGCGGGGATCAGCGGTTCGATCCCGCTAGAGACCA";
+    //return "AAAAAAAAAAAAAAATTTTTTTTTTTTTT";
 }
 
 float partition_distance_from_tRNA_sequence(const char * seq)
