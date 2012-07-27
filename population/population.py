@@ -11,7 +11,7 @@ from structure_and_landscapes.utility import selection
 
 
 class Population(object):
-    def __init__(self, init_pop, max_size=None, mutation_rate=1.0):
+    def __init__(self, init_pop, mutation_rate=1.0, max_size=None):
         self.population = list(init_pop)
         if max_size is None:
             self.maxsize = len(self.population)

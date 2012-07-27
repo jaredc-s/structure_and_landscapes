@@ -27,17 +27,17 @@ class TestPopulation(TC):
         self.assertEqual(self.pop.maxsize, 4)
 
     def test_init_givensize(self):
-        population = Population([1, 2, 3, 4], 5)
+        population = Population([1, 2, 3, 4], max_size = 5)
         self.assertEqual(population.maxsize, 5)
 
     def test_removal(self):
-        population = Population([1, 2, 3], 2)
+        population = Population([1, 2, 3], max_size = 2)
         population.remove_at_random()
         self.assertEqual(len(population), 2)
 
     def test_leastfit_removal(self):
         this_pop = Population([MockOrganism(1), MockOrganism(2),
-                               MockOrganism(100)], 1)
+                               MockOrganism(100)], max_size = 1)
 
         this_pop.remove_least_fit()
         self.assertIn(this_pop[0].eval_fit(),
