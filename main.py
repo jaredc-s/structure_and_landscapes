@@ -7,7 +7,10 @@ import bitstring.nk_model as nk_model
 import bitstring as bs
 import bitstring.nk_organism
 import rna.rna_organism as rna_organism
+from rna import vienna_distance
 
+import numpy as np
+import scipy.stats as st
 
 def int_org_demo():
     org_list = [int_organism(i) for i in range(1, 11)]
@@ -60,13 +63,13 @@ def rna_org_demo():
     target = rna_organism.default_organism
     start_genome = "".join(["A" for _ in target.value])
     starting_org = rna_organism.Organism(start_genome)
-    pop = Population([starting_org for _ in range(5)])
+    pop = Population([rna_organism.random_organism() for _ in range(100)], mutation_rate=.1)
     run(pop)
 
 
 def rna_org_structured_pop_demo():
-    org = rna_organism.default_organism
-    org_list = [org for _ in range(5)]
+    org = rna_organism.random_organism()
+    org_list = [org for _ in range(20)]
     pop_list = [Population(org_list) for _ in range(5)]
     structured_pop = Structured_Population(pop_list, migration_rate=0.5,
                                            proportion_of_pop_swapped=0.5)
@@ -94,19 +97,39 @@ def average_fitness_of_structured_population(structured_population):
 
 def run_struc(struc_pop):
     fit_list = []
-    for gen in range(5):
+    for gen in range(500):
         one_gen = [org.fitness for pop in struc_pop for org in pop]
         fit_list.append(one_gen)
         pop.advance_generation()
-    print(fit_list)
 
+        print_best_structure(pop)
+    #print(fit_list)
+    print np.mean(fit_list[0]), st.sem(fit_list[0])
+    print np.mean(fit_list[-1]), st.sem(fit_list[-1])
+
+def print_best_structure(pop):
+    fit_list = [(org.fitness, org) for org in pop]
+    best_org =  max(fit_list)[1]
+    print vienna_distance.fold(rna_organism.OPTIMAL_RNA_SEQUENCE)+'*'
+    print vienna_distance.fold(best_org.value), best_org.fitness
 
 def run(pop):
     fit_list = []
-    for gen in range(5):
+    for gen in range(500):
         one_gen = []
         for org in pop:
             one_gen.append(org.fitness)
         fit_list.append(one_gen)
         pop.advance_generation()
-    print(fit_list)
+
+        print_best_structure(pop)
+
+    #print(fit_list)
+    print np.mean(fit_list[0]), st.sem(fit_list[0])
+    print np.mean(fit_list[-1]), st.sem(fit_list[-1])
+    #print fit_list[-1]
+
+if __name__=='__main__':
+    #rna_org_demo()
+    #int_org_demo()
+    rna_org_structured_pop_demo()

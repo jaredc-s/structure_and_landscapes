@@ -1,0 +1,41 @@
+look up computing resources!!!
+a job that should take a second
+
+Stats in Python:
+*t-test
+*std error
+*anovas 
+*correlation 
+
+Visualizations:
+*line graphs
+*bar charts
+*heat maps ---> mutatation rate vs rugedness temp = 
+max fitness at end of a pop
+showing three dimensions 
+
+*3d figures --> contour map embed legends etc... 
+*embed images into figures --> compact figures
+*output visualizations in a variety of formats png, pdf, bmp
+
+Data Output:
+*pickles ! and shelve
+*other ways of storing python objects ...
+*csv...
+
+What to save:
+*all params
+*version program - evaluation
+*data itself - organisms that exist in a population over time...
+*time stamp - uniqueness in results object key!!!
+*replicate number... - refer to a paticular run...
+
+What to add:
+*mean
+*std error population fitness @ every generation (some interval)
+*max fitness over same interval 
+
+*generating data for representation of data 
+*easy ways to specify parameters (mutation rates, starting org etc!)
+*using data well have results.db
+
