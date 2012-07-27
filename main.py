@@ -124,10 +124,8 @@ def run(pop):
 
         print_best_structure(pop)
 
-    #print(fit_list)
     print np.mean(fit_list[0]), st.sem(fit_list[0])
     print np.mean(fit_list[-1]), st.sem(fit_list[-1])
-    #print fit_list[-1]
 
 if __name__=='__main__':
     #rna_org_demo()
