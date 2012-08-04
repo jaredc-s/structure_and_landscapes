@@ -18,7 +18,7 @@ Initialize settings (adapted from "Get started with EC2." directions from timkay
 		run: ec2-add-group ssh_allowed -d "allow ssh and scp"
 		run: ec2auth ssh_allowed -P tcp -p 22 -s 0.0.0.0/0
 		run: ec2-describe-groups
-			this should show a group named ssh_allowed with port 22 open			
+		 	this should show a group named ssh_allowed with port 22 open			
 	Create an Elastic Block Storage (EBS) to store data from multiple instances
 		run: ec2-create-volume --size 20 --zone us-west-2b
 			creates a "virutal hard drive 20 GB in size"
@@ -26,10 +26,9 @@ Initialize settings (adapted from "Get started with EC2." directions from timkay
 			this should list an available ebs	
 			record the volume id (e.g. vol-06835d69) 
 	Format the EBS with an EC2 instance
-		run: ec2-run-instance ami-fcf27fcc -k amazon_key -g ssh_allowed --instance-type t1.micro
+		run: ec2-run-instance ami-fcf27fcc -k amazon_key -g ssh_allowed --instance-type t1.micro --wait=10
 		run: ec2-describe-instances
 			this should show you an instances that spinning up (pending)
-			repeat command until the instance is running
 			record the instance id (the first column of the description) (e.g. i-6b2c9f58)
 			record the dns (e.g. ec2-54-245-23-238.us-west-2.compute.amazonaws.com)
 		run: ec2-attach-volume vol-06835d69 -i i-6b2c9f58 -d /dev/sdf
@@ -41,13 +40,39 @@ Initialize settings (adapted from "Get started with EC2." directions from timkay
 		run: mkdir -p  /mnt/ebs && mkfs -t ext4 /dev/xvdf && mount /dev/xvdf /mnt/ebs
 		end ssh session (CTRL-D)
 		run: ec2-terminate-instances i-6b2c9f58 
-			replace instance name with actual name
+		 	replace instance name with actual name
 
+Initialize EC2 Instance
+=======================
+Options: 
+	image (Debian squeeze 6.0):
+		ami-fcf27fcc (32-bit)
+		ami-8ef27fbe (64-bit)
+	instance types 
+		more info: (http://aws.amazon.com/ec2/instance-types/, 
+			http://aws.amazon.com/ec2/pricing/)
+ 		t1.micro (Tiny for testing purposes, $0.020 per Hour)
+		m1.small (1.7 GB, 1 core, $0.080 per Hour)
+Command to start:
+	ec2-run-instance ami-fcf27fcc -k amazon_key -g ssh_allowed --instance-type t1.micro --wait=5
+Command to get info about started instances and volumes:
+	ec2-describe-instances
+	ec2-describe-volumes
+Command to attach EBS volume:
+	ec2-attach-volume vol-06835d69 -i i-670fbc54 -d /dev/sdf
+	"then ssh into instance (see below)"
+	mkdir -p /mnt/ebs && mount /dev/xvdf /mnt/ebs
+	"ebs attached at /mnt/ebs"
+SSH into the instance:
+	ssh -o "StrictHostKeyChecking no" -i ~/.ssh/amazon_key root@ec2-54-245-18-248.us-west-2.compute.amazonaws.com 
+	ssh -i ~/.ssh/amazon_key root@ec2-50-112-3-37.us-west-2.compute.amazonaws.com
+Command to detach volume:
+	"ssh into instance"
+	umount /mnt/ebs
+	"from local computer"
+	ec2-detach-volume vol-06835d69
+Command to terminate instance:
+	ec2-terminate-instances i-670fbc54
 
-
-	KN = standard 
-	GN = standard
-	IMAGE = ami-fcf27fcc
-		The image is Debian 6.0
 
 
