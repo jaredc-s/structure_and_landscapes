@@ -16,7 +16,7 @@ figure out mutation problem
 Joe:
 look up computing resources at UW (thousands of hours not millions)
 determine optimal parameters for rna_organism...
-	-able to imporve
+	-able to improve
 	-able to get close to the optimum
 	-alot of variance in the outcome
 	-some runs do well and some make it 
