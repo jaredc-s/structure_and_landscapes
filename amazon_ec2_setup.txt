@@ -5,8 +5,49 @@ Amazon Web Services Set-Up
 Make an AWS account (aws.amazon.com)
 Install aws commandline tools (timkay.com/aws)
 	Be sure to do the optional step 3
-Initialize settings (follow directions from timkay.com/aws/howto.html)
-	KN = standard
+	add "--region=us-west-2 --simple" to ~/.awsrc
+Initialize settings (adapted from "Get started with EC2." directions from timkay.com/aws/howto.html)
+	Create Keypair (used for logging in to ec2 instance)
+		run: ec2-add-keypair amazon_key
+		save the output (including the begin and end lines) to ~/.ssh/amazon_key
+		run: chmod og-rwx ~/.ssh/amazon_key
+			this with limit the permissions of the private key
+		run: ec2-describe-keypairs
+			this should show a keypair named amazon_key
+	Create Security Group (used for determining how the instance can be accessed)
+		run: ec2-add-group ssh_allowed -d "allow ssh and scp"
+		run: ec2auth ssh_allowed -P tcp -p 22 -s 0.0.0.0/0
+		run: ec2-describe-groups
+			this should show a group named ssh_allowed with port 22 open			
+	Create an Elastic Block Storage (EBS) to store data from multiple instances
+		run: ec2-create-volume --size 20 --zone us-west-2b
+			creates a "virutal hard drive 20 GB in size"
+		run: ec2-describe-volumes
+			this should list an available ebs	
+			record the volume id (e.g. vol-06835d69) 
+	Format the EBS with an EC2 instance
+		run: ec2-run-instance ami-fcf27fcc -k amazon_key -g ssh_allowed --instance-type t1.micro
+		run: ec2-describe-instances
+			this should show you an instances that spinning up (pending)
+			repeat command until the instance is running
+			record the instance id (the first column of the description) (e.g. i-6b2c9f58)
+			record the dns (e.g. ec2-54-245-23-238.us-west-2.compute.amazonaws.com)
+		run: ec2-attach-volume vol-06835d69 -i i-6b2c9f58 -d /dev/sdf
+			substitute the actual volume and instance names here
+		run: ec2-describe-volumes
+			the volume should now be attached
+		run: ssh -i ~/.ssh/amazon_key root@ec2-54-245-23-238.us-west-2.compute.amazonaws.com 
+			allow new dns entry (type "yes" and enter)
+		run: mkdir -p  /mnt/ebs && mkfs -t ext4 /dev/xvdf && mount /dev/xvdf /mnt/ebs
+		end ssh session (CTRL-D)
+		run: ec2-terminate-instances i-6b2c9f58 
+			replace instance name with actual name
+
+
+
+	KN = standard 
 	GN = standard
 	IMAGE = ami-fcf27fcc
 		The image is Debian 6.0
+
+
