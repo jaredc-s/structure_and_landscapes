@@ -11,6 +11,7 @@ from rna import vienna_distance
 
 import numpy as np
 import scipy.stats as st
+import matplotlib.pyplot as plt
 
 def int_org_demo():
     org_list = [int_organism(i) for i in range(1, 11)]
@@ -63,7 +64,7 @@ def rna_org_demo():
     target = rna_organism.default_organism
     start_genome = "".join(["A" for _ in target.value])
     starting_org = rna_organism.Organism(start_genome)
-    pop = Population([rna_organism.random_organism() for _ in range(100)], mutation_rate=.1)
+    pop = Population([rna_organism.random_organism() for _ in range(100)], mutation_rate=.001)
     run(pop)
 
 
@@ -115,19 +116,32 @@ def print_best_structure(pop):
 
 def run(pop):
     fit_list = []
+    mean_fitness = []
+    std_error_fitness =[]
     for gen in range(500):
         one_gen = []
         for org in pop:
             one_gen.append(org.fitness)
-        fit_list.append(one_gen)
+        #fit_list.append(one_gen)
+
+        mean_fitness.append(np.mean(one_gen))
+        std_error_fitness.append(st.sem(one_gen))
         pop.advance_generation()
 
-        print_best_structure(pop)
+        #print_best_structure(pop)
 
-    print np.mean(fit_list[0]), st.sem(fit_list[0])
-    print np.mean(fit_list[-1]), st.sem(fit_list[-1])
+    plt.figure(facecolor='white', dpi=95)
+    plt.title('Mean Fitness')
+    plt.ylabel('fitness')
+    plt.xlabel('generations')
+    plt.errorbar(range(len(mean_fitness)), mean_fitness, lw=1.4, color= 'blue')
+    plt.show()
+    #print(fit_list)
+    #print np.mean(fit_list[0]), st.sem(fit_list[0])
+    #print np.mean(fit_list[-1]), st.sem(fit_list[-1])
+    #print fit_list[-1]
 
 if __name__=='__main__':
-    #rna_org_demo()
+    rna_org_demo()
     #int_org_demo()
-    rna_org_structured_pop_demo()
+    #rna_org_structured_pop_demo()
