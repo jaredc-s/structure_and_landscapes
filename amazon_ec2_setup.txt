@@ -73,6 +73,9 @@ Command to detach volume:
 	ec2-detach-volume vol-06835d69
 Command to terminate instance:
 	ec2-terminate-instances i-670fbc54
+Commands to setup:
+	apt-get -y update
+	apt-get -y install git
 
 
 
