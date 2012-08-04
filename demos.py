@@ -46,8 +46,8 @@ def nk_gene_structured_pop_demo():
     nk_org = bs.nk_organism.Organism(
         b, nk_fac.consecutive_dependencies_multigene(
             n_per_gene=3, number_of_genes=3, k_intra_gene=1, k_total=2))
-    org_list = [nk_org for _ in range(10)]
-    pop_list = [Population(org_list) for _ in range(10)]
+    org_list = [nk_org for _ in range(5)]
+    pop_list = [Population(org_list) for _ in range(5)]
     structured_pop = Structured_Population(pop_list, migration_rate=0.5,
                                            proportion_of_pop_swapped=0.5)
     run(structured_pop)
@@ -64,7 +64,7 @@ def rna_org_demo():
     target = rna_organism.default_organism
     start_genome = "".join(["A" for _ in target.value])
     starting_org = rna_organism.Organism(start_genome)
-    pop = Population([rna_organism.random_organism() for _ in range(100)], mutation_rate=.001)
+    pop = Population([rna_organism.random_organism() for _ in range(10)], mutation_rate=.001)
     run(pop)
 
 
