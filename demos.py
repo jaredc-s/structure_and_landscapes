@@ -70,7 +70,7 @@ def rna_org_demo():
 
 def rna_org_structured_pop_demo():
     org = rna_organism.random_organism()
-    org_list = [org for _ in range(20)]
+    org_list = [org for _ in range(5)]
     pop_list = [Population(org_list) for _ in range(5)]
     structured_pop = Structured_Population(pop_list, migration_rate=0.5,
                                            proportion_of_pop_swapped=0.5)
