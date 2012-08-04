@@ -28,7 +28,6 @@ coverage: clean cython_compile
 
 # Installs the needed dependancies
 install:
-	apt-get -y install python-pip
 	pip install nose coverage pep8 cython RunSnakeRun numpy matplotlib
 
 # Runs pep8 (python style checker) on all .py file
