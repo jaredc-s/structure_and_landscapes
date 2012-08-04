@@ -70,8 +70,8 @@ def rna_org_demo():
 
 def rna_org_structured_pop_demo():
     org = rna_organism.random_organism()
-    org_list = [org for _ in range(5)]
-    pop_list = [Population(org_list) for _ in range(5)]
+    org_list = [org for _ in range(2)]
+    pop_list = [Population(org_list) for _ in range(2)]
     structured_pop = Structured_Population(pop_list, migration_rate=0.5,
                                            proportion_of_pop_swapped=0.5)
     run(structured_pop)
@@ -79,8 +79,8 @@ def rna_org_structured_pop_demo():
 
 def structured_pop_demo():
     b = Bitstring("10011")
-    org_list = [bit_organism(b) for i in range(1, 50)]
-    pop_list = [Population(org_list) for _ in range(10)]
+    org_list = [bit_organism(b) for i in range(1, 5)]
+    pop_list = [Population(org_list) for _ in range(2)]
     struct_pop = Structured_Population(pop_list, migration_rate=0.5,
                                        proportion_of_pop_swapped=0.5)
     run(struct_pop)
