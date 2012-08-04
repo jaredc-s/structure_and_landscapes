@@ -97,7 +97,7 @@ def average_fitness_of_structured_population(structured_population):
 
 
 def run(pop):
-    for gen in range(500):
+    for gen in range(5):
         pop.advance_generation()
 
 
