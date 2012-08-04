@@ -48,16 +48,17 @@ Options:
 	image (Debian squeeze 6.0):
 		ami-fcf27fcc (32-bit)
 		ami-8ef27fbe (64-bit)
+		ami-3e800c0e (Ubuntu)
 	instance types 
 		more info: (http://aws.amazon.com/ec2/instance-types/, 
 			http://aws.amazon.com/ec2/pricing/)
  		t1.micro (Tiny for testing purposes, $0.020 per Hour)
-		m1.small (1.7 GB, 1 core, $0.080 per Hour)
+		m1.small (1.7  GB, 1 core, $0.080 per Hour)
 Command to start:
-	ec2-run-instance ami-fcf27fcc -k amazon_key -g ssh_allowed --instance-type t1.micro --wait=5
+	ec2-run-instance ami-3e800c0e -k amazon_key -g ssh_allowed --instance-type t1.micro --wait=5
 Command to get info about started instances and volumes:
 	ec2-describe-instances
-	ec2-describe-volumes
+	ec2-describe-volumes 
 Command to attach EBS volume:
 	ec2-attach-volume vol-06835d69 -i i-670fbc54 -d /dev/sdf
 	"then ssh into instance (see below)"
@@ -74,8 +75,9 @@ Command to detach volume:
 Command to terminate instance:
 	ec2-terminate-instances i-670fbc54
 Commands to setup:
-	apt-get -y update
-	apt-get -y install git
+	sudo apt-get -y install git
+	git clone git://github.com/nahumj/structure_and_landscapes.git
+	sudo bash structure_and_landscapes/amazon.sh
 
 
 
