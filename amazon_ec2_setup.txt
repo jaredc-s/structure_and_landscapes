@@ -55,7 +55,7 @@ Options:
  		t1.micro (Tiny for testing purposes, $0.020 per Hour)
 		m1.small (1.7  GB, 1 core, $0.080 per Hour)
 Command to start:
-	ec2-run-instance ami-3e800c0e -k amazon_key -g ssh_allowed --instance-type t1.micro --wait=5
+	ec2-run-instance ami-3e800c0e -k amazon_key -g ssh_allowed --instance-type m1.small --wait=5
 Command to get info about started instances and volumes:
 	ec2-describe-instances
 	ec2-describe-volumes 
