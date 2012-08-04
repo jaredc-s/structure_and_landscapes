@@ -5,7 +5,7 @@ CC=gcc
 LD=gcc
 
 # Flags for compiling (mostly needed for Vienna RNA and cython)
-CFLAGS=-shared -fopenmp -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing -I/usr/include/python -I/usr/local/include/ViennaRNA
+CFLAGS=-shared -fopenmp -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing -I/usr/include/python2.6 -I/usr/local/include/ViennaRNA
 LFLAGS=-L/usr/local/lib/ViennaRNA -lRNA 
 
 # Not real targets
