@@ -1,0 +1,12 @@
+Short guide to running this software on Amazon EC2
+
+Amazon Web Services Set-Up
+==========================
+Make an AWS account (aws.amazon.com)
+Install aws commandline tools (timkay.com/aws)
+	Be sure to do the optional step 3
+Initialize settings (follow directions from timkay.com/aws/howto.html)
+	KN = standard
+	GN = standard
+	IMAGE = ami-fcf27fcc
+		The image is Debian 6.0
