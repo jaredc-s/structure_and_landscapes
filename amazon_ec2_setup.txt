@@ -76,6 +76,6 @@ Command to terminate instance:
 Commands to setup:
 	sudo apt-get -y install git
 	git clone git://github.com/nahumj/structure_and_landscapes.git
-	sudo bash structure_and_landscapes/amazon.sh
+	sudo bash structure_and_landscapes/setup_script.sh
 
 
