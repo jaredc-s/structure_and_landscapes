@@ -1,31 +1,9 @@
-List of Dependancies for EC2
-===================================================================================
-sudo apt-get install git 
-git clone ****
-sudo apt-get install make
-sudo apt-get install build-essential 
-sudo apt-get install python-pip
-sudo apt-get install python-profiler python-wxgtk2.8 python-setuptools
-make install-dependancies 
-
 Tasks For Next Week:
 ===================================================================================
-J^3:
-figure out mutation problem
-
 Joe:
-look up computing resources at UW (thousands of hours not millions)
-determine optimal parameters for rna_organism...
-	-able to improve
-	-able to get close to the optimum
-	-alot of variance in the outcome
-	-some runs do well and some make it 
-	-for both structured and unstructured populations 
-	-#deems and migration rate...heat map
-	-
+Bye Week
 
 Josh:
-look up commercial cloud options 
 write up a peristence module ...
 
 
@@ -33,8 +11,6 @@ Jared:
 lazy nk_table 
 
 ====================================================================================
-look up computing resources!!!
-a job that should take a second
 
 Stats in Python:
 *t-test
