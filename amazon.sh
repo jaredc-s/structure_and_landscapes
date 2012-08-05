@@ -9,6 +9,4 @@ cd ViennaRNA-2.0.7
 ./configure
 make
 make install
-cd ~
-cd structure_and_landscapes
-make install
+export PYTHONPATH=$PYTHONPATH:~
