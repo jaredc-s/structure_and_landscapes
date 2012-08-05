@@ -1,5 +1,16 @@
-look up computing resources!!!
-a job that should take a second
+Tasks For Next Week:
+===================================================================================
+Joe:
+Bye Week
+
+Josh:
+write up a peristence module ...
+
+
+Jared: 
+lazy nk_table 
+
+====================================================================================
 
 Stats in Python:
 *t-test

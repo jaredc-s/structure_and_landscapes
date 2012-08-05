@@ -27,8 +27,8 @@ coverage: clean cython_compile
 	nosetests --with-coverage --
 
 # Installs the needed dependancies
-install-dependancies: 
-	pip install nose coverage pep8 cython RunSnakeRun numpy matplotlib
+install:
+	pip install nose coverage pep8 cython RunSnakeRun
 
 # Runs pep8 (python style checker) on all .py file
 style:
@@ -39,9 +39,11 @@ clean: clean_cython
 	-find . -name \*.pyc | xargs rm 
 	-rm profiledata
 	-rm -r .coverage
+	-rm -r ~/.config
 
 # Visual profiler
 profile: .profiledata 
+	mkdir ~/.config
 	runsnake $<
 
 

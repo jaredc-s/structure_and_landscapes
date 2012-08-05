@@ -22,6 +22,12 @@ Authors
 .. _`Joseph Marcus` : josephhmarcus@gmail.com 
 .. _`Joshua Nahum` : josh@nahum.us
 
+Github Repositories
+===================
+* git://github.com/jaredc-s/structure_and_landscapes.git
+* git://github.com/jhmarcus/structure_and_landscapes.git
+* git://github.com/nahumj/structure_and_landscapes.git  
+
 Requirements
 ============
 
