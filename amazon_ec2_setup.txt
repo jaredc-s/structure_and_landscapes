@@ -49,13 +49,14 @@ Options:
 		ami-fcf27fcc (32-bit)
 		ami-8ef27fbe (64-bit)
 		ami-3e800c0e (Ubuntu)
+		ami-8472fdb4 (Custom pre-initialied image 04August2012)
 	instance types 
 		more info: (http://aws.amazon.com/ec2/instance-types/, 
 			http://aws.amazon.com/ec2/pricing/)
  		t1.micro (Tiny for testing purposes, $0.020 per Hour)
 		m1.small (1.7  GB, 1 core, $0.080 per Hour)
 Command to start:
-	ec2-run-instance ami-3e800c0e -k amazon_key -g ssh_allowed --instance-type m1.small --wait=1 -z us-west-2b
+	ec2-run-instance ami-8472fdb4  -k amazon_key -g ssh_allowed --instance-type m1.small --wait=1 -z us-west-2b
 Command to get info about started instances and volumes:
 	ec2-describe-instances
 	ec2-describe-volumes 
