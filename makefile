@@ -39,9 +39,11 @@ clean: clean_cython
 	-find . -name \*.pyc | xargs rm 
 	-rm profiledata
 	-rm -r .coverage
+	-rm -r ~/.config
 
 # Visual profiler
 profile: .profiledata 
+	mkdir ~/.config
 	runsnake $<
 
 
