@@ -45,12 +45,12 @@ def nk_gene_structured_pop_demo():
     nk_fac = bs.nk_model.NKModelFactory()
     nk_org = bs.nk_organism.Organism(
         b, nk_fac.consecutive_dependencies_multigene(
-            n_per_gene=3, number_of_genes=3, k_intra_gene=1, k_total=2))
+            n_per_gene=5, number_of_genes=3, k_intra_gene=1, k_total=2))
     org_list = [nk_org for _ in range(10)]
     pop_list = [Population(org_list) for _ in range(10)]
     structured_pop = Structured_Population(pop_list, migration_rate=0.5,
                                            proportion_of_pop_swapped=0.5)
-    run_struc(structured_pop)
+    run(structured_pop)
 
 
 def bit_org_demo():
@@ -115,33 +115,12 @@ def print_best_structure(pop):
     print vienna_distance.fold(best_org.value), best_org.fitness
 
 def run(pop):
-    fit_list = []
-    mean_fitness = []
-    std_error_fitness =[]
     for gen in range(500):
-        one_gen = []
-        for org in pop:
-            one_gen.append(org.fitness)
-        #fit_list.append(one_gen)
-
-        mean_fitness.append(np.mean(one_gen))
-        std_error_fitness.append(st.sem(one_gen))
         pop.advance_generation()
 
-        #print_best_structure(pop)
-
-    plt.figure(facecolor='white', dpi=95)
-    plt.title('Mean Fitness')
-    plt.ylabel('fitness')
-    plt.xlabel('generations')
-    plt.errorbar(range(len(mean_fitness)), mean_fitness, lw=1.4, color= 'blue')
-    plt.show()
-    #print(fit_list)
-    #print np.mean(fit_list[0]), st.sem(fit_list[0])
-    #print np.mean(fit_list[-1]), st.sem(fit_list[-1])
-    #print fit_list[-1]
 
 if __name__=='__main__':
-    rna_org_demo()
+    nk_gene_structured_pop_demo()
+    #rna_org_demo()
     #int_org_demo()
     #rna_org_structured_pop_demo()
