@@ -8,7 +8,7 @@ write up a peristence module ...
 
 
 Jared: 
-lazy nk_table 
+Investigating RNAinverse
 
 ====================================================================================
 
