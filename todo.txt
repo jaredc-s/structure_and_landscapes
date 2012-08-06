@@ -8,7 +8,7 @@ write up a peristence module ...
 
 
 Jared: 
-Investigating RNAinverse
+Add lineage tracking
 
 ====================================================================================
 
