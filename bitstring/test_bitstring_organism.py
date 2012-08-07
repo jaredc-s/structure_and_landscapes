@@ -45,6 +45,11 @@ class TestOrganism(TC):
         g_ = g0.mutate()
         self.assertNotEqual(g0, g_)
 
+    def test_parent(self):
+        g0 = Organism(self.value_0)
+        g_ = g0.mutate()
+        self.assertEqual(g0.id, g_.parent)
+
     def test_fitness(self):
         g0 = Organism(self.value_0)
         self.assertAlmostEqual(0, g0.fitness)
