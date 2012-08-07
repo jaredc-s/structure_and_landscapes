@@ -21,6 +21,12 @@ class TestOrganism(TC):
         expected_fit = (1 + 0.2 + 0.8) / float(3)
         self.assertEqual(expected_fit, self.org.fitness)
 
+    def test_parent(self):
+        org2 = Organism(self.value, self.model, '1')
+        org3 = org2.mutate()
+        self.assertEqual(org2.id, org3.parent)
+        self.assertIsNotNone(org3.id)
+
     def test_equality(self):
         other = Organism(bitstring.Bitstring("001"), self.model)
         self.assertNotEqual(self.org, other)
