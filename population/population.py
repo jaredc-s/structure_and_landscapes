@@ -69,4 +69,7 @@ class Population(object):
     def add_to_pop(self, org):
         self.population.append(org)
 
+    def max_fitness_of_pop(self):
+        return max([org.fitness for org in self.population])
+
 default_population = Population([1, 1, 0, 0, 1])

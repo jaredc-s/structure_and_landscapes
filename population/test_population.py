@@ -74,3 +74,6 @@ class TestPopulation(TC):
 
     def test_full(self):
         self.assertTrue(self.pop.is_full())
+
+    def test_max_fit(self):
+        self.assertEqual(self.pop.max_fitness_of_pop(), MockOrganism(4).eval_fit())
