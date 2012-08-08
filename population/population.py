@@ -74,6 +74,6 @@ class Population(object):
 
     def mean_fitness_of_pop(self):
         fits = [org.fitness for org in self.population]
-        return float(sum(fits))/len(fits)
+        return float(sum(fits)) / len(fits)
 
 default_population = Population([1, 1, 0, 0, 1])
