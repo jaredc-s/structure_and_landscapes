@@ -4,7 +4,7 @@ Amazon Web Services Set-Up
 ==========================
 Make an AWS account (aws.amazon.com)
 Install aws commandline tools (timkay.com/aws)
-	Be sure to do the optional step 3
+	Be sure to do the optional step 3 as root (sudo perl aws --install)
 	add "--region=us-west-2 --simple" to ~/.awsrc
 Initialize settings (adapted from "Get started with EC2." directions from timkay.com/aws/howto.html)
 	Create Keypair (used for logging in to ec2 instance)
@@ -46,17 +46,20 @@ Initialize EC2 Instance
 =======================
 Options: 
 	image (Debian squeeze 6.0):
-		ami-fcf27fcc (32-bit)
-		ami-8ef27fbe (64-bit)
-		ami-3e800c0e (Ubuntu)
+		ami-fcf27fcc (Debian 6.0 32-bit)
+		ami-8ef27fbe (Debian 6.0 64-bit)
+		ami-20800c10 (Ubuntu 12.04 64-bit)
+		ami-3e800c0e (Ubuntu 12.04 32-bit)
 		ami-8472fdb4 (Custom pre-initialied image 04August2012)
 	instance types 
 		more info: (http://aws.amazon.com/ec2/instance-types/, 
 			http://aws.amazon.com/ec2/pricing/)
  		t1.micro (Tiny for testing purposes, $0.020 per Hour)
 		m1.small (1.7  GB, 1 core, $0.080 per Hour)
+		m1.medium (3.75 GB, 1 core x 2, $0.16 per hour)
+		m1.large (7.5 GB, 2 core x 2, $0.32 per hour)
 Command to start:
-	ec2-run-instance ami-8472fdb4  -k amazon_key -g ssh_allowed --instance-type m1.small --wait=1 -z us-west-2b
+	ec2-run-instance ami-8472fdb4  -k amazon_key -g ssh_allowed --instance-type m1.medium --wait=1 -z us-west-2b
 Command to get info about started instances and volumes:
 	ec2-describe-instances
 	ec2-describe-volumes 
