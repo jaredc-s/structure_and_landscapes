@@ -20,7 +20,7 @@ Initialize settings (adapted from "Get started with EC2." directions from timkay
 		run: ec2-describe-groups
 		 	this should show a group named ssh_allowed with port 22 open			
 	Create an Elastic Block Storage (EBS) to store data from multiple instances
-		run: ec2-create-volume --size 20 -z us-west-2b
+		run: ec2-create-volume --size 20 --zone us-west-2b
 			creates a "virutal hard drive 20 GB in size"
 		run: ec2-describe-volumes
 			this should list an available ebs	
@@ -35,9 +35,9 @@ Initialize settings (adapted from "Get started with EC2." directions from timkay
 			substitute the actual volume and instance names here
 		run: ec2-describe-volumes
 			the volume should now be attached
-		run: ssh -i ~/.ssh/amazon_key root@ec2-54-245-23-238.us-west-2.compute.amazonaws.com 
+		run: ssh -i ~/.ssh/amazon_key ubuntu@ec2-54-245-23-238.us-west-2.compute.amazonaws.com 
 			allow new dns entry (type "yes" and enter)
-		run: mkdir -p  /mnt/ebs && mkfs -t ext4 /dev/xvdf && mount /dev/xvdf /mnt/ebs
+		run: sudo mkdir -p  /mnt/ebs && sudo mkfs -t ext4 /dev/xvdf && sudo mount /dev/xvdf /mnt/ebs
 		end ssh session (CTRL-D)
 		run: ec2-terminate-instances i-6b2c9f58 
 		 	replace instance name with actual name
@@ -82,5 +82,7 @@ Commands to setup:
 	git clone git://github.com/nahumj/structure_and_landscapes.git
 	sudo bash structure_and_landscapes/setup_script.sh
 	export PYTHONPATH=$PYTHONPATH:~
+Moving files (to pull files reverse order):
+	scp -i ~/.ssh/amazon_key LOCAL_FILE_PATH ubuntu@ec2-54-245-18-248.us-west-2.compute.amazonaws.com:REMOTE_FILE PATH  
 
 
