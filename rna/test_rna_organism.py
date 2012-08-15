@@ -20,6 +20,10 @@ class TestOrganism(TC):
             org = org.mutate()
         self.assertTrue(set(org.value) <= set("ATCG"))
 
+    def test_parent(self):
+        org = Organism('AAA', '1')
+        org2 = org.mutate()
+        self.assertEqual(org.id, org2.parent)
     def test_fitness(self):
         #self.assertAlmostEqual(self.organism.fitness, 1)
         all_As = "".join('A' for _ in self.organism.value)

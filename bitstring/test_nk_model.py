@@ -25,7 +25,19 @@ class TestSimpleNKModel(TC):
         bs = Bitstring("01")
         expected_fitness = (.3 + .6) / 2.0
         self.assertAlmostEqual(expected_fitness, model.calculate_fitness(bs))
-
+    
+    def test_calc_fit_lazy(self):
+        dep = [[0], [1]]
+        clt = [[None, None, None, None], [None, None, None, None]]
+        model = NKModelSimple(dep, clt)
+        bs = Bitstring('01')
+        bs2 = Bitstring('01')
+        bs3 = Bitstring('10')
+        self.assertNotEqual(model.calculate_fitness(bs), None)
+        self.assertEqual(model.calculate_fitness(bs),
+                         model.calculate_fitness(bs2))
+        self.assertNotEqual(model.calculate_fitness(bs),
+                            model.calculate_fitness(bs3))
 
 class TestNKModelFactory(TC):
     def setUp(self):

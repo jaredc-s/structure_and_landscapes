@@ -17,6 +17,7 @@ distribution. The mean contribution of each locus is the fitness.
 import collections
 import itertools
 from random import Random
+import random
 from bitstring import Bitstring
 
 
@@ -157,7 +158,7 @@ class NKModelFactory(object):
         corresponding to the numerical value of the subbitstring
         (locus + k neighbors).
         """
-        clt = [[self.random_generator.random() for _ in range(
+        clt = [[None for _ in range(
             2 ** len(dep_list))] for dep_list in dependency_lists]
         return NKModelSimple(dependency_lists, clt)
 
@@ -189,5 +190,8 @@ class NKModelSimple(object):
             contribution_index = bitstring.selected_loci_as_int(
                 dependency_list)
             lookup_table = self.contribution_lookup_tables[loci]
+            if lookup_table[contribution_index] is None:
+                part_fit = random.random()
+                lookup_table[contribution_index] = part_fit
             fitness_tally += lookup_table[contribution_index]
         return fitness_tally / num_loci
