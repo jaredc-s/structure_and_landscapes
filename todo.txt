@@ -1,14 +1,23 @@
 Tasks For Next Week:
 ===================================================================================
+Meeting 1pm Wednesday, August 22nd.
+
 Joe:
-Bye Week
+August 24 gone.
+Visual representations of population evolution/fitness.
+Simple NK, fixed n = 10, k = 0 - 9, structure versus unstructured
 
 Josh:
 write up a peristence module ...
-
+Test RunSnake
+Profile lazy lookup (look into None versus to-be-fill dict)
+Shared Amazon Account or Linking together. Finance stuff.
 
 Jared: 
 Add lineage tracking
+lazy lookup (list of dicts)
+Dropbox, shared folders
+
 
 ====================================================================================
 
