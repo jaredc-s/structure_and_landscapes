@@ -47,18 +47,20 @@ class TestNKModelFactory(TC):
         smooth_nk = self.factory.no_dependencies(2)
         self.assertEqual(smooth_nk.dependency_lists, [[0], [1]])
         self.assertEqual(len(smooth_nk.contribution_lookup_tables), 2)
-        self.assertEqual(len(smooth_nk.contribution_lookup_tables[0]), 2)
-        self.assertEqual(len(smooth_nk.contribution_lookup_tables[1]), 2)
+        smooth_nk.calculate_fitness(Bitstring("0"))
+        self.assertEqual(len(smooth_nk.contribution_lookup_tables[0]), 1)
+        self.assertEqual(len(smooth_nk.contribution_lookup_tables[1]), 0)
 
     def test_model_with_uniform_contribution_lookup_table(self):
-        dep_lists = [[0, 1], [1, 2, 3], [4]]
+        dep_lists = [[0, 1], [1, 2, 0], [2]]
         model = self.factory._model_with_uniform_contribution_lookup_table(
             dep_lists)
         clt = model.contribution_lookup_tables
+        model.calculate_fitness(Bitstring("001"))
         self.assertEqual(len(clt), 3)
-        self.assertEqual(len(clt[0]), 4)
-        self.assertEqual(len(clt[1]), 8)
-        self.assertEqual(len(clt[2]), 2)
+        self.assertEqual(len(clt[0]), 1)
+        self.assertEqual(len(clt[1]), 1)
+        self.assertEqual(len(clt[2]), 1)
 
     def test_max_depandancies(self):
         model = self.factory.max_dependencies(6)
