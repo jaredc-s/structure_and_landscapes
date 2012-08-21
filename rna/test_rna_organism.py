@@ -24,13 +24,20 @@ class TestOrganism(TC):
         org = Organism('AAA', '1')
         org2 = org.mutate()
         self.assertEqual(org.id, org2.parent)
+
+    def test_fitness_cache(self):
+        organism =  rna_organism.random_organism()
+        self.assertIsNone(organism._fitness)
+        organism.fitness
+        self.assertIsNotNone(organism._fitness)
+
     def test_fitness(self):
         #self.assertAlmostEqual(self.organism.fitness, 1)
         all_As = "".join('A' for _ in self.organism.value)
 
         a_org = Organism(all_As)
         self.assertLess(a_org.fitness, self.organism.fitness)
-
+        
     def test_key(self):
         self.assertEqual(self.organism[0], 'G')
         self.assertEqual(self.organism, rna_organism.default_organism)
