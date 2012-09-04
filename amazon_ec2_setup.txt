@@ -54,11 +54,11 @@ Options:
 		ami-3e800c0e (Ubuntu 12.04 32-bit)
 	instance types 
 		more info: (http://aws.amazon.com/ec2/instance-types/, 
-			http://aws.amazon.com/ec2/pricing/)
- 		t1.micro (Tiny for testing purposes, $0.020 per Hour)
-		m1.small (1.7  GB, 1 core, $0.080 per Hour)
+			    http://aws.amazon.com/ec2/pricing/)
+ 		t1.micro  (Tiny for testing purposes, $0.020 per Hour)
+		m1.small  (1.7  GB, 1 core, $0.080 per Hour)
 		m1.medium (3.75 GB, 1 core x 2, $0.16 per hour)
-		m1.large (7.5 GB, 2 core x 2, $0.32 per hour)
+		m1.large  (7.5 GB, 2 core x 2, $0.32 per hour)
 Command to start:
 	ec2-run-instance ami-8472fdb4  -k amazon_key -g ssh_allowed --instance-type m1.medium --wait=1 -z us-west-2b
 Command to get info about started instances and volumes:
