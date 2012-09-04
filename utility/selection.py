@@ -1,11 +1,11 @@
 """
 Module to perform fitness proportional selection
-Selection is based off number line proportionallity
+Selection is based off number line proportionally
 If random number is selected in area that has already been selected
    the space in the population will be returned unfilled
 
 Birth-death models:
-Moran: Random death, among neighbors (well mixed for everyone) pick org
+Moran: Random death, among neighbors (well mixed for everyone) pick organism
 to give birth into that slot do it 1,000 times for a population size of 1,000.
 This is termed a "generation"
 """
@@ -54,7 +54,7 @@ def normalize(nums):
 
 def moran_death_birth(orgs, mutation_rate):
     """Method to execute the replacement of organism in a death-birth
-    fashion using fecundity to replace the randomly seleted death organism
+    fashion using fecundity to replace the randomly selected death organism
     """
     for _ in range(len(orgs)):
         index_to_kill = random.randrange(len(orgs))
