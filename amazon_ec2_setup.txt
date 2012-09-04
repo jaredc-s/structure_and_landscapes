@@ -20,7 +20,6 @@ Initialize settings (adapted from "Get started with EC2." directions from timkay
 		run: ec2-add-group ssh_allowed -d "allow ssh and scp"
 		run: ec2auth ssh_allowed -P tcp -p 22 -s 0.0.0.0/0
 		run: ec2-describe-groups
-		 	this should show a group named ssh_allowed with port 22 open			
 	Create an Elastic Block Storage (EBS) to store data from multiple instances
 		run: ec2-create-volume --size 20 --zone us-west-2b
 			creates a "virutal hard drive 20 GB in size"
