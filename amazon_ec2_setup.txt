@@ -1,5 +1,7 @@
 Short guide to running this software on Amazon EC2
 
+Note: Ami and vol names will be unique to your project.
+
 Amazon Web Services Set-Up
 ==========================
 Make an AWS account (aws.amazon.com)
