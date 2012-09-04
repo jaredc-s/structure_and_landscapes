@@ -52,7 +52,6 @@ Options:
 		ami-8ef27fbe (Debian 6.0 64-bit)
 		ami-20800c10 (Ubuntu 12.04 64-bit, preferred)
 		ami-3e800c0e (Ubuntu 12.04 32-bit)
-		ami-8472fdb4 (Custom pre-initialied image 04August2012)
 	instance types 
 		more info: (http://aws.amazon.com/ec2/instance-types/, 
 			http://aws.amazon.com/ec2/pricing/)
