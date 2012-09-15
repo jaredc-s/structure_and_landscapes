@@ -14,18 +14,19 @@ import uuid
 from contextlib import closing
 
 def save(filepath, key, value):
-    with closing(get_shelf(filepath)) as shelf:
+    with get_shelf(filepath) as shelf:
         shelf[key] = value
 
 def load(filepath, key):
-    with closing(get_shelf(filepath)) as shelf:
+    with get_shelf(filepath) as shelf:
         return shelf[key]
 
 def get_shelf(filepath):
     """
     Returns the shelf object. Don't forget to close.
     """
-    return shelve.open(filepath, flag='c', protocol=pickle.HIGHEST_PROTOCOL)
+    return closing(shelve.open(
+        filepath, flag='c', protocol=pickle.HIGHEST_PROTOCOL))
 
 def save_with_unique_key(filepath, value):
     """

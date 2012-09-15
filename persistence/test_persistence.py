@@ -5,7 +5,7 @@ import os.path
 import shutil
 from contextlib import closing
 
-import structure_and_landscapes.integer.integer_organism as org
+from ..integer import integer_organism as org
 class TestModule(TC):
     def setUp(self):
         """
@@ -42,11 +42,11 @@ class TestModule(TC):
         persistence.save(self.temp_file, "a", 1)
         persistence.save(self.temp_file, "b", 2)
         persistence.save(self.temp_file, "c", 3)
-        with closing(persistence.get_shelf(self.temp_file)) as shelf:
+        with persistence.get_shelf(self.temp_file) as shelf:
             self.assertEqual(len(shelf), 3)
 
     def test_save_with_unique_key(self):
         for _ in range(10):
             persistence.save_with_unique_key(self.temp_file, None)
-        with closing(persistence.get_shelf(self.temp_file)) as shelf:
+        with persistence.get_shelf(self.temp_file) as shelf:
             self.assertEqual(len(shelf), 10)
