@@ -69,10 +69,10 @@ class Population(object):
     def add_to_pop(self, org):
         self.population.append(org)
 
-    def max_fitness_of_pop(self):
+    def max_fitness(self):
         return max([org.fitness for org in self.population])
 
-    def mean_fitness_of_pop(self):
+    def mean_fitness(self):
         fits = [org.fitness for org in self.population]
         return float(sum(fits)) / len(fits)
 

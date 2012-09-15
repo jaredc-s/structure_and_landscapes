@@ -23,7 +23,7 @@ test-all: all
 all: cython_compile
 
 # Tells us unittesting line coverage 
-coverage: clean cython_compile
+coverage: all
 	nosetests --with-coverage --cover-package=structure_and_landscapes --
 
 # Installs the needed dependancies

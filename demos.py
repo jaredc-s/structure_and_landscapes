@@ -103,7 +103,6 @@ def run(pop):
     return pop
 
 
-if __name__=='__main__':
-    print(rna_org_demo())
+print(rna_org_demo())
     #int_org_demo()
     #rna_org_structured_pop_demo()
