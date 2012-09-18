@@ -80,8 +80,8 @@ class Structured_Population(object):
         self.migrate()
 
     def max_fitness(self):
-        return max([pop.max_fitness_of_pop() for pop in self.list_of_populations])
+        return max([pop.max_fitness() for pop in self.list_of_populations])
 
     def mean_fitness(self):
-        fits = [pop.mean_fitness_of_pop() for pop in self.list_of_populations]
+        fits = [pop.mean_fitness() for pop in self.list_of_populations]
         return float(sum(fits)) / len(fits)

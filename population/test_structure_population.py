@@ -1,9 +1,9 @@
-import unittest
 from unittest import TestCase as TC
-
-import structure_population
-from structure_population import Structured_Population
 import random
+
+from structure_population import Structured_Population
+from population import Population
+from ..integer.integer_organism import Organism
 
 
 class MockOrganism(object):
@@ -51,14 +51,24 @@ class MockPopulation(object):
     def moran_selection(self):
         self.pop = self.pop
 
+    def mean_fitness(self):
+        pass
+
+
 
 class TestPopulation(TC):
     def setUp(self):
-        self.orgs = [MockOrganism(1), MockOrganism(2),
-                     MockOrganism(3), MockOrganism(4)]
+        self.orgs = [Organism(1), Organism(2),
+                     Organism(3), Organism(4)]
 
-        self.pops = [MockPopulation(self.orgs, 5) for _ in range(10)]
+        self.pops = [Population(self.orgs) for _ in range(10)]
         self.struct = Structured_Population(self.pops, 0.5, 0.5)
+
+    def test_max_fitness(self):
+        self.assertAlmostEqual(self.struct.max_fitness(), 4.0)
+
+    def test_mean_fitness(self):
+        self.assertAlmostEqual(self.struct.mean_fitness(), 2.5)
 
     def test_length(self):
         self.assertEqual(10, len(self.struct))
@@ -72,14 +82,10 @@ class TestPopulation(TC):
         self.struct.replicate()
         self.struct.remove_at_random()
         for pop in self.struct:
-            self.assertEqual(5, len(pop))
+            self.assertEqual(4, len(pop))
 
     def test_advance_generation(self):
         self.struct.advance_generation()
-        for pop in self.struct:
-            for org in pop:
-                print org.eval_fit()
-            print '\n'
 
     def test_migrate(self):
         self.struct.migrate()
