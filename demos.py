@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 from bitstring.bitstring_organism import Organism as bit_organism
 from integer.integer_organism import Organism as int_organism
 from bitstring.bitstring import Bitstring
