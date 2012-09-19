@@ -11,6 +11,7 @@ cd ViennaRNA-2.0.7
 make
 make install
 export PYTHONPATH=$PYTHONPATH:~
+cd
 git clone https://github.com/nahumj/structure_and_landscapes.git
 cd structure_and_landscapes
 make install

@@ -66,7 +66,7 @@ def rna_org_demo():
     start_genome = "".join(["A" for _ in target.value])
     starting_org = rna_organism.Organism(start_genome)
     pop = Population([rna_organism.random_organism() for _ in range(10)], mutation_rate=.001)
-    run(pop)
+    return run(pop)
 
 
 def rna_org_structured_pop_demo():
@@ -100,9 +100,9 @@ def average_fitness_of_structured_population(structured_population):
 def run(pop):
     for gen in range(5):
         pop.advance_generation()
+    return pop
 
 
-if __name__=='__main__':
-    rna_org_demo()
+print(rna_org_demo())
     #int_org_demo()
     #rna_org_structured_pop_demo()
