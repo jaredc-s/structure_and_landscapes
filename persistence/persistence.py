@@ -23,7 +23,7 @@ def load(filepath, key):
 
 def get_shelf(filepath):
     """
-    Returns the shelf object. Don't forget to close.
+    Returns the shelf object. Uses context manager ('with' statement).
     """
     return closing(shelve.open(
         filepath, flag='c', protocol=pickle.HIGHEST_PROTOCOL))
