@@ -11,7 +11,7 @@ import uuid
 
 
 class Organism(mixins.KeyedHashingMixin):
-    def __init__(self, value, parent_id = None):
+    def __init__(self, value, parent_id=None):
         """
         init takes a single argument which should be a bit string
         """

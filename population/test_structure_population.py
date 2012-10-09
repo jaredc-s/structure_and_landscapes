@@ -55,7 +55,6 @@ class MockPopulation(object):
         pass
 
 
-
 class TestPopulation(TC):
     def setUp(self):
         self.orgs = [Organism(1), Organism(2),

@@ -4,6 +4,7 @@ parameters and results of a single evolutionary simulation.
 """
 import persistence
 
+
 class Run(object):
 
     def __init__(self, initial_population, parameters, shelf_filepath):

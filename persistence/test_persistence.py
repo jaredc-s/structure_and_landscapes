@@ -6,6 +6,8 @@ import shutil
 from contextlib import closing
 
 from ..integer import integer_organism as org
+
+
 class TestModule(TC):
     def setUp(self):
         """
@@ -22,7 +24,6 @@ class TestModule(TC):
         """
         temp_dir = os.path.dirname(self.temp_file)
         shutil.rmtree(temp_dir)
-
 
     def test_save_load(self):
         key = "test_key"
