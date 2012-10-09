@@ -64,7 +64,8 @@ class Organism(mixins.KeyedHashingMixin):
         """
         if self._fitness is None:
             num_diffs = vienna_distance.get_distance_from_tRNA_sequence(self.value)
-            normalized_fitness = 2**(len(self.value) - num_diffs)
+            a = 0.01
+            normalized_fitness = 1/(a+(float(num_diffs)/len(self.value)))
             self._fitness = (normalized_fitness)
         return self._fitness
 
