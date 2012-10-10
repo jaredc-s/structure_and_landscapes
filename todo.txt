@@ -14,9 +14,7 @@ Profile lazy lookup (look into None versus to-be-fill dict)
 Shared Amazon Account or Linking together. Finance stuff.
 
 Jared: 
-Add lineage tracking
-lazy lookup (list of dicts)
-Dropbox, shared folders
+
 ====================================================================================
 
 Stats in Python:

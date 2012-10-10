@@ -79,10 +79,3 @@ def rna_organism_mutation_map(organism):
 
 rna_org = rna_organism.random_organism()
 print rna_organism_mutation_map(rna_org)
-
-
-
-
-
-
->>>>>>> joe/master

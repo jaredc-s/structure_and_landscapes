@@ -14,6 +14,7 @@ import numpy as np
 import scipy.stats as st
 import matplotlib.pyplot as plt
 
+
 def int_org_demo():
     org_list = [int_organism(i) for i in range(1, 11)]
     pop = Population(org_list)
@@ -65,7 +66,8 @@ def rna_org_demo():
     target = rna_organism.default_organism
     start_genome = "".join(["A" for _ in target.value])
     starting_org = rna_organism.Organism(start_genome)
-    pop = Population([rna_organism.random_organism() for _ in range(10)], mutation_rate=.001)
+    pop = Population([rna_organism.random_organism() for _ in range(10)],
+                     mutation_rate=.001)
     return run(pop)
 
 

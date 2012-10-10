@@ -4,7 +4,7 @@ import bitstring_organism
 import uuid
 
 class Organism(BOrg):
-    def __init__(self, value, nk_model, parent_id = None):
+    def __init__(self, value, nk_model, parent_id=None):
         self.nk_model = nk_model
         self._fitness = None
         super(Organism, self).__init__(value, parent_id)
@@ -21,4 +21,5 @@ class Organism(BOrg):
         mutate and returns a new organism with the mutation
         note: original organism is unchanged
         """
-        return Organism(self.value.single_step_mutant(), self.nk_model, self.id)
+        return Organism(self.value.single_step_mutant(),
+                        self.nk_model, self.id)

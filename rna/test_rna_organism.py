@@ -26,7 +26,7 @@ class TestOrganism(TC):
         self.assertEqual(org.id, org2.parent)
 
     def test_fitness_cache(self):
-        organism =  rna_organism.random_organism()
+        organism = rna_organism.random_organism()
         self.assertIsNone(organism._fitness)
         organism.fitness
         self.assertIsNotNone(organism._fitness)
@@ -37,7 +37,7 @@ class TestOrganism(TC):
 
         a_org = Organism(all_As)
         self.assertLess(a_org.fitness, self.organism.fitness)
-        
+
     def test_key(self):
         self.assertEqual(self.organism[0], 'G')
         self.assertEqual(self.organism, rna_organism.default_organism)
@@ -50,6 +50,7 @@ class TestOrganism(TC):
         org = Organism('AATA')
         expected = "Organism('AATA')"
         self.assertEqual(repr(org), expected)
+
 
 class TestModule(TC):
     def test_default(self):
