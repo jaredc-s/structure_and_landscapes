@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 from bitstring.bitstring_organism import Organism as bit_organism
 from integer.integer_organism import Organism as int_organism
 from bitstring.bitstring import Bitstring
@@ -46,8 +47,8 @@ def nk_gene_structured_pop_demo():
     nk_org = bs.nk_organism.Organism(
         b, nk_fac.consecutive_dependencies_multigene(
             n_per_gene=3, number_of_genes=3, k_intra_gene=1, k_total=2))
-    org_list = [nk_org for _ in range(10)]
-    pop_list = [Population(org_list) for _ in range(10)]
+    org_list = [nk_org for _ in range(5)]
+    pop_list = [Population(org_list) for _ in range(5)]
     structured_pop = Structured_Population(pop_list, migration_rate=0.5,
                                            proportion_of_pop_swapped=0.5)
     run(structured_pop)
@@ -64,26 +65,26 @@ def rna_org_demo():
     target = rna_organism.default_organism
     start_genome = "".join(["A" for _ in target.value])
     starting_org = rna_organism.Organism(start_genome)
-    pop = Population([rna_organism.random_organism() for _ in range(100)], mutation_rate=.001)
-    run(pop)
+    pop = Population([rna_organism.random_organism() for _ in range(10)], mutation_rate=.001)
+    return run(pop)
 
 
 def rna_org_structured_pop_demo():
     org = rna_organism.random_organism()
-    org_list = [org for _ in range(20)]
-    pop_list = [Population(org_list) for _ in range(5)]
+    org_list = [org for _ in range(2)]
+    pop_list = [Population(org_list) for _ in range(2)]
     structured_pop = Structured_Population(pop_list, migration_rate=0.5,
                                            proportion_of_pop_swapped=0.5)
-    run_struc(structured_pop)
+    run(structured_pop)
 
 
 def structured_pop_demo():
     b = Bitstring("10011")
-    org_list = [bit_organism(b) for i in range(1, 50)]
-    pop_list = [Population(org_list) for _ in range(10)]
+    org_list = [bit_organism(b) for i in range(1, 5)]
+    pop_list = [Population(org_list) for _ in range(2)]
     struct_pop = Structured_Population(pop_list, migration_rate=0.5,
                                        proportion_of_pop_swapped=0.5)
-    run_struc(struct_pop)
+    run(struct_pop)
 
 
 def average_fitness_of_structured_population(structured_population):
@@ -96,31 +97,12 @@ def average_fitness_of_structured_population(structured_population):
     return sum(list_of_fitnesses) / float(len(list_of_fitnesses))
 
 
-def run_struc(struc_pop):
-    fit_list = []
-    for gen in range(500):
-        one_gen = [org.fitness for pop in struc_pop for org in pop]
-        fit_list.append(one_gen)
-        pop.advance_generation()
-
-        print_best_structure(pop)
-    #print(fit_list)
-    print np.mean(fit_list[0]), st.sem(fit_list[0])
-    print np.mean(fit_list[-1]), st.sem(fit_list[-1])
-
-def print_best_structure(pop):
-    fit_list = [(org.fitness, org) for org in pop]
-    best_org =  max(fit_list)[1]
-    print vienna_distance.fold(rna_organism.OPTIMAL_RNA_SEQUENCE)+'*'
-    print vienna_distance.fold(best_org.value), best_org.fitness
-
 def run(pop):
-    for gen in range(500):
+    for gen in range(5):
         pop.advance_generation()
+    return pop
 
 
-if __name__=='__main__':
-    nk_gene_structured_pop_demo()
-    #rna_org_demo()
+print(rna_org_demo())
     #int_org_demo()
     #rna_org_structured_pop_demo()

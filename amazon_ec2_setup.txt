@@ -1,0 +1,88 @@
+Short guide to running this software on Amazon EC2
+
+Note: Ami and vol names will be unique to your project.
+
+Amazon Web Services Set-Up
+==========================
+Make an AWS account (aws.amazon.com)
+Install aws commandline tools (timkay.com/aws)
+	Be sure to do the optional step 3 as root (sudo perl aws --install)
+	add "--region=us-west-2 --simple" to ~/.awsrc
+Initialize settings (adapted from "Get started with EC2." directions from timkay.com/aws/howto.html)
+	Create Keypair (used for logging in to ec2 instance)
+		run: ec2-add-keypair amazon_key
+		save the output (including the begin and end lines) to ~/.ssh/amazon_key
+		run: chmod og-rwx ~/.ssh/amazon_key
+			this with limit the permissions of the private key
+		run: ec2-describe-keypairs
+			this should show a keypair named amazon_key
+	Create Security Group (used for determining how the instance can be accessed)
+		run: ec2-add-group ssh_allowed -d "allow ssh and scp"
+		run: ec2auth ssh_allowed -P tcp -p 22 -s 0.0.0.0/0
+		run: ec2-describe-groups
+	Create an Elastic Block Storage (EBS) to store data from multiple instances
+		run: ec2-create-volume --size 20 --zone us-west-2b
+			creates a "virutal hard drive 20 GB in size"
+		run: ec2-describe-volumes
+			this should list an available ebs	
+			record the volume id (e.g. vol-06835d69) 
+	Format the EBS with an EC2 instance
+		run: ec2-run-instance ami-fcf27fcc -k amazon_key -g ssh_allowed --instance-type t1.micro --wait=10
+		run: ec2-describe-instances
+			this should show you an instances that spinning up (pending)
+			record the instance id (the first column of the description) (e.g. i-6b2c9f58)
+			record the dns (e.g. ec2-54-245-23-238.us-west-2.compute.amazonaws.com)
+		run: ec2-attach-volume vol-06835d69 -i i-6b2c9f58 -d /dev/sdf
+			substitute the actual volume and instance names here
+		run: ec2-describe-volumes
+			the volume should now be attached
+		run: ssh -i ~/.ssh/amazon_key ubuntu@ec2-54-245-23-238.us-west-2.compute.amazonaws.com 
+			allow new dns entry (type "yes" and enter)
+		run: sudo mkdir -p  /mnt/ebs && sudo mkfs -t ext4 /dev/xvdf && sudo mount /dev/xvdf /mnt/ebs
+		end ssh session (CTRL-D)
+		run: ec2-terminate-instances i-6b2c9f58 
+		 	replace instance name with actual name
+
+Initialize EC2 Instance
+=======================
+Options: 
+	image (Debian squeeze 6.0):
+		ami-fcf27fcc (Debian 6.0 32-bit)
+		ami-8ef27fbe (Debian 6.0 64-bit)
+		ami-20800c10 (Ubuntu 12.04 64-bit, preferred)
+		ami-3e800c0e (Ubuntu 12.04 32-bit)
+	instance types 
+		more info: (http://aws.amazon.com/ec2/instance-types/, 
+			    http://aws.amazon.com/ec2/pricing/)
+ 		t1.micro  (Tiny for testing purposes, $0.020 per Hour)
+		m1.small  (1.7  GB, 1 core, $0.080 per Hour)
+		m1.medium (3.75 GB, 1 core x 2, $0.16 per hour)
+		m1.large  (7.5 GB, 2 core x 2, $0.32 per hour)
+Command to start:
+	ec2-run-instance ami-8472fdb4  -k amazon_key -g ssh_allowed --instance-type m1.medium --wait=1 -z us-west-2b
+Command to get info about started instances and volumes:
+	ec2-describe-instances
+	ec2-describe-volumes 
+Command to attach EBS volume:
+	ec2-attach-volume vol-06835d69 -i i-670fbc54 -d /dev/sdf
+	"then ssh into instance (see below)"
+	sudo mkdir -p /mnt/ebs && sudo mount /dev/xvdf /mnt/ebs
+	"ebs attached at /mnt/ebs"
+SSH into the instance:
+	ssh -o "StrictHostKeyChecking no" -i ~/.ssh/amazon_key ubuntu@ec2-54-245-18-248.us-west-2.compute.amazonaws.com 
+Command to detach volume:
+	"ssh into instance"
+	umount /mnt/ebs
+	"from local computer"
+	ec2-detach-volume vol-06835d69
+Command to terminate instance:
+	ec2-terminate-instances i-670fbc54
+Commands to setup:
+	sudo apt-get -y install git
+	git clone git://github.com/nahumj/structure_and_landscapes.git
+	sudo bash structure_and_landscapes/setup_script.sh
+	export PYTHONPATH=$PYTHONPATH:~
+Moving files (to pull files reverse order):
+	scp -i ~/.ssh/amazon_key LOCAL_FILE_PATH ubuntu@ec2-54-245-18-248.us-west-2.compute.amazonaws.com:REMOTE_FILE PATH  
+
+

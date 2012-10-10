@@ -1,40 +1,23 @@
-List of Dependancies for EC2
-===================================================================================
-sudo apt-get install git 
-git clone ****
-sudo apt-get install make
-sudo apt-get install build-essential 
-sudo apt-get install python-pip
-sudo apt-get install python-profiler python-wxgtk2.8 python-setuptools
-make install-dependancies 
-
 Tasks For Next Week:
 ===================================================================================
-J^3:
-figure out mutation problem
+Meeting 1pm Wednesday, August 22nd.
 
 Joe:
-look up computing resources at UW (thousands of hours not millions)
-determine optimal parameters for rna_organism...
-	-able to imporve
-	-able to get close to the optimum
-	-alot of variance in the outcome
-	-some runs do well and some make it 
-	-for both structured and unstructured populations 
-	-#deems and migration rate...heat map
-	-
+August 24 gone.
+Visual representations of population evolution/fitness.
+Simple NK, fixed n = 10, k = 0 - 9, structure versus unstructured
 
 Josh:
-look up commercial cloud options 
 write up a peristence module ...
-
+Test RunSnake
+Profile lazy lookup (look into None versus to-be-fill dict)
+Shared Amazon Account or Linking together. Finance stuff.
 
 Jared: 
-lazy nk_table 
-
+Add lineage tracking
+lazy lookup (list of dicts)
+Dropbox, shared folders
 ====================================================================================
-look up computing resources!!!
-a job that should take a second
 
 Stats in Python:
 *t-test
@@ -66,10 +49,7 @@ What to save:
 *replicate number... - refer to a paticular run...
 
 What to add:
-*mean
 *std error population fitness @ every generation (some interval)
-*max fitness over same interval 
-
 *generating data for representation of data 
 *easy ways to specify parameters (mutation rates, starting org etc!)
 *using data well have results.db

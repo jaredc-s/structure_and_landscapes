@@ -7,15 +7,18 @@ import random
 import bitstring
 from bitstring import Bitstring
 from structure_and_landscapes.utility import mixins
+import uuid
 
 
 class Organism(mixins.KeyedHashingMixin):
-    def __init__(self, value):
+    def __init__(self, value, parent_id = None):
         """
         init takes a single argument which should be a bit string
         """
         self.value = value
         self._fitness = None
+        self.parent = parent_id
+        self.id = uuid.uuid4()
 
     def mutate(self):
         """
@@ -23,7 +26,7 @@ class Organism(mixins.KeyedHashingMixin):
         mutate and returns a new organism with the mutation
         note: original organism is unchanged
         """
-        return Organism(self.value.single_step_mutant())
+        return Organism(self.value.single_step_mutant(), self.id)
 
     @property
     def fitness(self):

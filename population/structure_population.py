@@ -78,3 +78,10 @@ class Structured_Population(object):
     def advance_generation(self):
         self.moran_cull()
         self.migrate()
+
+    def max_fitness(self):
+        return max([pop.max_fitness() for pop in self.list_of_populations])
+
+    def mean_fitness(self):
+        fits = [pop.mean_fitness() for pop in self.list_of_populations]
+        return float(sum(fits)) / len(fits)

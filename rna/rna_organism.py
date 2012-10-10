@@ -4,19 +4,22 @@ Organism where the genome is represented by RNA
 from structure_and_landscapes.utility import mixins as mixins
 from structure_and_landscapes.rna import vienna_distance
 import random
+import uuid
 
 OPTIMAL_RNA_SEQUENCE = vienna_distance.get_tRNA_sequence()
 RNA_SEQUENCE_LENGTH = len(OPTIMAL_RNA_SEQUENCE)
 
 
 class Organism(mixins.KeyedHashingMixin):
-    def __init__(self, value):
+    def __init__(self, value, parent_id = None):
         """
         The genome of a RNA Organism is a string of letters
         composed of "AGCU".
         """
         self.value = value
         self._fitness = None
+        self.parent = parent_id
+        self.id = uuid.uuid4()
 
     def __key__(self):
         return self.value
@@ -35,7 +38,7 @@ class Organism(mixins.KeyedHashingMixin):
         possibilities.remove(sequence[position])
         mutate_to = random.choice(possibilities)
         new_seq = sequence[:position] + mutate_to + sequence[position + 1:]
-        return Organism(new_seq)
+        return Organism(new_seq, self.id)
 
     def change_base(self, position):
         """

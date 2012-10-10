@@ -9,7 +9,7 @@ import random
 class TestOrganism(TC):
     def setUp(self):
         self.value = bitstring.Bitstring("100")
-        self.lookup = [[1, 0.5], [0.2, 0.4], [0.1, 0.8]]
+        self.lookup = [{0:1, 1:0.5}, {0:0.2, 1:0.4}, {0:0.1, 1:0.8}]
         deps = [[0], [1], [2]]
         self.model = nk_model.NKModelSimple(deps, self.lookup)
         self.org = Organism(self.value, self.model)
@@ -20,6 +20,12 @@ class TestOrganism(TC):
     def test_fitness(self):
         expected_fit = (1 + 0.2 + 0.8) / float(3)
         self.assertEqual(expected_fit, self.org.fitness)
+
+    def test_parent(self):
+        org2 = Organism(self.value, self.model, '1')
+        org3 = org2.mutate()
+        self.assertEqual(org2.id, org3.parent)
+        self.assertIsNotNone(org3.id)
 
     def test_equality(self):
         other = Organism(bitstring.Bitstring("001"), self.model)

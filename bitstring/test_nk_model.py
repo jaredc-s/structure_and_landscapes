@@ -7,25 +7,37 @@ from bitstring import Bitstring
 class TestSimpleNKModel(TC):
     def test_init(self):
         dep = [[0, 1], [1, 0]]
-        clt = [[1, 2, 3, 4], [5, 6, 7, 8]]
+        clt = [{0:1, 1:2, 2:3, 3:4}, {0:5, 1:6, 2:7, 3:8}]
         model = NKModelSimple(dep, clt)
         self.assertEqual(dep, model.dependency_lists)
         self.assertEqual(clt, model.contribution_lookup_tables)
 
     def test_calculate_fitness_hard(self):
         dep = [[0, 1], [1, 0], [2, 1]]
-        clt = [[.1, .2, .3, .4], [.5, .6, .7, .8], [.9, 1.0, .15, .25]]
+        clt = [{0:.1, 1:.2, 2:.3, 3:.4}, {0:.5, 1:.6, 2:.7, 3:.8}, {0:.9, 1:1.0, 2:.15, 3:.25}]
         model = NKModelSimple(dep, clt)
         bs = Bitstring("010")
         expected_fitness = (.3 + .6 + .15) / 3.0
         self.assertAlmostEqual(expected_fitness, model.calculate_fitness(bs))
 
     def test_calculate_fitness_easy(self):
-        model = NKModelSimple([[0], [1]], [[.2, .3], [.6, .7]])
+        model = NKModelSimple([[0], [1]], [{0:.2, 1:.3}, {0:.6, 1:.7}])
         bs = Bitstring("01")
         expected_fitness = (.3 + .6) / 2.0
         self.assertAlmostEqual(expected_fitness, model.calculate_fitness(bs))
-
+    
+    def test_calc_fit_lazy(self):
+        dep = [[0], [1]]
+        clt = [{}, {}]
+        model = NKModelSimple(dep, clt)
+        bs = Bitstring('01')
+        bs2 = Bitstring('01')
+        bs3 = Bitstring('10')
+        self.assertNotEqual(model.calculate_fitness(bs), None)
+        self.assertEqual(model.calculate_fitness(bs),
+                         model.calculate_fitness(bs2))
+        self.assertNotEqual(model.calculate_fitness(bs),
+                            model.calculate_fitness(bs3))
 
 class TestNKModelFactory(TC):
     def setUp(self):
@@ -35,18 +47,20 @@ class TestNKModelFactory(TC):
         smooth_nk = self.factory.no_dependencies(2)
         self.assertEqual(smooth_nk.dependency_lists, [[0], [1]])
         self.assertEqual(len(smooth_nk.contribution_lookup_tables), 2)
-        self.assertEqual(len(smooth_nk.contribution_lookup_tables[0]), 2)
-        self.assertEqual(len(smooth_nk.contribution_lookup_tables[1]), 2)
+        smooth_nk.calculate_fitness(Bitstring("0"))
+        self.assertEqual(len(smooth_nk.contribution_lookup_tables[0]), 1)
+        self.assertEqual(len(smooth_nk.contribution_lookup_tables[1]), 0)
 
     def test_model_with_uniform_contribution_lookup_table(self):
-        dep_lists = [[0, 1], [1, 2, 3], [4]]
+        dep_lists = [[0, 1], [1, 2, 0], [2]]
         model = self.factory._model_with_uniform_contribution_lookup_table(
             dep_lists)
         clt = model.contribution_lookup_tables
+        model.calculate_fitness(Bitstring("001"))
         self.assertEqual(len(clt), 3)
-        self.assertEqual(len(clt[0]), 4)
-        self.assertEqual(len(clt[1]), 8)
-        self.assertEqual(len(clt[2]), 2)
+        self.assertEqual(len(clt[0]), 1)
+        self.assertEqual(len(clt[1]), 1)
+        self.assertEqual(len(clt[2]), 1)
 
     def test_max_depandancies(self):
         model = self.factory.max_dependencies(6)

@@ -1,6 +1,6 @@
 from nose.plugins.attrib import attr
 from unittest import TestCase as TC
-from main import *
+from demos import *
 from population.structure_population import Structured_Population
 from population.population import Population
 from integer.integer_organism import Organism

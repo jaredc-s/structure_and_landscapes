@@ -11,7 +11,7 @@ from structure_and_landscapes.utility import selection
 
 
 class Population(object):
-    def __init__(self, init_pop, max_size=None, mutation_rate=1.0):
+    def __init__(self, init_pop, mutation_rate=1.0, max_size=None):
         self.population = list(init_pop)
         if max_size is None:
             self.maxsize = len(self.population)
@@ -68,5 +68,12 @@ class Population(object):
 
     def add_to_pop(self, org):
         self.population.append(org)
+
+    def max_fitness(self):
+        return max([org.fitness for org in self.population])
+
+    def mean_fitness(self):
+        fits = [org.fitness for org in self.population]
+        return float(sum(fits)) / len(fits)
 
 default_population = Population([1, 1, 0, 0, 1])
