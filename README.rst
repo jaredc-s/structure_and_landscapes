@@ -19,7 +19,7 @@ Authors
 * `Joshua Nahum`_ 
 * `Joseph Henry Rochlin Marcus`_
 .. _`Jared Carlson-Stevermer` : jmcs@utexas.edu
-.. _`Joseph Marcus` : josephhmarcus@gmail.com 
+.. _`Joseph Henry Rochlin Marcus` : josephhmarcus@gmail.com 
 .. _`Joshua Nahum` : josh@nahum.us
 
 Requirements
