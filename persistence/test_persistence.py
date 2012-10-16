@@ -39,6 +39,10 @@ class TestModule(TC):
         result = persistence.load(self.temp_file, key)
         self.assertEqual(value, result)
 
+    def test_load_not_found(self):
+        with self.assertRaises(KeyError):
+            bad_result = persistence.load(self.temp_file, "fake_key")
+
     def test_get_shelf(self):
         persistence.save(self.temp_file, "a", 1)
         persistence.save(self.temp_file, "b", 2)
