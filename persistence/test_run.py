@@ -37,6 +37,3 @@ class TestRun(TC):
             r_saved = shelf.values()[0]
             self.assertEquals(r_saved.parameters["generations"], 5)
             self.assertNotEquals(r_saved.final_population, None)
-            print(r_saved.initial_population)
-            print(r_saved.final_population)
-        self.fail()
