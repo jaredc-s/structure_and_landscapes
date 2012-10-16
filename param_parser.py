@@ -10,24 +10,50 @@ import rna.rna_organism as rna_organism
 from rna import vienna_distance
 
 import random
+import numpy as np
+import scipy.stats as st
+import matplotlib.pyplot as plt
+
+
+def run_struc(struc_pop):
+    fit_list = []
+    for gen in range(updates):
+        one_gen = [org.fitness for pop in struc_pop for org in pop]
+        fit_list.append(one_gen)
+        pop.advance_generation()
+
+        print_best_structure(pop)
+    #print(fit_list)
+    print np.mean(fit_list[0]), st.sem(fit_list[0])
+    print np.mean(fit_list[-1]), st.sem(fit_list[-1])
+
+def print_best_structure(pop):
+    fit_list = [(org.fitness, org) for org in pop]
+    best_org =  max(fit_list)[1]
+    print best_org
+    #print vienna_distance.fold(rna_organism.OPTIMAL_RNA_SEQUENCE)+'*'
+    #print vienna_distance.fold(best_org.value), best_org.fitness
+
+
+
 
 fp = open("parameters.cfg")
 fp.readline()
 fp.readline()
 fp.readline()
 fp.readline()
-mut_rate = fp.readline().split(":")[1].strip()
-num_org = fp.readline().split(":")[1].strip()
-pops = fp.readline().split(":")[1].strip()
-mig_rate = fp.readline().split(":")[1].strip()
-swap_rate = fp.readline().split(":")[1].strip()
+mut_rate = float(fp.readline().split(":")[1].strip())
+num_org = int(fp.readline().split(":")[1].strip())
+pops = int(fp.readline().split(":")[1].strip())
+mig_rate = float(fp.readline().split(":")[1].strip())
+swap_rate = float(fp.readline().split(":")[1].strip())
 org_type = fp.readline().split(":")[1].strip()
-len_org = fp.readline().split(":")[1].strip()
-len_gene = fp.readline().split(":")[1].strip()
-num_gene = fp.readline().split(":")[1].strip()
-k_tot = fp.readline().split(":")[1].strip()
-k_intra = fp.readline().split(":")[1].strip()
-updates = fp.readline().split(":")[1].strip()
+len_org = int(fp.readline().split(":")[1].strip())
+len_gene = int(fp.readline().split(":")[1].strip())
+num_gene = int(fp.readline().split(":")[1].strip())
+k_tot = int(fp.readline().split(":")[1].strip())
+k_intra = int(fp.readline().split(":")[1].strip())
+updates = int(fp.readline().split(":")[1].strip())
 
 random.seed(1)
 
@@ -49,7 +75,7 @@ elif org_type == "NK Model":
     if pops <= 1:
         mig_rate = 0
         swap_rate = 0
-    b = bs.bitstring.random_string(length_org)
+    b = bs.bitstring.random_string(len_org)
     nk_fac = bs.nk_model.NKModelFactory()
     nk_org = bs.nk_organism.Organism(
         b, nk_fac.consecutive_dependencies_multigene(
@@ -65,21 +91,3 @@ elif org_type == "NK Model":
 else:
     raise TypeError("Not a valid org type")
 
-
-def run_struc(struc_pop):
-    fit_list = []
-    for gen in range(updates):
-        one_gen = [org.fitness for pop in struc_pop for org in pop]
-        fit_list.append(one_gen)
-        pop.advance_generation()
-
-        print_best_structure(pop)
-    #print(fit_list)
-    print np.mean(fit_list[0]), st.sem(fit_list[0])
-    print np.mean(fit_list[-1]), st.sem(fit_list[-1])
-
-def print_best_structure(pop):
-    fit_list = [(org.fitness, org) for org in pop]
-    best_org =  max(fit_list)[1]
-    print vienna_distance.fold(rna_organism.OPTIMAL_RNA_SEQUENCE)+'*'
-    print vienna_distance.fold(best_org.value), best_org.fitness
