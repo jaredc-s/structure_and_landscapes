@@ -112,3 +112,9 @@ def flip_position(bitstring_instance, position_to_flip):
     values = list(bitstring_instance)
     values[position_to_flip] = not values[position_to_flip]
     return Bitstring(values)
+
+def random_string(length):
+    bits = ["1", "0"]
+    sequence = [random.choice(bits) for _ in range(length)]
+    seq = "".join(sequence)
+    return Bitstring(seq)

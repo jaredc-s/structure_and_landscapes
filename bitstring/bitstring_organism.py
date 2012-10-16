@@ -51,3 +51,9 @@ class Organism(mixins.KeyedHashingMixin):
         return "{}(value={})".format(self.__class__.__name__, self.value)
 
 default_organism = Organism(Bitstring(False for _ in range(10)))
+
+def random_organism(length):
+    bits = ["1", "0"]
+    sequence = [random.choice(bits) for _ in range(length)]
+    seq = "".join(sequence)
+    return Organism(seq)
