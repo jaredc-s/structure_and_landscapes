@@ -3,6 +3,7 @@ This module contains a class (Run) that encapsulate the
 parameters and results of a single evolutionary simulation.
 """
 import persistence
+import copy
 
 
 class Run(object):
@@ -13,5 +14,9 @@ class Run(object):
         self.shelf_filepath = shelf_filepath
 
     def run(self):
-        self.results = None
-        persistence.save_with_unique_key(self, self.shelf_filepath)
+        generations = self.parameters["generations"]
+        pop = self.initial_population
+        for gen in range(generations):
+            pop.advance_generation()
+        self.final_population = copy.deepcopy(pop)
+        persistence.save_with_unique_key(self.shelf_filepath, self)
