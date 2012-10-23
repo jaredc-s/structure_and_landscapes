@@ -39,28 +39,16 @@ class Run(object):
         self.other_data = other_data
         persistence.save_with_unique_key(self.shelf_filepath, self)
 
-def run_struc(struc_pop, number_of_generations):
-    fit_list = []
-    for gen in range(number_of_generations):
-        one_gen = [org.fitness for pop in struc_pop for org in pop]
-        fit_list.append(one_gen)
-        pop.advance_generation()
-
-        print_best_org(pop)
-    #print(fit_list)
-    print(np.mean(fit_list[0]), st.sem(fit_list[0]))
-    print(np.mean(fit_list[-1]), st.sem(fit_list[-1]))
-
-def print_best_org(pop):
-    fit_list = [(org.fitness, org) for org in pop]
-    best_org =  max(fit_list)[1]
-    print(best_org)
+def run_population(population, number_of_generations):
+    for _ in range(number_of_generations):
+        population.advance_generation()
+    return population
 
 class OrgException(Exception):
     pass
 
 
-def process_and_run(parameter_settings):
+def process_initial_org(parameter_settings):
     if parameter_settings["Organism Type"] == "RNA":
         org = rna_organism.random_organism()
     elif parameter_settings["Organism Type"] == "Bitstring":
@@ -82,9 +70,10 @@ def process_and_run(parameter_settings):
                 b, nk_model)
     else:
         raise OrgException("Not a valid org type")
+    return org
 
-
-
+def process_initial_population(parameter_settings):
+    org = process_initial_org(parameter_settings)
     number_of_pops = int(parameter_settings["Number of Populations"])
     if number_of_pops <= 1:
         mig_rate = 0.0
@@ -102,5 +91,18 @@ def process_and_run(parameter_settings):
             pop_list,
             migration_rate=mig_rate,
             proportion_of_pop_swapped=swap_rate)
-    run_struc(structured_pop, int(parameter_settings["Number of Generations"]))
+    return structured_pop
 
+def process_and_run(parameter_settings):
+    initial_population = process_initial_population(parameter_settings)
+    number_of_generations = int(
+            parameter_settings["Number of Generations"])
+    final_population = run_population(
+            initial_population,
+            number_of_generations)
+    shelf_filepath = parameter_settings["Output File Path"]
+    Run(
+            initial_population=initial_population,
+            final_population=final_population,
+            parameters=parameter_settings,
+            shelf_filepath=shelf_filepath)
