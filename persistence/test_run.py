@@ -30,10 +30,10 @@ class TestRun(TC):
     def test_run_simple(self):
         org_list = [int_organism(i) for i in range(1, 11)]
         init_pop = Population(org_list)
-        parameters = {"generations" : 5}
-        r = run.Run(init_pop, parameters, self.temp_file)
-        r.run()
+        final_population = None
+        other_data = "hi"
+        r = run.Run(init_pop, final_population, {}, self.temp_file, other_data)
         with persistence.get_shelf(self.temp_file) as shelf:
             r_saved = shelf.values()[0]
-            self.assertEquals(r_saved.parameters["generations"], 5)
-            self.assertNotEquals(r_saved.final_population, None)
+            self.assertEquals(r_saved.final_population, None)
+            self.assertEquals(r_saved.other_data, "hi")
