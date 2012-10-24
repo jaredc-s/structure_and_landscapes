@@ -6,15 +6,14 @@ from persistence.run import process_and_run
 
 parser = argparse.ArgumentParser(
         description="Command Line Interface for the structure and landscapes package.")
-parser.add_argument('parameters_file', help="specify the location of the configuration file")
+parser.add_argument('--parameters', help="specify the location of the configuration file")
+parser.add_argument('--seed', dest='seed', type=int, help="random number seed, default to current time")
 args = parser.parse_args()
-print(args)
 
-random.seed(1)
-
+random.seed(args.seed)
 
 parameter_settings = {}
-with open(args.parameters_file, "r") as parameters_file:
+with open(args.parameters, "r") as parameters_file:
     for line in parameters_file:
         line_without_comments, _, _ = line.partition("#")
         line_stripped = line_without_comments.strip()
