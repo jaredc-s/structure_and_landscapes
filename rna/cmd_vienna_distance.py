@@ -1,6 +1,6 @@
 import subprocess
 
-def command_fold(seq):
+def fold(seq):
     #subprocess.call(['RNAfold'])
     fold = subprocess.Popen(['RNAfold'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     output = fold.communicate(seq)
@@ -9,11 +9,22 @@ def command_fold(seq):
 
 #look at using check_output
 
-def command_distanct(seq1, seq2):
-    pass
+def get_distance(seq1, seq2):
+    structure1 = fold(seq1)
+    structure2 = fold(seq2)
+    distance = subprocess.Popen(['RNAdistance'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    ouput = distance.communicate(structure1+'\n'+structure2)
+
+    return int(ouput[0][2:])
 
 def get_tRNA_sequence():
-    pass
+    return "GGTCTCTTGGCCCAGTTGGTTAAGGCACCGTGCTAATAACGCGGGGATCAGCGGTTCGATCCCGCTAGAGACCA"
 
-def command_get_distance_from_tRNA(seq):
-    pass
+def get_distance_from_tRNA_sequence(seq):
+    org_struct = fold(seq)
+    target_struct = '(((((((.(((((....))........(((((.......)))))(((((........))))).)))))))))).'
+    distance = subprocess.Popen(['RNAdistance'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    ouput = distance.communicate(org_struct+'\n'+target_struct)
+
+    return int(ouput[0][2:])
+
