@@ -2,7 +2,7 @@
 Organism where the genome is represented by RNA
 """
 from structure_and_landscapes.utility import mixins as mixins
-from structure_and_landscapes.rna import vienna_distance
+from structure_and_landscapes.rna import cmd_vienna_distance as vienna_distance
 import random
 import uuid
 

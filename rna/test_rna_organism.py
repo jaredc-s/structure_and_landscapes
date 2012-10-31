@@ -3,7 +3,7 @@ from unittest import TestCase as TC
 
 import rna_organism
 from rna_organism import Organism
-import vienna_distance
+import cmd_vienna_distance as vienna_distance
 
 
 class TestOrganism(TC):
