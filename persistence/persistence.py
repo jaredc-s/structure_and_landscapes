@@ -38,3 +38,8 @@ def save_with_unique_key(filepath, value):
     """
     key = str(uuid.uuid4())
     save(filepath, key, value)
+
+def values(filepath):
+    with get_shelf(filepath) as shelf:
+        for key in shelf:
+            yield shelf[key]

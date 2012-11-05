@@ -55,3 +55,12 @@ class TestModule(TC):
             persistence.save_with_unique_key(self.temp_file, None)
         with persistence.get_shelf(self.temp_file) as shelf:
             self.assertEqual(len(shelf), 10)
+
+    def test_values(self):
+        persistence.save(self.temp_file, "a", 1)
+        persistence.save(self.temp_file, "b", 2)
+        persistence.save(self.temp_file, "c", 3)
+
+        stored_values = set(persistence.values(self.temp_file))
+        self.assertEqual(len(stored_values), 3)
+        self.assertEqual(set([1,2,3]), stored_values)
