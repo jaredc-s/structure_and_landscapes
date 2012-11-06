@@ -5,16 +5,16 @@ parameters and results of a single evolutionary simulation.
 import persistence
 import copy
 
-from bitstring.bitstring_organism import Organism as bit_organism
-from integer.integer_organism import Organism as int_organism
-from bitstring.bitstring import Bitstring
-from population.population import Population
-from population.structure_population import Structured_Population
-import bitstring.nk_model as nk_model
-import bitstring as bs
-import bitstring.nk_organism
-import rna.rna_organism as rna_organism
-from rna import vienna_distance
+from ..bitstring.bitstring_organism import Organism as bit_organism
+from ..integer.integer_organism import Organism as int_organism
+from ..bitstring.bitstring import Bitstring
+from ..population.population import Population
+from ..population.structure_population import Structured_Population
+from ..bitstring import nk_model as nk_model
+from .. import bitstring as bs
+from ..bitstring import nk_organism
+from ..rna import rna_organism as rna_organism
+from ..rna import vienna_distance
 
 import random
 import numpy as np
