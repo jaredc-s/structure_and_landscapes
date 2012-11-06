@@ -64,3 +64,19 @@ class TestModule(TC):
         stored_values = set(persistence.values(self.temp_file))
         self.assertEqual(len(stored_values), 3)
         self.assertEqual(set([1,2,3]), stored_values)
+
+    def test_consolidate(self):
+        path_1 = self.temp_file + "1"
+        path_2 = self.temp_file + "2"
+        path_3 = self.temp_file + "3"
+        path_new = self.temp_file + "4"
+
+        persistence.save(path_1, "a", 1)
+        persistence.save(path_2, "b", 2)
+        persistence.save(path_3, "c", 3)
+        persistence.save(path_3, "d", 4)
+        persistence.consolidate([path_1, path_2, path_3], path_new)
+
+        stored_values = set(persistence.values(path_new))
+        self.assertEqual(set([1,2,3,4]), stored_values)
+

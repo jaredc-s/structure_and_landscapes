@@ -40,6 +40,21 @@ def save_with_unique_key(filepath, value):
     save(filepath, key, value)
 
 def values(filepath):
+    """
+    Given a filepath to a shelve object.
+    Returns an iterable of the values contained therein.
+    """
     with get_shelf(filepath) as shelf:
         for key in shelf:
             yield shelf[key]
+
+def consolidate(shelf_paths, new_shelf_path):
+    """
+    Combine contents from iterable of file paths in shelf_paths
+    into new_shelf_path.
+    """
+    with get_shelf(new_shelf_path) as new_shelf:
+        for shelf_path in shelf_paths:
+            with get_shelf(shelf_path) as old_shelf:
+                for key in old_shelf:
+                    new_shelf[key] = old_shelf[key]
