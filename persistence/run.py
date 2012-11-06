@@ -2,19 +2,19 @@
 This module contains a class (Run) that encapsulate the
 parameters and results of a single evolutionary simulation.
 """
-import persistence
+from structure_and_landscapes import persistence
 import copy
 
-from ..bitstring.bitstring_organism import Organism as bit_organism
-from ..integer.integer_organism import Organism as int_organism
-from ..bitstring.bitstring import Bitstring
-from ..population.population import Population
-from ..population.structure_population import Structured_Population
-from ..bitstring import nk_model as nk_model
-from .. import bitstring as bs
-from ..bitstring import nk_organism
-from ..rna import rna_organism as rna_organism
-from ..rna import vienna_distance
+from structure_and_landscapes.bitstring.bitstring_organism import Organism as bit_organism
+from structure_and_landscapes.integer.integer_organism import Organism as int_organism
+from structure_and_landscapes.bitstring.bitstring import Bitstring
+from structure_and_landscapes.population.population import Population
+from structure_and_landscapes.population.structure_population import Structured_Population
+from structure_and_landscapes.bitstring import nk_model as nk_model
+from structure_and_landscapes import bitstring as bs
+from structure_and_landscapes.bitstring import nk_organism
+from structure_and_landscapes.rna import rna_organism as rna_organism
+from structure_and_landscapes.rna import vienna_distance
 
 import random
 import numpy as np

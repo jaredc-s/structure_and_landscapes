@@ -3,8 +3,8 @@ import tempfile
 import os
 import shutil
 
-from ..integer.integer_organism import Organism as int_organism
-from ..population.population import Population
+from structure_and_landscapes.integer.integer_organism import Organism as int_organism
+from structure_and_landscapes.population.population import Population
 
 import run
 import persistence
