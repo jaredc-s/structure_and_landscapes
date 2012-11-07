@@ -10,21 +10,18 @@ write tests...
 shelf_path = '/vagrant/saved_runs.dat'
 run_list = list(persistence.values(shelf_path))
 
-def filter_run_list(run_list, parameters_dictionary):
+def filter_runs(run_list, parameters_dictionary):
     """
     takes a list of runs and filters them by specified parameters
     passed in. Retruns a list of filtered runs.
     """
-    filtered_run_list = []
 
     for run in run_list:
-        for key in parameters_dictionary.keys():
-            if run.parameters.get(key) != parameters_dictionary.get(key):
-                break
-        else:
-            filtered_run_list.append(run)
+        same_values = [run.parameters.get(key) == value
+                for key, value in parameters_dictionary.items()]
+        if all(same_values):
+            yield run
 
-    return filtered_run_list
 
 def organism_fitness_for_each_run(run_list):
     """
@@ -55,7 +52,7 @@ def max_fitness_for_each_run(run_list):
     return [run.final_population.max_fitness() for run in run_list]
 
 
-filtered_run_list = filter_run_list(run_list, {'Organism Type':'NK Model'})
+filtered_run_list = list(filter_runs(run_list, {'Organism Type':'NK Model'}))
 print mean_fitness_for_each_run(filtered_run_list)
 print max_fitness_for_each_run(filtered_run_list)
 #print organism_fitness_for_each_run(filtered_run_list)
