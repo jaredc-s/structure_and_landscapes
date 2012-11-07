@@ -6,6 +6,7 @@ from structure_and_landscapes.persistence import persistence
 import copy
 
 from structure_and_landscapes.bitstring.bitstring_organism import Organism as bit_organism
+from structure_and_landscapes.bitstring import bitstring_organism
 from structure_and_landscapes.integer.integer_organism import Organism as int_organism
 from structure_and_landscapes.bitstring.bitstring import Bitstring
 from structure_and_landscapes.population.population import Population
@@ -52,7 +53,7 @@ def process_initial_org(parameter_settings):
     if parameter_settings["Organism Type"] == "RNA":
         org = rna_organism.random_organism()
     elif parameter_settings["Organism Type"] == "Bitstring":
-        b = bs.default_organism(int(parameter_settings["Length of Org"]))
+        org = bitstring_organism.random_organism(int(parameter_settings["Length of Org"]))
     elif parameter_settings["Organism Type"] == "NK Model":
         b = bs.bitstring.random_string(int(parameter_settings["Length of Org"]))
         nk_fac = bs.nk_model.NKModelFactory()
