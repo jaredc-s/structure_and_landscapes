@@ -37,8 +37,8 @@ def organism_fitness_for_each_run(run_list):
         for sub_population in run.final_population:
             for org in sub_population:
                 org_fitness_list.append(org.fitness)
-            sub_population_fitness_list.append(org_fitness)
-            org_fitness = []
+            sub_population_fitness_list.append(org_fitness_list)
+            org_fitness_list = []
 
     return sub_population_fitness_list
 
@@ -54,9 +54,9 @@ def max_fitness_for_each_run(run_list):
     """
     return [run.final_population.max_fitness() for run in run_list]
 
-#Call
 
 filtered_run_list = filter_run_list(run_list, {'Organism Type':'NK Model'})
 print mean_fitness_for_each_run(filtered_run_list)
-
+print max_fitness_for_each_run(filtered_run_list)
+#print organism_fitness_for_each_run(filtered_run_list)
 
