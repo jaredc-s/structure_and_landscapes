@@ -65,3 +65,8 @@ class TestOrganism(TC):
 class TestModule(TC):
     def test_default_organism(self):
         org = bitstring_organism.default_organism
+        self.assertAlmostEqual(org.fitness, 0)
+
+    def test_random_organism(self):
+        org = bitstring_organism.random_organism(8)
+        org.fitness
