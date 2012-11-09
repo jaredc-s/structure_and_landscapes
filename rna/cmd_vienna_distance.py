@@ -2,8 +2,9 @@ import subprocess
 
 def fold(seq):
     #subprocess.call(['RNAfold'])
-    fold = subprocess.Popen(['RNAfold'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    fold = subprocess.Popen(['RNAfold', '--noPS'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     output = fold.communicate(seq)
+    print output
     structure = output[0].split('\n')
     return structure[1][0:len(seq)]
 
