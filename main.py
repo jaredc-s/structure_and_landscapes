@@ -12,7 +12,7 @@ from rna import vienna_distance
 import numpy as np
 import scipy.stats as st
 import matplotlib.pyplot as plt
-
+#This is for testing purposes
 def int_org_demo():
     org_list = [int_organism(i) for i in range(1, 11)]
     pop = Population(org_list)
