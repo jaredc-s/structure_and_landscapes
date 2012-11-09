@@ -1,5 +1,5 @@
 from unittest import TestCase as TC
-import vienna_distance as vienna_distance
+import cmd_vienna_distance as vienna_distance
 
 
 class TestModule(TC):
