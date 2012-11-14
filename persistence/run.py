@@ -55,20 +55,23 @@ def process_initial_org(parameter_settings):
     elif parameter_settings["Organism Type"] == "Bitstring":
         org = bitstring_organism.random_organism(int(parameter_settings["Length of Org"]))
     elif parameter_settings["Organism Type"] == "NK Model":
-        b = bs.bitstring.random_string(int(parameter_settings["Length of Org"]))
+        length = int(parameter_settings["Length of Org"])
+        b = bs.bitstring.random_string(length)
         nk_fac = bs.nk_model.NKModelFactory()
-        length_of_gene = int(parameter_settings["Length of Gene"])
         number_of_genes = int(parameter_settings["Number of Genes"])
-        k_intra = int(parameter_settings["K-intra"])
         k_total = int(parameter_settings["K-total"])
+        if number_of_genes == 1:
+            nk_model = nk_fac.non_consecutive_dependencies(n=length, k=k_total)
+        else:
+            length_of_gene = int(parameter_settings["Length of Gene"])
+            k_intra = int(parameter_settings["K-intra"])
 
-        nk_model =  nk_fac.consecutive_dependencies_multigene(
-                n_per_gene=length_of_gene,
-                number_of_genes=number_of_genes,
-                k_intra_gene=k_intra,
-                k_total=k_total)
-        org = bs.nk_organism.Organism(
-                b, nk_model)
+            nk_model =  nk_fac.non_consecutive_dependencies_multigene(
+                    n_per_gene=length_of_gene,
+                    number_of_genes=number_of_genes,
+                    k_intra_gene=k_intra,
+                    k_total=k_total)
+        org = bs.nk_organism.Organism(b, nk_model)
     else:
         raise OrgException("Not a valid org type")
     return org
