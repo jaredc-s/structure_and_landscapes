@@ -58,7 +58,10 @@ def process_initial_org(parameter_settings):
         length = int(parameter_settings["Length of Org"])
         b = bs.bitstring.random_string(length)
         nk_fac = bs.nk_model.NKModelFactory()
-        number_of_genes = int(parameter_settings["Number of Genes"])
+        if "Number of Genes" not in parameter_settings:
+            number_of_genes = 1
+        else:
+            number_of_genes = int(parameter_settings["Number of Genes"])
         k_total = int(parameter_settings["K-total"])
         if number_of_genes == 1:
             nk_model = nk_fac.non_consecutive_dependencies(n=length, k=k_total)
