@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 import random
 import argparse
-from persistence.run import process_and_run
+from structure_and_landscapes.persistence.run import process_and_run
 import datetime
 import itertools
 
@@ -54,8 +54,10 @@ def dictionary_product(key_to_list_of_values):
 
     return result
 
-if __name__=='__main__':
-
+def parse_arguments():
+    """
+    parses the command line arguments and returns them
+    """
     parser = argparse.ArgumentParser(
             description="Command Line Interface for the structure and landscapes package.")
     parser.add_argument('--parameters', help="specify the location of the configuration file")
@@ -63,14 +65,23 @@ if __name__=='__main__':
     parser.add_argument('--number_of_runs', default=1, type=int, help="the specified number of runs")
     args = parser.parse_args()
 
-    random.seed(args.seed)
-
-    parameter_settings = get_parameter_settings(args.parameters)
-
     if args.seed != 0 and args.number_of_runs > 1:
         raise AssertionError("cannot specify a seed and more than one run at the same time")
 
+    return args
+
+def run_specified_configurations(args):
+    """
+    processes the configuration file and performs all runs
+    """
+    random.seed(args.seed)
+    parameter_settings = get_parameter_settings(args.parameters)
     for _ in range(args.number_of_runs):
         for setting in parameter_settings:
             setting['Time Started'] = datetime.datetime.now()
             process_and_run(setting)
+
+if __name__=='__main__':
+    args = parse_arguments()
+    run_specified_configurations(args)
+
