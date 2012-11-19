@@ -8,10 +8,24 @@ import itertools
 
 def get_parameter_settings(parameters_file_contents):
     """
+    Returns a list of parameter settings dictioanries
+    """
+
+    parameters_setting, multiple_values = get_general_and_specific_settings()
+
+    all_parameter_settings = []
+    for specific_values in dictionary_product(multiple_values):
+        specific_values.update(parameter_settings)
+        all_parameter_settings.append(specific_values)
+
+    return all_parameter_settings
+
+def get_general_and_specific_settings(parameters_file_contents):
+    """
     Parse the contents of the parameters file.
     Comments are after '#' symbols. 'xxx:yyy' are the key-value mappings.
     If multiple settings are included ('xxx:y,z'), then the full factorial of all multiple
-    settings are returned, as multiple dictionaries. Returns a list of parameter settings dictioanries
+    settings are returned, as multiple dictionaries.
     """
     parameter_settings = {}
     multiple_values = {}
@@ -28,13 +42,7 @@ def get_parameter_settings(parameters_file_contents):
         else:
             multiple_values[parameter] = [value_split.strip() for value_split in values_split]
 
-    all_parameter_settings = []
-
-    for specific_values in dictionary_product(multiple_values):
-        specific_values.update(parameter_settings)
-        all_parameter_settings.append(specific_values)
-
-    return all_parameter_settings
+    return parameter_settings, multiple_values
 
 def dictionary_product(key_to_list_of_values):
     """
