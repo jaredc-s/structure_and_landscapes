@@ -6,36 +6,35 @@ import datetime
 import itertools
 
 
-def get_parameter_settings(parameters_file_path):
+def get_parameter_settings(parameters_file_contents):
     """
-    Parse parameters file.
+    Parse the contents of the parameters file.
     Comments are after '#' symbols. 'xxx:yyy' are the key-value mappings.
     If multiple settings are included ('xxx:y,z'), then the full factorial of all multiple
     settings are returned, as multiple dictionaries. Returns a list of parameter settings dictioanries
     """
     parameter_settings = {}
-    with open(parameters_file_path, "r") as parameters_file:
-        multiple_values = {}
-        parameter_settings['Seed'] = args.seed
-        for line in parameters_file:
-            line_without_comments, _, _ = line.partition("#")
-            line_stripped = line_without_comments.strip()
-            if not line_stripped:
-                continue
-            parameter, _, value = line_stripped.partition(":")
-            values_split = value.split(",")
-            if len(values_split) == 1:
-                parameter_settings[parameter] = value
-            else:
-                multiple_values[parameter] = [value_split.strip() for value_split in values_split]
+    multiple_values = {}
+    parameter_settings['Seed'] = args.seed
+    for line in parameters_file_contents.splitlines():
+        line_without_comments, _, _ = line.partition("#")
+        line_stripped = line_without_comments.strip()
+        if not line_stripped:
+            continue
+        parameter, _, value = line_stripped.partition(":")
+        values_split = value.split(",")
+        if len(values_split) == 1:
+            parameter_settings[parameter] = value
+        else:
+            multiple_values[parameter] = [value_split.strip() for value_split in values_split]
 
-        all_parameter_settings = []
+    all_parameter_settings = []
 
-        for specific_values in dictionary_product(multiple_values):
-            specific_values.update(parameter_settings)
-            all_parameter_settings.append(specific_values)
+    for specific_values in dictionary_product(multiple_values):
+        specific_values.update(parameter_settings)
+        all_parameter_settings.append(specific_values)
 
-        return all_parameter_settings
+    return all_parameter_settings
 
 def dictionary_product(key_to_list_of_values):
     """
@@ -75,7 +74,10 @@ def run_specified_configurations(args):
     processes the configuration file and performs all runs
     """
     random.seed(args.seed)
-    parameter_settings = get_parameter_settings(args.parameters)
+    with open(args.parameters, "r") as parameters_file:
+        parameters_file_contents = parameters_file.read()
+
+    parameter_settings = get_parameter_settings(parameters_file_contents)
     for _ in range(args.number_of_runs):
         for setting in parameter_settings:
             setting['Time Started'] = datetime.datetime.now()
