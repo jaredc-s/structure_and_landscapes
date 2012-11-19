@@ -16,19 +16,34 @@ args.number_of_runs
 
 def get_parameter_settings(parameters_file_path):
     """
+    Parse parameters file.
+    Comments are after '#' symbols. 'xxx:yyy' are the key-value mappings.
+    If multiple settings are included ('xxx:y,z'), then the full factorial of all multiple
+    settings are returned, as multiple dictionaries.
     """
     parameter_settings = {}
     with open(parameters_file_path, "r") as parameters_file:
+        multiple_values = {}
+        parameter_settings['Seed'] = args.seed
         for line in parameters_file:
             line_without_comments, _, _ = line.partition("#")
             line_stripped = line_without_comments.strip()
             if not line_stripped:
                 continue
             parameter, _, value = line_stripped.partition(":")
-            parameter_settings[parameter] = value
-            parameter_settings['Seed'] = args.seed
+            values_split = value.split(",")
+            if len(values_split) == 1:
+                parameter_settings[parameter] = value
+            else:
+                multiple_values[parameter] = [value_split.strip() for value_split in values_split]
 
-        return parameter_settings
+        all_parameter_settings = []
+        for parameter, value_list in multiple_values:
+            for value in value_list:
+                specific_parameter_settings = parameter_settings.copy()
+
+
+        return all_parameter_settings
 
 parameter_settings = get_parameter_settings(args.parameters)
 
