@@ -72,5 +72,5 @@ if __name__=='__main__':
 
     for _ in range(args.number_of_runs):
         for setting in parameter_settings:
-            setting['Time_Started'] = datetime.datetime.now()
+            setting['Time Started'] = datetime.datetime.now()
             process_and_run(setting)
