@@ -114,6 +114,9 @@ def flip_position(bitstring_instance, position_to_flip):
     return Bitstring(values)
 
 def random_string(length):
+    """
+    Returns a random bitstring of the desired length
+    """
     bits = ["1", "0"]
     sequence = [random.choice(bits) for _ in range(length)]
     seq = "".join(sequence)

@@ -97,3 +97,8 @@ class TestModule(unittest.TestCase):
         b = Bitstring("00000")
         b_mutated = bitstring.flip_position(b, 0)
         self.assertEqual(b_mutated, Bitstring("00001"))
+
+    def test_random_string(self):
+        length = 4
+        b = bitstring.random_string(length)
+        self.assertEqual(length, len(b))
