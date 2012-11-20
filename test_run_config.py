@@ -14,3 +14,12 @@ class TestModule(TC):
         self.assertIn(expected_results_0, results)
         self.assertIn(expected_results_1, results)
         self.assertIn(expected_results_11, results)
+
+    def test_split_lists_out(self):
+        settings = {'A':"4",
+                'B':"True",
+                'C':["1", "2"]}
+        without_lists, with_lists = run_config.split_lists_out(settings)
+        self.assertIn('A', without_lists)
+        self.assertIn('B', without_lists)
+        self.assertIn('C', with_lists)
