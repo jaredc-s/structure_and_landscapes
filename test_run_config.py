@@ -29,4 +29,20 @@ class TestModule(TC):
         settings = run_config.parse_contents_to_settings_dict(contents)
         self.assertEqual({"A":"1", "B":"2", "C":"3"}, settings)
 
+    def test_parse_contents_to_settings_dict_multiple(self):
+        contents = "A:1,2\nB:3\nC:4,5"
+        settings = run_config.parse_contents_to_settings_dict(contents)
+        self.assertEqual({"A":["1", "2"], "B":"3", "C":["4", "5"]}, settings)
+
+    def test_comments_whitespace_parseing(self):
+        contents = """
+        # Early comments
+
+        Multiple words : 4, 5, 6 # End comment
+        # After comments
+        """
+        settings = run_config.parse_contents_to_settings_dict(contents)
+        self.assertEqual({"Multiple words":["4", "5", "6"]}, settings)
+
+
 

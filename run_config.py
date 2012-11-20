@@ -51,10 +51,12 @@ def parse_contents_to_settings_dict(parameters_file_contents):
         line_stripped = line_without_comments.strip()
         if not line_stripped:
             continue
-        parameter, _, value = line_stripped.partition(":")
+        raw_parameter, _, raw_value = line_stripped.partition(":")
+        parameter = raw_parameter.strip()
+        value = raw_value.strip()
         values_split = value.split(",")
         if len(values_split) == 1:
-            settings[parameter] = value
+            settings[parameter] = value.strip()
         else:
             settings[parameter] = [value_split.strip()
                                    for value_split in values_split]
