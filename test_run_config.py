@@ -44,5 +44,17 @@ class TestModule(TC):
         settings = run_config.parse_contents_to_settings_dict(contents)
         self.assertEqual({"Multiple words":["4", "5", "6"]}, settings)
 
+    def test_get_parameters_settings(self):
+        contents = """
+        A : 1
+        B : 2, 3
+        C : 4, 5
+        """
+        expected_start = {'A':'1', 'B':'2', 'C':'4'}
+        expected_end = {'A':'1', 'B':'3', 'C':'5'}
 
+        result = run_config.get_parameter_settings(contents)
+        self.assertEqual(len(result), 4)
+        self.assertIn(expected_start, result)
+        self.assertIn(expected_end, result)
 
