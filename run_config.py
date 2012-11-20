@@ -13,7 +13,7 @@ def get_parameter_settings(parameters_file_contents):
     are performed in all possible combinations).
     """
 
-    settings = get_general_and_specific_settings(parameters_file_contents)
+    settings = parse_contents_to_settings_dict(parameters_file_contents)
     general_settings, multiple_settings = split_lists_out(settings)
 
     list_of_settings = []
@@ -38,7 +38,7 @@ def split_lists_out(dictionary):
     return without_lists, with_lists
 
 
-def get_general_and_specific_settings(parameters_file_contents):
+def parse_contents_to_settings_dict(parameters_file_contents):
     """
     Parse the contents of the parameters file.
     Comments are after '#' symbols. 'xxx:yyy' are the key-value mappings.
@@ -46,7 +46,6 @@ def get_general_and_specific_settings(parameters_file_contents):
     then the list of values is mapped.
     """
     settings = {}
-    settings['Seed'] = args.seed
     for line in parameters_file_contents.splitlines():
         line_without_comments, _, _ = line.partition("#")
         line_stripped = line_without_comments.strip()
