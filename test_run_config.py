@@ -23,3 +23,10 @@ class TestModule(TC):
         self.assertIn('A', without_lists)
         self.assertIn('B', without_lists)
         self.assertIn('C', with_lists)
+
+    def test_parse_contents_to_settings_dict_single(self):
+        contents = "A:1\nB:2\nC:3"
+        settings = run_config.parse_contents_to_settings_dict(contents)
+        self.assertEqual({"A":"1", "B":"2", "C":"3"}, settings)
+
+
