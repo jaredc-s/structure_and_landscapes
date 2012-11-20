@@ -13,6 +13,7 @@ def plot_average_fitness(fitness):
     plot(values)
     show()
 
+
 def plot_fitness_distribution(fitness_list):
     mu, sigma = 100, 15
     x = mu + sigma * numpy.random.randn(100000)
@@ -20,4 +21,3 @@ def plot_fitness_distribution(fitness_list):
     fig = plt.figure()
     ax = fig.add_subplot(111)
     n, bins, patches = ax.hist(x, 50, normed=1, facecolor='green', alpha=.75)
-

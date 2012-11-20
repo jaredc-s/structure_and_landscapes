@@ -63,7 +63,8 @@ class Organism(mixins.KeyedHashingMixin):
         a predefined structure or seeing it's distance from tRNA
         """
         if self._fitness is None:
-            num_diffs = vienna_distance.get_distance_from_tRNA_sequence(self.value)
+            num_diffs = vienna_distance.get_distance_from_tRNA_sequence(
+                self.value)
             a = 0.01
             normalized_fitness = 1 / (a + (float(num_diffs) / len(self.value)))
             self._fitness = (normalized_fitness)

@@ -113,6 +113,7 @@ def flip_position(bitstring_instance, position_to_flip):
     values[position_to_flip] = not values[position_to_flip]
     return Bitstring(values)
 
+
 def random_string(length):
     """
     Returns a random bitstring of the desired length

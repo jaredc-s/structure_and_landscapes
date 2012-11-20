@@ -3,6 +3,7 @@ from bitstring_organism import Organism as BOrg
 import bitstring_organism
 import uuid
 
+
 class Organism(BOrg):
     def __init__(self, value, nk_model, parent_id=None):
         self.nk_model = nk_model

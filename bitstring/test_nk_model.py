@@ -14,7 +14,9 @@ class TestSimpleNKModel(TC):
 
     def test_calculate_fitness_hard(self):
         dep = [[0, 1], [1, 0], [2, 1]]
-        clt = [{0:.1, 1:.2, 2:.3, 3:.4}, {0:.5, 1:.6, 2:.7, 3:.8}, {0:.9, 1:1.0, 2:.15, 3:.25}]
+        clt = [{0:.1, 1:.2, 2:.3, 3:.4},
+               {0:.5, 1:.6, 2:.7, 3:.8},
+               {0:.9, 1:1.0, 2:.15, 3:.25}]
         model = NKModelSimple(dep, clt)
         bs = Bitstring("010")
         expected_fitness = (.3 + .6 + .15) / 3.0

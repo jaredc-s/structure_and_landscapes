@@ -2,9 +2,9 @@
 import random
 import argparse
 from structure_and_landscapes.run_management.run import process_and_run
-from structure_and_landscapes.run_management.parameters import get_parameter_settings
+from structure_and_landscapes.run_management.parameters \
+    import get_parameter_settings
 import datetime
-
 
 
 def parse_arguments():

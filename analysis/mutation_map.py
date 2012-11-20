@@ -23,8 +23,8 @@ def bitstring_organism_mutation_map(organism):
     for i in range(len(bitstring_value)):
         perturbed_bitstring = bitstring.flip_position(bitstring_value, i)
         perturbed_organism = bitstring_organism.Organism(perturbed_bitstring)
-        bitstring_org_mutation_map.append((perturbed_bitstring, perturbed_organism.fitness))
-
+        bitstring_org_mutation_map.append((
+            perturbed_bitstring, perturbed_organism.fitness))
     return bitstring_org_mutation_map
 
 #bit = bitstring.Bitstring('0000')
@@ -45,7 +45,8 @@ def nk_organism_mutation_map(organism, nk):
     for i in range(len(bitstring_value)):
         perturbed_bitstring = bitstring.flip_position(bitstring_value, i)
         perturbed_organism = nk_organism.Organism(perturbed_bitstring, nk)
-        nk_organism_mutation_map.append((perturbed_bitstring, perturbed_organism.fitness))
+        nk_organism_mutation_map.append((
+            perturbed_bitstring, perturbed_organism.fitness))
 
     return nk_organism_mutation_map
 
@@ -55,7 +56,8 @@ def nk_organism_mutation_map(organism, nk):
 #bit = bin(random.getrandbits(length_of_desired_genome))[2:]
 #bit = bit.rjust(length_of_desired_genome, '0')
 #nk_model_type = nk_model.NKModelFactory()
-#use_model = nk_model_type.non_consecutive_dependencies_multigene(8, 2, k_intra, k_total)
+#use_model = nk_model_type.non_consecutive_dependencies_multigene(
+#   8, 2, k_intra, k_total)
 #nk_org = nk_organism.Organism(bitstring.Bitstring(bit), use_model)
 
 #print nk_organism_mutation_map(nk_org, use_model)
