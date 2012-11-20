@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 import random
 import argparse
-from structure_and_landscapes.persistence.run import process_and_run
+from structure_and_landscapes.run_management.run import process_and_run
 import datetime
 import itertools
 

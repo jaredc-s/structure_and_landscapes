@@ -1,6 +1,5 @@
-from structure_and_landscapes import persistence
-from structure_and_landscapes.persistence import run
-from structure_and_landscapes.persistence import persistence
+from structure_and_landscapes.run_management import run
+from structure_and_landscapes.run_management import persistence
 from scipy import stats
 import itertools
 

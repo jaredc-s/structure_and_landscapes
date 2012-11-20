@@ -2,7 +2,7 @@
 This module contains a class (Run) that encapsulate the
 parameters and results of a single evolutionary simulation.
 """
-from structure_and_landscapes.persistence import persistence
+from structure_and_landscapes.run_management import persistence
 import copy
 
 from structure_and_landscapes.bitstring.bitstring_organism import Organism as bit_organism
