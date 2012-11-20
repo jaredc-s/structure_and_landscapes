@@ -11,25 +11,40 @@ def get_parameter_settings(parameters_file_contents):
     Returns a list of parameter settings dictioanries
     """
 
-    parameters_setting, multiple_values = get_general_and_specific_settings()
+    settings = get_general_and_specific_settings(parameters_file_contents)
 
-    all_parameter_settings = []
-    for specific_values in dictionary_product(multiple_values):
-        specific_values.update(parameter_settings)
-        all_parameter_settings.append(specific_values)
+    general_settings, multiple_settings = split_lists_out(settings)
 
-    return all_parameter_settings
+    list_of_settings = []
+    for specific_values in dictionary_product(multiple_settings):
+        specific_values.update(general_settings)
+        list_of_settings.append(specific_values)
+
+    return list_of_settings
+
+def split_lists_out(dictionary):
+    """
+    Splits given dictionary into two, first the mappings were the value
+    is not a list, and the second the mappings whose values are lists.
+    """
+    without_lists = {}
+    with_lists = {}
+    for key, value in dictionary.items():
+        if isinstance(value, list):
+            with_lists[key] = value
+        else:
+            without_lists[key] = value
+    return without_lists, with_lists
 
 def get_general_and_specific_settings(parameters_file_contents):
     """
     Parse the contents of the parameters file.
     Comments are after '#' symbols. 'xxx:yyy' are the key-value mappings.
-    If multiple settings are included ('xxx:y,z'), then the full factorial of all multiple
-    settings are returned, as multiple dictionaries.
+    If multiple settings are included ('xxx:y,z'),
+    then the list of values is mapped.
     """
-    parameter_settings = {}
-    multiple_values = {}
-    parameter_settings['Seed'] = args.seed
+    settings = {}
+    settings['Seed'] = args.seed
     for line in parameters_file_contents.splitlines():
         line_without_comments, _, _ = line.partition("#")
         line_stripped = line_without_comments.strip()
@@ -38,11 +53,11 @@ def get_general_and_specific_settings(parameters_file_contents):
         parameter, _, value = line_stripped.partition(":")
         values_split = value.split(",")
         if len(values_split) == 1:
-            parameter_settings[parameter] = value
+            settings[parameter] = value
         else:
-            multiple_values[parameter] = [value_split.strip() for value_split in values_split]
+            settings[parameter] = [value_split.strip() for value_split in values_split]
 
-    return parameter_settings, multiple_values
+    return settings
 
 def dictionary_product(key_to_list_of_values):
     """
