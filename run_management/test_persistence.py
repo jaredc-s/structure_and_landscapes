@@ -63,7 +63,7 @@ class TestModule(TC):
 
         stored_values = set(persistence.values(self.temp_file))
         self.assertEqual(len(stored_values), 3)
-        self.assertEqual(set([1,2,3]), stored_values)
+        self.assertEqual(set([1, 2, 3]), stored_values)
 
     def test_consolidate(self):
         path_1 = self.temp_file + "1"
@@ -78,5 +78,4 @@ class TestModule(TC):
         persistence.consolidate([path_1, path_2, path_3], path_new)
 
         stored_values = set(persistence.values(path_new))
-        self.assertEqual(set([1,2,3,4]), stored_values)
-
+        self.assertEqual(set([1, 2, 3, 4]), stored_values)

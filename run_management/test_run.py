@@ -3,7 +3,8 @@ import tempfile
 import os
 import shutil
 
-from structure_and_landscapes.integer.integer_organism import Organism as int_organism
+from structure_and_landscapes.integer.integer_organism \
+    import Organism as int_organism
 from structure_and_landscapes.population.population import Population
 
 import run
@@ -32,7 +33,8 @@ class TestRun(TC):
         init_pop = Population(org_list)
         final_population = None
         other_data = "hi"
-        r = run.Run(init_pop, final_population, {}, self.temp_file, other_data)
+        r = run.Run(init_pop, final_population, {},
+                    self.temp_file, other_data)
         with persistence.get_shelf(self.temp_file) as shelf:
             r_saved = shelf.values()[0]
             self.assertEquals(r_saved.final_population, None)

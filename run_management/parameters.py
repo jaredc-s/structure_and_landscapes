@@ -1,5 +1,6 @@
 import itertools
 
+
 def get_parameter_settings(parameters_file_contents):
     """
     Returns a list of parameter settings dictionaries corresponding
@@ -73,4 +74,3 @@ def dictionary_product(key_to_list_of_values):
         specific_dict = dict(list_of_pairs)
         result.append(specific_dict)
     return result
-

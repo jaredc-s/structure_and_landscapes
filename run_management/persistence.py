@@ -39,6 +39,7 @@ def save_with_unique_key(filepath, value):
     key = str(uuid.uuid4())
     save(filepath, key, value)
 
+
 def values(filepath):
     """
     Given a filepath to a shelve object.
@@ -47,6 +48,7 @@ def values(filepath):
     with get_shelf(filepath) as shelf:
         for key in shelf:
             yield shelf[key]
+
 
 def consolidate(shelf_paths, new_shelf_path):
     """
