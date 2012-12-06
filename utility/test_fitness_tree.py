@@ -1,4 +1,5 @@
 from unittest import TestCase as TC
+from nose.plugins.attrib import attr
 
 from fitness_tree import *
 
@@ -17,7 +18,6 @@ class MockOrganism(object):
         return not self == other
 
 class TestModule(TC):
-
     def setUp(self):
         self.orgs = [MockOrganism(1, "a"),
                 MockOrganism(2, "b"),
@@ -59,3 +59,27 @@ class TestModule(TC):
     def test_choose_leaf_by_fitness(self):
         org = choose_leaf_by_fitness(self.tree)
         self.assertIn(org, self.orgs)
+
+    @attr("probabilistic")
+    def test_choose_leaf_by_fitness_random(self):
+        high_fit_org = MockOrganism(12, "high fit")
+        tree = add_to_tree(self.tree, high_fit_org)
+        draws = [choose_leaf_by_fitness(tree) for _ in range(40)]
+        self.assertTrue(draws.count(high_fit_org) > 15)
+        self.assertEqual(len(set(draws)), 4)
+
+    @attr("probabilistic")
+    def test_remove_leaf_uniformly_random(self):
+        high_fit_org = MockOrganism(99, "high fit")
+        self.orgs.append(high_fit_org)
+        trees = [build_tree(self.orgs) for _ in range(40)]
+        removed_orgs = [remove_leaf_uniformly(tree)[1] for tree in trees]
+        self.assertEqual(len(set(removed_orgs)), 4)
+        self.assertTrue(removed_orgs.count(high_fit_org) < 20)
+
+    @attr("probabilistic")
+    def test_should_choose_first_weighted_bias(self):
+        outcomes = [None for _ in range(10)
+                if should_choose_first_weighted(9, 1)]
+        self.assertTrue(len(outcomes) > 5)
+

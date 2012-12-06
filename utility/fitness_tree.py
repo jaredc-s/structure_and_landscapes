@@ -4,6 +4,7 @@ in proportion to fitness (fecundity selection) and random death.
 
 Weighted (by fitness) binary tree.
 """
+from __future__ import division
 import random
 
 class Node(object):
@@ -52,6 +53,10 @@ def choose_leaf_by_fitness(tree):
             return choose_leaf_by_fitness(tree.left)
         else:
             return choose_leaf_by_fitness(tree.right)
+    if tree.left is not None:
+        return choose_leaf_by_fitness(tree.left)
+    else:
+        return choose_leaf_by_fitness(tree.right)
 
 def should_choose_left_by_fitness(tree):
     """
