@@ -73,7 +73,6 @@ class TestNumberline(TC):
         self.assertEquals([MockOrganism(3, 'B'), 4 / float(6)], numline[1])
         self.assertEquals([MockOrganism(2, 'C'), 6 / float(6)], numline[2])
 
-
 class TestMoran(TC):
     def setUp(self):
         self.pop = [MockOrganism(1, 'A'), MockOrganism(3, 'B'),
@@ -90,3 +89,7 @@ class TestMoran(TC):
     def test_mutation_rate(self):
         moran_death_birth(self.pop, -1)
         self.assertNotEqual(self.pop[0].identifier[-1], "'")
+
+class TestMoranNumberline(TestMoran):
+    moran_death_birth = moran_death_birth_numberline
+

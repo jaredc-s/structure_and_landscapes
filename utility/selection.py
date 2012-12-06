@@ -10,6 +10,7 @@ to give birth into that slot do it 1,000 times for a population size of 1,000.
 This is termed a "generation"
 """
 import random
+import fitness_tree
 
 
 def select(organisms, number_of_draws):
@@ -53,6 +54,19 @@ def normalize(nums):
 
 
 def moran_death_birth(orgs, mutation_rate):
+    """Method to execute the replacement of organism in a death-birth
+    fashion using fecundity to replace the randomly selected death organism
+    """
+    tree = fitness_tree.build_tree(orgs)
+    for _ in range(len(orgs)):
+        tree, removed_org = fitness_tree.remove_leaf_uniformly(tree)
+        chosen_to_give_birth = fitness_tree.choose_leaf_by_fitness(tree)
+        if random.random() < mutation_rate:
+            chosen_to_give_birth = chosen_to_give_birth.mutate()
+        tree = fitness_tree.add_to_tree(tree, chosen_to_give_birth)
+    return fitness_tree.tree_to_list(tree)
+
+def moran_death_birth_numberline(orgs, mutation_rate):
     """Method to execute the replacement of organism in a death-birth
     fashion using fecundity to replace the randomly selected death organism
     """
