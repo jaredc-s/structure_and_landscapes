@@ -13,7 +13,7 @@ LFLAGS=-L/usr/local/lib/ViennaRNA -lRNA
 
 # Default target; runs all 'not slow' tests (excludes integration tests)
 test: all
-	nosetests -a '!slow' -- 
+	nosetests -A 'not slow  and not probabilistic' -- 
 
 # Runs all tests (including integration tests)
 test-all: all
