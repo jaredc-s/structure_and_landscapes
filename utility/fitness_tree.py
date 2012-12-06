@@ -77,6 +77,10 @@ def should_choose_first_weighted(weight_a, weight_b):
     """
     Returns True randomly in proportion to the weight of a relative to b.
     """
+    if weight_a <= 0:
+        return False
+    if weight_b <= 0:
+        return True
     return random.random() < (weight_a / (weight_a + weight_b))
 
 
