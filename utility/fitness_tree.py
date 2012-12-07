@@ -3,9 +3,12 @@ Implementation of a Data Structure that allows births to be choosen
 in proportion to fitness (fecundity selection) and random death.
 
 Weighted (by fitness) binary tree.
+
+Could be improved by making the tree a class, instead of data and functions.
 """
 from __future__ import division
 import random
+
 
 class Node(object):
     """
@@ -39,6 +42,7 @@ class Node(object):
                 self.total_fitness += self.right.total_fitness
                 self.total_leaves += self.right.total_leaves
 
+
 def choose_leaf_by_fitness(tree):
     """
     Returns the contents of a leaf (an org) choosen randomly,
@@ -58,20 +62,23 @@ def choose_leaf_by_fitness(tree):
     else:
         return choose_leaf_by_fitness(tree.right)
 
+
 def should_choose_left_by_fitness(tree):
     """
     Return True randomly in proportion to the fitness
     of the leaves.
     """
     return should_choose_first_weighted(
-            tree.left.total_fitness, tree.right.total_fitness)
+        tree.left.total_fitness, tree.right.total_fitness)
+
 
 def should_choose_left_by_number_of_leaves(tree):
     """
     Return True randomly in proportion to the number of leaves (uniformly).
     """
     return should_choose_first_weighted(
-            tree.left.total_leaves, tree.right.total_leaves)
+        tree.left.total_leaves, tree.right.total_leaves)
+
 
 def should_choose_first_weighted(weight_a, weight_b):
     """
@@ -124,6 +131,7 @@ def tree_is_empty(tree):
             tree.right is None and
             tree.leaf_contents is None)
 
+
 def tree_to_list(tree):
     """
     Returns all of the leaf contents (orgs) as a list.
@@ -147,11 +155,13 @@ def build_tree(orgs):
         tree = add_to_tree(tree, org)
     return tree
 
+
 def singleton_tree(org):
     """
     Returns a Node with the organism.
     """
     return Node(left=None, right=None, leaf_contents=org)
+
 
 def empty_tree():
     """
@@ -159,11 +169,13 @@ def empty_tree():
     """
     return Node(left=None, right=None)
 
+
 def add_to_tree(tree, org):
     """
     Adds a single org to a tree.
     """
     return merge_trees(tree, singleton_tree(org))
+
 
 def merge_trees(tree_master, tree_other):
     """
@@ -175,7 +187,7 @@ def merge_trees(tree_master, tree_other):
         if tree_master.leaf_contents is None:
             return tree_other
         else:
-            return Node(left = tree_master, right = tree_other)
+            return Node(left=tree_master, right=tree_other)
 
     if tree_master.left is None or tree_master.right is None:
         # Tree master is one sided, add other to right
@@ -190,6 +202,3 @@ def merge_trees(tree_master, tree_other):
             tree_master.right = merge_trees(tree_master.right, tree_other)
     tree_master.calibrate_totals()
     return tree_master
-
-
-

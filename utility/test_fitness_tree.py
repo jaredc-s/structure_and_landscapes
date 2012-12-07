@@ -3,6 +3,7 @@ from nose.plugins.attrib import attr
 
 from fitness_tree import *
 
+
 class MockOrganism(object):
     def __init__(self, fitness, identifier):
         self.fitness = fitness
@@ -17,11 +18,12 @@ class MockOrganism(object):
     def __ne__(self, other):
         return not self == other
 
+
 class TestModule(TC):
     def setUp(self):
         self.orgs = [MockOrganism(1, "a"),
-                MockOrganism(2, "b"),
-                MockOrganism(3, "c")]
+                     MockOrganism(2, "b"),
+                     MockOrganism(3, "c")]
         self.tree = build_tree(self.orgs)
 
     def test_build_tree(self):
@@ -80,6 +82,5 @@ class TestModule(TC):
     @attr("probabilistic")
     def test_should_choose_first_weighted_bias(self):
         outcomes = [None for _ in range(10)
-                if should_choose_first_weighted(9, 1)]
+                    if should_choose_first_weighted(9, 1)]
         self.assertTrue(len(outcomes) > 5)
-
