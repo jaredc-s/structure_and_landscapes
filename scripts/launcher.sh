@@ -5,7 +5,8 @@ REPO=./
 #USER DEFINED
 NUM_REPS=1
 
-for TASK in {1..${NUM_REPS}} ; do
+for TASK in seq 1 $NUM_REPS ; do
+echo $TASK
 #Create an AWS volume
 #    ec2-create-volume --size 20 --zone us-west-2a
 
@@ -14,12 +15,12 @@ for TASK in {1..${NUM_REPS}} ; do
 
 #Start up an amazon instance. Will have to change if running own
 #Debian instance
-#    ec2-run-instance ami-20800c10 -k amazon_key -g ssh_allowed --instance-type t1.micro --wait=10
+    ec2-run-instance ami-20800c10 -k amazon_key -g ssh_allowed --instance-type t1.micro --wait=10
 
+    sleep 60
 #Pause time to let instance start up
-
     instance=$(ec2-describe-instances | tr '\t' '\n' | tail -n 4 | head -n1)
-    dns=$(ec2-describe-instances | tr '\t' '\n' | tail -n2 | head -n1)
+    dns=$(ec2-describe-instances | tr '\t' '\n' | tail -n 2 | head -n1)
 
 #    ec2-attach-volume ${VOL_NUMBER} -i ${instance} -d /dev/sdf
 #THIS WORKS
