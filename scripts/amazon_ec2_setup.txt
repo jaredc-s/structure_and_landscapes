@@ -80,7 +80,7 @@ Command to terminate instance:
 Commands to setup:
 	sudo apt-get -y install git
 	git clone git://github.com/nahumj/structure_and_landscapes.git
-	sudo bash structure_and_landscapes/setup_script.sh
+	sudo bash structure_and_landscapes/scripts/setup_script.sh
 	export PYTHONPATH=$PYTHONPATH:~
 Moving files (to pull files reverse order):
 	scp -i ~/.ssh/amazon_key LOCAL_FILE_PATH ubuntu@ec2-54-245-18-248.us-west-2.compute.amazonaws.com:REMOTE_FILE PATH  
