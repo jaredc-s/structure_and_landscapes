@@ -3,10 +3,10 @@
 #Not sure if needed
 REPO=./
 #USER DEFINED
-NUM_REPS=1
+NUM_REPS=2
 
-for TASK in seq 1 $NUM_REPS ; do
-echo $TASK
+for ((i=1; i<=${NUM_REPS}; i++)) ; do
+
 #Create an AWS volume
 #    ec2-create-volume --size 20 --zone us-west-2a
 
