@@ -17,3 +17,5 @@ git clone git://github.com/jaredc-s/structure_and_landscapes.git
 export PYTHONPATH=$PYTHONPATH:$(pwd)
 cd structure_and_landscapes
 make install
+
+#Put actual run instantiation here?
