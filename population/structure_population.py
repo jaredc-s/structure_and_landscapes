@@ -2,15 +2,15 @@
 Structured populations have multple instantiations of
 population class
 
-Migration occurs after each generation by partial, directional
-overwriting of one subpopulation on another
+Migration occurs generation by replicating organisms from
+one subpopulation and overwriting the same amount in another
 
-Migration rate is equal to proption of subpopulations
+Migration rate is the proportion of subpopulations
 experiencing a migration event
 
 Proportion of population migrated is proportion of
-population replacted in the destination subpopulation
-in each migration event
+population duplicated from the source subpopulation on top of the
+destination subpopulation in each migration event
 """
 
 import random
@@ -35,29 +35,34 @@ class Structured_Population(object):
         return len(self.list_of_populations)
 
     def migrate(self):
-        """should happen after replicate but
-          before the culling
-        However migration prior to replication would
-          allow greater chance of survival
+        """
+        Perform migrations in population
         """
         number_migrating_pops = int(self.mig_rate *
                                     len(self.list_of_populations))
 
-        from_pops = random.sample(self.list_of_populations,
+        source_pops = random.sample(self.list_of_populations,
                                   number_migrating_pops)
-        together = zip(from_pops[0::2], from_pops[1::2])
-        for popA, popB in together:
-            self.swap(popA, popB)
 
-    def swap(self, popA, popB):
-        number_migrating_orgs = int(self.prop_miged * len(popA))
-        popA_indices = random.sample(list(range(len(popA))),
+        dest_pops = random.sample(self.list_of_populations,
+                                  number_migrating_pops)
+        for source, dest in zip(source_pops, dest_pops):
+            self.subpop_migrate(source, dest)
+
+    def subpop_migrate(self, source, dest):
+        """
+        Performs a migration (between two subpopulations)
+        from source to dest
+        """
+        number_migrating_orgs = int(self.prop_miged * len(source))
+        source_orgs_shuffled = random.shuffle(source)
+
+        source_indices = random.sample(list(range(len(source))),
                                      number_migrating_orgs)
-        popB_indices = random.sample(list(range(len(popB))),
+        dest_indices = random.sample(list(range(len(dest))),
                                      number_migrating_orgs)
-        for popA_index, popB_index in zip(popA_indices, popB_indices):
-            (popA[popA_index], popB[popB_index]) = \
-                (popB[popB_index], popA[popA_index])
+        for source_index, dest_index in zip(source_indices, dest_indices):
+            dest[dest_index] = source[source_index]
 
     def replicate(self):
         for pop in self.list_of_populations:
