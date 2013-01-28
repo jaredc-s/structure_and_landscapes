@@ -4,6 +4,7 @@ import random
 from meta_population import MetaPopulation
 from population import Population
 from ..integer.integer_organism import Organism
+from nose.plugins.attrib import attr
 
 
 class MockOrganism(object):
@@ -55,39 +56,51 @@ class MockPopulation(object):
         pass
 
 
-class TestPopulation(TC):
+class TestMetaPopulation(TC):
     def setUp(self):
         self.orgs = [Organism(1), Organism(2),
                      Organism(3), Organism(4)]
 
         self.pops = [Population(self.orgs) for _ in range(10)]
-        self.struct = MetaPopulation(self.pops, 0.5, 0.5)
+        self.metapop = MetaPopulation(self.pops, 0.5, 0.5)
 
     def test_max_fitness(self):
-        self.assertAlmostEqual(self.struct.max_fitness(), 4.0)
+        self.assertAlmostEqual(self.metapop.max_fitness(), 4.0)
 
     def test_mean_fitness(self):
-        self.assertAlmostEqual(self.struct.mean_fitness(), 2.5)
+        self.assertAlmostEqual(self.metapop.mean_fitness(), 2.5)
 
     def test_length(self):
-        self.assertEqual(10, len(self.struct))
+        self.assertEqual(10, len(self.metapop))
 
     def test_replicate(self):
-        self.struct.replicate()
-        for pop in self.struct:
+        self.metapop.replicate()
+        for pop in self.metapop:
             self.assertEqual(8, len(pop))
 
     def test_remove_random(self):
-        self.struct.replicate()
-        self.struct.remove_at_random()
-        for pop in self.struct:
+        self.metapop.replicate()
+        self.metapop.remove_at_random()
+        for pop in self.metapop:
             self.assertEqual(4, len(pop))
 
     def test_advance_generation(self):
-        self.struct.advance_generation()
+        self.metapop.advance_generation()
 
+    def test_migrate_simple(self):
+        self.metapop.migrate()
+
+    @attr("probabilistic")
     def test_migrate(self):
-        self.struct.migrate()
+        "Labels orgs in pop to check for migrations"
+        for index, pop in enumerate(self.pops):
+            for org in pop:
+                org.original_pop = index
+        self.metapop.migrate()
+        migrations_took_place = any(org.original_pop != index
+                for index, pop in enumerate(self.pops)
+                for org in pop)
+        self.assertTrue(migrations_took_place)
 
     def test_get(self):
-        self.assertEqual(self.struct[1], self.pops[1])
+        self.assertEqual(self.metapop[1], self.pops[1])
