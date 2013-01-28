@@ -92,10 +92,10 @@ def process_initial_population(parameter_settings):
     number_of_pops = int(parameter_settings["Number of Populations"])
     if number_of_pops <= 1:
         mig_rate = 0.0
-        swap_rate = 0.0
+        prop_miged = 0.0
     else:
         mig_rate = float(parameter_settings["Migration Rate"])
-        swap_rate = float(parameter_settings[
+        prop_miged = float(parameter_settings[
             "Proportion of Population Migrated"])
 
     orgs_per_population = int(parameter_settings["Orgs per Population"])
@@ -105,7 +105,7 @@ def process_initial_population(parameter_settings):
     structured_pop = Structured_Population(
         pop_list,
         migration_rate=mig_rate,
-        proportion_of_pop_swapped=swap_rate)
+        proportion_of_pop_migrated=prop_miged)
     return structured_pop
 
 

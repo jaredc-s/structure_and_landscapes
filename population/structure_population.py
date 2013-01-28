@@ -1,15 +1,16 @@
 """
-Structured populations have multple instatiations of
+Structured populations have multple instantiations of
 population class
 
-Migration occurs after each generation by swapping
-between two subpopulations
+Migration occurs after each generation by partial, directional
+overwriting of one subpopulation on another
 
 Migration rate is equal to proption of subpopulations
 experiencing a migration event
 
-Proportion of population swapped is proportion of
-population swapped in each migration event
+Proportion of population migrated is proportion of
+population replacted in the destination subpopulation
+in each migration event
 """
 
 import random
@@ -19,10 +20,10 @@ from population import Population
 
 class Structured_Population(object):
     def __init__(self, sub_populations, migration_rate,
-                 proportion_of_pop_swapped):
+                 proportion_of_pop_migrated):
         self.list_of_populations = list(sub_populations)
         self.mig_rate = migration_rate
-        self.prop_swapped = proportion_of_pop_swapped
+        self.prop_miged = proportion_of_pop_migrated
 
     def __iter__(self):
         return iter(self.list_of_populations)
@@ -49,7 +50,7 @@ class Structured_Population(object):
             self.swap(popA, popB)
 
     def swap(self, popA, popB):
-        number_migrating_orgs = int(self.prop_swapped * len(popA))
+        number_migrating_orgs = int(self.prop_miged * len(popA))
         popA_indices = random.sample(list(range(len(popA))),
                                      number_migrating_orgs)
         popB_indices = random.sample(list(range(len(popB))),
