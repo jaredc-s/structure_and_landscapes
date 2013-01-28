@@ -1,4 +1,3 @@
-import random
 from test_meta_population import TestMetaPopulation
 from structured_population import StructuredPopulation
 from population import Population
