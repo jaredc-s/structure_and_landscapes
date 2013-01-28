@@ -1,4 +1,3 @@
-import unittest
 from unittest import TestCase as TC
 
 import population
