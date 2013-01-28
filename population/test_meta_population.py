@@ -1,7 +1,7 @@
 from unittest import TestCase as TC
 import random
 
-from structure_population import Structured_Population
+from meta_population import MetaPopulation
 from population import Population
 from ..integer.integer_organism import Organism
 
@@ -61,7 +61,7 @@ class TestPopulation(TC):
                      Organism(3), Organism(4)]
 
         self.pops = [Population(self.orgs) for _ in range(10)]
-        self.struct = Structured_Population(self.pops, 0.5, 0.5)
+        self.struct = MetaPopulation(self.pops, 0.5, 0.5)
 
     def test_max_fitness(self):
         self.assertAlmostEqual(self.struct.max_fitness(), 4.0)

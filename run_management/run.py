@@ -12,8 +12,8 @@ from structure_and_landscapes.integer.integer_organism \
     import Organism as int_organism
 from structure_and_landscapes.bitstring.bitstring import Bitstring
 from structure_and_landscapes.population.population import Population
-from structure_and_landscapes.population.structure_population \
-    import Structured_Population
+from structure_and_landscapes.population.meta_population \
+    import MetaPopulation
 from structure_and_landscapes.bitstring import nk_model as nk_model
 from structure_and_landscapes import bitstring as bs
 from structure_and_landscapes.bitstring import nk_organism
@@ -102,11 +102,11 @@ def process_initial_population(parameter_settings):
 
     org_list = [org for _ in range(orgs_per_population)]
     pop_list = [Population(org_list) for _ in range(number_of_pops)]
-    structured_pop = Structured_Population(
+    meta_pop = MetaPopulation(
         pop_list,
         migration_rate=mig_rate,
         proportion_of_pop_migrated=prop_miged)
-    return structured_pop
+    return meta_pop
 
 
 def process_and_run(parameter_settings):

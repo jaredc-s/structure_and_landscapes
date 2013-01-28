@@ -1,5 +1,5 @@
 """
-Structured populations have multple instantiations of
+Meta populations have multple instantiations of
 population class
 
 Migration occurs generation by replicating organisms from
@@ -11,6 +11,9 @@ experiencing a migration event
 Proportion of population migrated is proportion of
 population duplicated from the source subpopulation on top of the
 destination subpopulation in each migration event
+
+Migrations in the MetaPopulation are not localized, populations
+have no spatial nearness.
 """
 
 import random
@@ -18,7 +21,7 @@ from structure_and_landscapes.utility.selection import select
 from population import Population
 
 
-class Structured_Population(object):
+class MetaPopulation(object):
     def __init__(self, sub_populations, migration_rate,
                  proportion_of_pop_migrated):
         self.list_of_populations = list(sub_populations)
