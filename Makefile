@@ -27,7 +27,7 @@ coverage: all
 	nosetests --with-coverage --cover-package=structure_and_landscapes --
 
 # Installs the needed dependancies
-install:
+install: all
 	pip install nose coverage pep8 cython RunSnakeRun
 
 # Runs pep8 (python style checker) on all .py file
@@ -41,7 +41,7 @@ clean: clean_cython
 	-rm -r .coverage
 
 # Visual profiler
-profile: .profiledata 
+profile: install .profiledata
 	mkdir ~/.config
 	runsnake $<
 
