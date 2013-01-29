@@ -45,6 +45,10 @@ class TestSelection(TC):
         new_pop_set = set(new_pop)
         self.assertEquals(len(new_pop_set), len(new_pop))
 
+    def test_fecundity(self):
+        new_org = fecundity_birth_selection(self.pop)
+        self.assertIsInstance(new_org, MockOrganism)
+
 
 class TestNormalize(TC):
     def test_multiple(self):
@@ -78,19 +82,24 @@ class TestMoran(TC):
     def setUp(self):
         self.pop = [MockOrganism(1, 'A'), MockOrganism(3, 'B'),
                     MockOrganism(2, 'C')]
+        self.function = moran_death_birth
 
     def test_moran_len(self):
-        moran_death_birth(self.pop, .5)
+        self.function(self.pop, .5)
         self.assertEqual(3, len(self.pop))
 
-    def test_fecundity(self):
-        new_org = fecundity_birth_selection(self.pop)
-        self.assertIsInstance(new_org, MockOrganism)
-
     def test_mutation_rate(self):
-        moran_death_birth(self.pop, -1)
-        self.assertNotEqual(self.pop[0].identifier[-1], "'")
+        new_pop = self.function(self.pop, -1)
+        for org in new_pop:
+            self.assertNotEqual(org.identifier[-1], "'")
+
+    def test_desired_number(self):
+        new_pop = self.function(self.pop, -1, desired_number_of_orgs=5)
+        self.assertEqual(len(new_pop), 5)
 
 
 class TestMoranNumberline(TestMoran):
-    moran_death_birth = moran_death_birth_numberline
+    def setUp(self):
+        self.pop = [MockOrganism(1, 'A'), MockOrganism(3, 'B'),
+                    MockOrganism(2, 'C')]
+        self.function = moran_death_birth_numberline

@@ -53,31 +53,77 @@ def normalize(nums):
     return [(num / total) for num in nums]
 
 
-def moran_death_birth(orgs, mutation_rate):
-    """Method to execute the replacement of organism in a death-birth
+def moran_death_birth(orgs, mutation_rate, desired_number_of_orgs=None):
+    """
+    Method to execute the replacement of organism in a death-birth
     fashion using fecundity to replace the randomly selected death organism
     """
     tree = fitness_tree.build_tree(orgs)
-    for _ in range(len(orgs)):
+    if desired_number_of_orgs is None:
+        desired_number_of_orgs = len(orgs)
+    tree = _bring_orgs_to_desired_number_in_tree(
+        tree, mutation_rate, desired_number_of_orgs - len(orgs))
+    for _ in range(desired_number_of_orgs):
         tree, removed_org = fitness_tree.remove_leaf_uniformly(tree)
-        chosen_to_give_birth = fitness_tree.choose_leaf_by_fitness(tree)
-        if random.random() < mutation_rate:
-            chosen_to_give_birth = chosen_to_give_birth.mutate()
-        tree = fitness_tree.add_to_tree(tree, chosen_to_give_birth)
+        tree = _add_child_by_fitness_to_tree(tree, mutation_rate)
     return fitness_tree.tree_to_list(tree)
 
 
-def moran_death_birth_numberline(orgs, mutation_rate):
-    """Method to execute the replacement of organism in a death-birth
+def _bring_orgs_to_desired_number_in_tree(tree, mutation_rate,
+                                          delta_number_of_orgs):
+    """
+    Adds (by fitness) or removes (uniformily) orgs from tree by delta number
+    of orgs (positive adds, negative removes).
+    Returns modified tree
+    """
+    while delta_number_of_orgs > 0:
+        tree = _add_child_by_fitness_to_tree(tree, mutation_rate)
+        delta_number_of_orgs -= 1
+    while delta_number_of_orgs < 0:
+        tree, removed_org = fitness_tree.remove_leaf_uniformly(tree)
+        delta_number_of_orgs += 1
+    return tree
+
+
+def _add_child_by_fitness_to_tree(tree, mutation_rate):
+    """
+    Takes a fitness tree and a mutation rate.
+    Returns a tree with a new org (chosen by fitness and possibly mutated)
+    """
+    chosen_to_give_birth = fitness_tree.choose_leaf_by_fitness(tree)
+    if random.random() < mutation_rate:
+        chosen_to_give_birth = chosen_to_give_birth.mutate()
+    return fitness_tree.add_to_tree(tree, chosen_to_give_birth)
+
+
+def moran_death_birth_numberline(orgs, mutation_rate, desired_number_of_orgs=None):
+    """
+    Method to execute the replacement of organism in a death-birth
     fashion using fecundity to replace the randomly selected death organism
     """
-    for _ in range(len(orgs)):
+    if desired_number_of_orgs is None:
+        desired_number_of_orgs = len(orgs)
+
+    while desired_number_of_orgs > len(orgs):
+        _add_child_by_fitness_to_list(orgs, mutation_rate)
+    while desired_number_of_orgs < len(orgs):
+        index_to_kill = random.randrange(len(orgs))
+        del orgs[index_to_kill]
+
+    for _ in range(desired_number_of_orgs):
         index_to_kill = random.randrange(len(orgs))
         chosen_to_give_birth = fecundity_birth_selection(orgs)
         if random.random() < mutation_rate:
             chosen_to_give_birth = chosen_to_give_birth.mutate()
         orgs[index_to_kill] = chosen_to_give_birth
     return orgs
+
+
+def _add_child_by_fitness_to_list(orgs, mutation_rate):
+    chosen_to_give_birth = fecundity_birth_selection(orgs)
+    if random.random() < mutation_rate:
+        chosen_to_give_birth = chosen_to_give_birth.mutate()
+    orgs.append(chosen_to_give_birth)
 
 
 def fecundity_birth_selection(orgs):
