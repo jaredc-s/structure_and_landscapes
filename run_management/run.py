@@ -14,6 +14,8 @@ from structure_and_landscapes.bitstring.bitstring import Bitstring
 from structure_and_landscapes.population.population import Population
 from structure_and_landscapes.population.meta_population \
     import MetaPopulation
+from structure_and_landscapes.population.structured_population \
+    import StructuredPopulation
 from structure_and_landscapes.bitstring import nk_model as nk_model
 from structure_and_landscapes import bitstring as bs
 from structure_and_landscapes.bitstring import nk_organism

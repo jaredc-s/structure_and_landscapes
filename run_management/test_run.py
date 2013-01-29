@@ -70,18 +70,20 @@ class TestRun(TC):
             'Organism Type': 'Bitstring',
             'Mutation Rate': '0.01',
             'Length of Org': '5',
-            'Number of Populations': '1',
             'Orgs per Population': '10'}
-        multiple_pops = {
-            'Organism Type': 'Bitstring',
-            'Mutation Rate': '0.01',
-            'Length of Org': '5',
+        meta_pops = {
             'Number of Populations': '2',
-            'Orgs per Population': '5',
             'Migration Rate': '0.33',
             'Proportion of Population Migrated': '1.0'}
+        structured_pops = {
+            'Number of Subpopulations in Width': '3',
+            'Number of Subpopulations in Height': '4',
+            'Migration Type': 'Local'}
+        meta_pops.update(single_pop)
+        structured_pops.update(meta_pops)
         run.process_initial_population(single_pop)
-        run.process_initial_population(multiple_pops)
+        run.process_initial_population(meta_pops)
+        run.process_initial_population(structured_pops)
 
     def test_process_and_run(self):
         settings = {
