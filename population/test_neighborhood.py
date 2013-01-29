@@ -1,6 +1,7 @@
 from unittest import TestCase as TC
 from neighborhood import *
 
+
 class TestModule(TC):
     def setUp(self):
         self.grid_width = 4
@@ -25,31 +26,30 @@ class TestModule(TC):
     def test_convert_inverse(self):
         for i in range(self.grid_width * self.grid_height):
             x, y = convert_linear_ordering_to_coordinate_pair(
-                    self.grid_width, i)
+                self.grid_width, i)
             result = convert_coordinate_pair_to_linear_ordering(
-                    self.grid_width, x, y)
+                self.grid_width, x, y)
             self.assertEqual(i, result)
 
     def test_correct_for_wrapping(self):
-        result_0 = correct_for_wrapping(self.grid_width,
-                self.grid_height, 2, 3)
+        result_0 = correct_for_wrapping(
+            self.grid_width, self.grid_height, 2, 3)
         self.assertEqual(result_0, (2, 3))
-        result_1 = correct_for_wrapping(self.grid_width,
-                self.grid_height, 2, -1)
+        result_1 = correct_for_wrapping(
+            self.grid_width, self.grid_height, 2, -1)
         self.assertEqual(result_1, (2, 4))
-        result_2 = correct_for_wrapping(self.grid_width,
-                self.grid_height, -2, -2)
+        result_2 = correct_for_wrapping(
+            self.grid_width, self.grid_height, -2, -2)
         self.assertEqual(result_2, (2, 3))
 
     def test_nearest_4_neighbors(self):
-        neighbors = nearest_4_neighbors(self.grid_width,
-                self.grid_height, 0, 0)
+        neighbors = nearest_4_neighbors(
+            self.grid_width, self.grid_height, 0, 0)
         expected_neighbors = {(0, 4), (0, 1), (1, 0), (3, 0)}
         self.assertEqual(set(neighbors), expected_neighbors)
 
     def test_nearest_4_neighbors_by_linear_position(self):
-        neighbors = nearest_4_neighbors_by_linear_position(self.grid_width,
-                self.grid_height, 0)
+        neighbors = nearest_4_neighbors_by_linear_position(
+            self.grid_width, self.grid_height, 0)
         expected_neighbors = {16, 4, 1, 3}
         self.assertEqual(set(neighbors), expected_neighbors)
-

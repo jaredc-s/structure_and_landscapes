@@ -41,14 +41,15 @@ class MetaPopulation(object):
         """
         Perform migrations in population
         """
-        number_migrating_pops = int(self.mig_rate *
-                                    len(self.list_of_populations))
+        number_migrating_pops = int(
+            self.mig_rate * len(self.list_of_populations))
 
-        source_pops = random.sample(self.list_of_populations,
-                                  number_migrating_pops)
+        source_pops = random.sample(
+            self.list_of_populations,
+            number_migrating_pops)
 
-        dest_pops = random.sample(self.list_of_populations,
-                                  number_migrating_pops)
+        dest_pops = random.sample(
+            self.list_of_populations, number_migrating_pops)
         for source, dest in zip(source_pops, dest_pops):
             self.subpop_migrate(source, dest)
 
@@ -58,10 +59,10 @@ class MetaPopulation(object):
         from source to dest
         """
         number_migrating_orgs = int(self.prop_miged * len(source))
-        source_indices = random.sample(list(range(len(source))),
-                                     number_migrating_orgs)
-        dest_indices = random.sample(list(range(len(dest))),
-                                     number_migrating_orgs)
+        source_indices = random.sample(
+            list(range(len(source))), number_migrating_orgs)
+        dest_indices = random.sample(
+            list(range(len(dest))), number_migrating_orgs)
         for source_index, dest_index in zip(source_indices, dest_indices):
             dest[dest_index] = source[source_index]
 

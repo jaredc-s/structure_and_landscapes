@@ -97,9 +97,10 @@ class TestMetaPopulation(TC):
             for org in pop:
                 org.original_pop = index
         self.metapop.migrate()
-        migrations_took_place = any(org.original_pop != index
-                for index, pop in enumerate(self.pops)
-                for org in pop)
+        migrations_took_place = any(
+            org.original_pop != index
+            for index, pop in enumerate(self.pops)
+            for org in pop)
         self.assertTrue(migrations_took_place)
 
     def test_get(self):

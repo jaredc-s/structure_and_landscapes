@@ -96,7 +96,7 @@ def process_initial_population(parameter_settings):
     mutation_rate = float(parameter_settings["Mutation Rate"])
 
     if ("Number of Subpopulations in Width" in parameter_settings and
-        "Number of Subpopulations in Height" in parameter_settings):
+            "Number of Subpopulations in Height" in parameter_settings):
         width = int(parameter_settings["Number of Subpopulations in Width"])
         height = int(parameter_settings["Number of Subpopulations in Height"])
         assert(width > 0)
@@ -109,28 +109,27 @@ def process_initial_population(parameter_settings):
     if number_of_pops <= 1:
         return Population(org_list, mutation_rate=mutation_rate)
 
-
     mig_rate = float(parameter_settings["Migration Rate"])
     prop_miged = float(parameter_settings[
         "Proportion of Population Migrated"])
 
-
     pop_list = [Population(org_list, mutation_rate=mutation_rate)
-            for _ in range(number_of_pops)]
+                for _ in range(number_of_pops)]
     if "Migration Type" in parameter_settings:
         assert(parameter_settings["Migration Type"] in
-                {"Local", "Global", "Restricted", "Unrestricted"})
+               {"Local", "Global", "Restricted", "Unrestricted"})
         if parameter_settings["Migration Type"] in {"Local", "Restricted"}:
             return StructuredPopulation(
-                    pop_list,
-                    migration_rate=mig_rate,
-                    proportion_of_pop_migrated=prop_miged,
-                    width=width,
-                    height=height)
+                pop_list,
+                migration_rate=mig_rate,
+                proportion_of_pop_migrated=prop_miged,
+                width=width,
+                height=height)
     return MetaPopulation(
         pop_list,
         migration_rate=mig_rate,
         proportion_of_pop_migrated=prop_miged)
+
 
 def process_and_run(parameter_settings):
     initial_population = process_initial_population(parameter_settings)
