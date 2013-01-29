@@ -24,7 +24,7 @@ for ((i=1; i<=${NUM_REPS}; i++)) ; do
 
 #    ec2-attach-volume ${VOL_NUMBER} -i ${instance} -d /dev/sdf
 #THIS WORKS
-    cat ./scripts/inner_run.sh | ssh -i ~/.ssh/amazon_key -o StrictHostKeyChecking=no ubuntu@${dns} /bin/bash
+    cat ./scripts/setup_script.sh | ssh -i ~/.ssh/amazon_key -o StrictHostKeyChecking=no ubuntu@${dns} /bin/bash
      
 #    ./scripts/setup_script.sh
 
