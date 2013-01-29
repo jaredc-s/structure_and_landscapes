@@ -68,11 +68,13 @@ class TestRun(TC):
     def test_process_initial_population(self):
         single_pop = {
             'Organism Type': 'Bitstring',
+            'Mutation Rate': '0.01',
             'Length of Org': '5',
             'Number of Populations': '1',
             'Orgs per Population': '10'}
         multiple_pops = {
             'Organism Type': 'Bitstring',
+            'Mutation Rate': '0.01',
             'Length of Org': '5',
             'Number of Populations': '2',
             'Orgs per Population': '5',
@@ -84,6 +86,7 @@ class TestRun(TC):
     def test_process_and_run(self):
         settings = {
             'Organism Type': 'Bitstring',
+            'Mutation Rate': '0.01',
             'Length of Org': '5',
             'Number of Populations': '1',
             'Orgs per Population': '10',

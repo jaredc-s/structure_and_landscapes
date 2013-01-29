@@ -89,25 +89,46 @@ def process_initial_org(parameter_settings):
 
 def process_initial_population(parameter_settings):
     org = process_initial_org(parameter_settings)
-    number_of_pops = int(parameter_settings["Number of Populations"])
-    if number_of_pops <= 1:
-        mig_rate = 0.0
-        prop_miged = 0.0
-    else:
-        mig_rate = float(parameter_settings["Migration Rate"])
-        prop_miged = float(parameter_settings[
-            "Proportion of Population Migrated"])
-
     orgs_per_population = int(parameter_settings["Orgs per Population"])
-
     org_list = [org for _ in range(orgs_per_population)]
-    pop_list = [Population(org_list) for _ in range(number_of_pops)]
-    meta_pop = MetaPopulation(
+    mutation_rate = float(parameter_settings["Mutation Rate"])
+
+    if ("Number of Subpopulations in Width" in parameter_settings and
+        "Number of Subpopulations in Height" in parameter_settings):
+        width = int(parameter_settings["Number of Subpopulations in Width"])
+        height = int(parameter_settings["Number of Subpopulations in Height"])
+        assert(width > 0)
+        assert(height > 0)
+        number_of_pops = width * height
+    elif "Number of Populations" in parameter_settings:
+        number_of_pops = int(parameter_settings["Number of Populations"])
+    else:
+        number_of_pops = 1
+    if number_of_pops <= 1:
+        return Population(org_list, mutation_rate=mutation_rate)
+
+
+    mig_rate = float(parameter_settings["Migration Rate"])
+    prop_miged = float(parameter_settings[
+        "Proportion of Population Migrated"])
+
+
+    pop_list = [Population(org_list, mutation_rate=mutation_rate)
+            for _ in range(number_of_pops)]
+    if "Migration Type" in parameter_settings:
+        assert(parameter_settings["Migration Type"] in
+                {"Local", "Global", "Restricted", "Unrestricted"})
+        if parameter_settings["Migration Type"] in {"Local", "Restricted"}:
+            return StructuredPopulation(
+                    pop_list,
+                    migration_rate=mig_rate,
+                    proportion_of_pop_migrated=prop_miged,
+                    width=width,
+                    height=height)
+    return MetaPopulation(
         pop_list,
         migration_rate=mig_rate,
         proportion_of_pop_migrated=prop_miged)
-    return meta_pop
-
 
 def process_and_run(parameter_settings):
     initial_population = process_initial_population(parameter_settings)
