@@ -75,8 +75,8 @@ class TestModule(TC):
     def test_choose_leaf_by_fitness_random(self):
         high_fit_org = MockOrganism(12, "high fit")
         tree = add_to_tree(self.tree, high_fit_org)
-        draws = [choose_leaf_by_fitness(tree) for _ in range(40)]
-        self.assertTrue(draws.count(high_fit_org) > 15)
+        draws = [choose_leaf_by_fitness(tree) for _ in range(100)]
+        self.assertTrue(draws.count(high_fit_org) > 40)
         self.assertEqual(len(set(draws)), 4)
 
     @attr("probabilistic")
