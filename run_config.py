@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python2.7
 import random
 import argparse
 from structure_and_landscapes.run_management.run import process_and_run
@@ -14,12 +14,13 @@ def parse_arguments():
     parser = argparse.ArgumentParser(
         description="Command Line Interface for the "
         "structure and landscapes package.")
-    parser.add_argument(
-        '--parameters', help="specify the location of the configuration file")
-    parser.add_argument(
+    parser.add_argument('-p',
+        '--parameters', help="specify the location of the configuration file",
+        default='parameters.cfg')
+    parser.add_argument('-s',
         '--seed', default=0, type=int,
         help="random number seed, default to current time")
-    parser.add_argument(
+    parser.add_argument('-n',
         '--number_of_runs', default=1, type=int,
         help="the specified number of runs")
     args = parser.parse_args()
