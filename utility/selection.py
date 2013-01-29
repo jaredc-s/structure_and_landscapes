@@ -96,7 +96,8 @@ def _add_child_by_fitness_to_tree(tree, mutation_rate):
     return fitness_tree.add_to_tree(tree, chosen_to_give_birth)
 
 
-def moran_death_birth_numberline(orgs, mutation_rate, desired_number_of_orgs=None):
+def moran_death_birth_numberline(orgs, mutation_rate,
+                                 desired_number_of_orgs=None):
     """
     Method to execute the replacement of organism in a death-birth
     fashion using fecundity to replace the randomly selected death organism

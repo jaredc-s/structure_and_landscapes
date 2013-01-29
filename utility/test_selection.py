@@ -93,9 +93,20 @@ class TestMoran(TC):
         for org in new_pop:
             self.assertNotEqual(org.identifier[-1], "'")
 
+    def test_mutation_rate_nonzero(self):
+        new_pop = self.function(self.pop, 1)
+        self.assertTrue(any(org.identifier[-1] == "'" for org in new_pop))
+
+    def test_mutation_rate_nonzero_desire(self):
+        new_pop = self.function(self.pop, 1, desired_number_of_orgs=10)
+        self.assertTrue(any(org.identifier[-1] == "'" for org in new_pop))
+
     def test_desired_number(self):
         new_pop = self.function(self.pop, -1, desired_number_of_orgs=5)
         self.assertEqual(len(new_pop), 5)
+
+        new_new_pop = self.function(new_pop, -1, desired_number_of_orgs=2)
+        self.assertEqual(len(new_new_pop), 2)
 
 
 class TestMoranNumberline(TestMoran):

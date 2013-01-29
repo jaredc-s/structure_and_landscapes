@@ -62,6 +62,15 @@ class TestModule(TC):
         org = choose_leaf_by_fitness(self.tree)
         self.assertIn(org, self.orgs)
 
+    def test_choose_leaf_by_fitness_singleton(self):
+        single_tree = singleton_tree(self.orgs[0])
+        org = choose_leaf_by_fitness(single_tree)
+        self.assertEqual(org, self.orgs[0])
+
+    def test_choose_leaf_by_fitness_error(self):
+        with self.assertRaises(ValueError):
+            choose_leaf_by_fitness(empty_tree())
+
     @attr("probabilistic")
     def test_choose_leaf_by_fitness_random(self):
         high_fit_org = MockOrganism(12, "high fit")
