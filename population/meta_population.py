@@ -58,8 +58,6 @@ class MetaPopulation(object):
         from source to dest
         """
         number_migrating_orgs = int(self.prop_miged * len(source))
-        source_orgs_shuffled = random.shuffle(source)
-
         source_indices = random.sample(list(range(len(source))),
                                      number_migrating_orgs)
         dest_indices = random.sample(list(range(len(dest))),
