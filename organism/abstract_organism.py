@@ -30,7 +30,7 @@ class AbstractOrganism(mixins.KeyedHashingMixin):
 
 
     @abstractmethod
-    def _mutated_value(self):
+    def _mutated_value(self): # pragma: no cover
         """
         Concrete subclasses should override this.
 
@@ -45,7 +45,7 @@ class AbstractOrganism(mixins.KeyedHashingMixin):
             parent_id=self.self_id)
 
     @abstractmethod
-    def _evaluate_fitness(self):
+    def _evaluate_fitness(self): # pragma: no cover
         """
         Method should return a float representing the fitness of the organism.
 
