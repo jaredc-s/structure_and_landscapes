@@ -19,7 +19,6 @@ class Organism(AbstractOrganism):
         returns a int that is increment
         or decremented from the current state
         """
-        new_value = self.value
         if random.random() < 0.5:
             return self.value + 1
         else:
