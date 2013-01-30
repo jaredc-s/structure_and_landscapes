@@ -14,7 +14,6 @@ class Organism(AbstractOrganism):
         if not isinstance(self.value, int):
             raise ValueError("Integer Organisms must hold ints")
 
-
     def _mutated_value(self):
         """
         returns a int that is increment

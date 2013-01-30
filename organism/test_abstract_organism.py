@@ -45,6 +45,11 @@ class MixinTestOrganism(object):
         expected_beginning = 'Organism(value={!r},'.format(self.value_0)
         self.assertIn(expected_beginning, repr(org))
 
+    def test_parent(self):
+        g0 = self.Organism(self.value_0)
+        g_ = g0.mutate()
+        self.assertEqual(g0.self_id, g_.parent_id)
+
 class MixinTestModule(object):
     def test_default_organism(self):
         org = self.organism.default_organism
