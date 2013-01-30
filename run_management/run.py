@@ -17,8 +17,8 @@ from structure_and_landscapes.population.meta_population \
 from structure_and_landscapes.organism.bitstring.nk_model import nk_model as nk_model
 from structure_and_landscapes.organism import bitstring as bs
 from structure_and_landscapes.organism.bitstring.nk_model import organism as nk_organism
-from structure_and_landscapes.rna import rna_organism as rna_organism
-from structure_and_landscapes.rna import vienna_distance
+from structure_and_landscapes.organism.rna import organism as rna_organism
+from structure_and_landscapes.organism.rna import vienna_distance
 
 import random
 import numpy as np
