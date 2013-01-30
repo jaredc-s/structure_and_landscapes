@@ -11,7 +11,7 @@ import abc
 class AbstractOrganism(mixins.KeyedHashingMixin):
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, value, parent_id=None, self_id=None):
+    def __init__(self, value, *args, **kwargs):
         """
         The value argument is the state that is used for evaluating fitness
         parent_id is a uuid marking the parent (for inheritance tracking)
@@ -19,9 +19,15 @@ class AbstractOrganism(mixins.KeyedHashingMixin):
         """
         self.value = value
         self._fitness = None
-        self.parent_id = parent_id
-        if self_id is None:
+        for attr, set_value in kwargs.items():
+            setattr(self, attr, set_value)
+        if not hasattr(self, "parent_id"):
+            self.parent_id = None
+        if args:
+            raise ValueError("Organisms can only take the value as unnamed arguments")
+        if not hasattr(self, "self_id") or self.self_id is None:
             self.self_id = uuid.uuid4()
+
 
     @abc.abstractmethod
     def _mutated_value(self):

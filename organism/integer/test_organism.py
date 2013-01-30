@@ -1,5 +1,6 @@
 from unittest import TestCase as TC
 from organism import Organism
+import organism
 from ..test_abstract_organism import MixinTestOrganism, MixinTestModule
 
 

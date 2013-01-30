@@ -1,7 +1,7 @@
 from unittest import TestCase as TC
 import nk_model
 from nk_model import *
-from bitstring import Bitstring
+from ..bitstring import Bitstring
 
 
 class TestSimpleNKModel(TC):

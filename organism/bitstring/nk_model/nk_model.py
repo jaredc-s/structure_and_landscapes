@@ -18,7 +18,7 @@ import collections
 import itertools
 from random import Random
 import random
-from bitstring import Bitstring
+from ..bitstring import Bitstring
 
 
 class NKModelFactory(object):
