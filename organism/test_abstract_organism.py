@@ -10,6 +10,10 @@ class MixinTestOrganism(object):
         organism2 = self.Organism(self.value_1)
         self.assertEqual(organism2.value, self.value_1)
 
+    def test_init_unnamed(self):
+        with self.assertRaises(ValueError):
+            self.Organism(self.value_0, None)
+
     def test_eq(self):
         g0 = self.Organism(self.value_0)
         g0_ = self.Organism(self.value_0)

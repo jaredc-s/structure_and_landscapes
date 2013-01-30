@@ -5,11 +5,11 @@ Immutable class. Hashable. Equalible. Printable.
 """
 from structure_and_landscapes.utility import mixins
 import uuid
-import abc
+from abc import ABCMeta, abstractmethod
 
 
 class AbstractOrganism(mixins.KeyedHashingMixin):
-    __metaclass__ = abc.ABCMeta
+    __metaclass__ = ABCMeta
 
     def __init__(self, value, *args, **kwargs):
         """
@@ -24,12 +24,12 @@ class AbstractOrganism(mixins.KeyedHashingMixin):
         if not hasattr(self, "parent_id"):
             self.parent_id = None
         if args:
-            raise ValueError("Organisms can only take the value as unnamed arguments")
+            raise ValueError("Organisms can only take the value an unnamed argument")
         if not hasattr(self, "self_id") or self.self_id is None:
             self.self_id = uuid.uuid4()
 
 
-    @abc.abstractmethod
+    @abstractmethod
     def _mutated_value(self):
         """
         Concrete subclasses should override this.
@@ -44,7 +44,7 @@ class AbstractOrganism(mixins.KeyedHashingMixin):
             value=self._mutated_value(),
             parent_id=self.self_id)
 
-    @abc.abstractmethod
+    @abstractmethod
     def _evaluate_fitness(self):
         """
         Method should return a float representing the fitness of the organism.
