@@ -1,8 +1,8 @@
 import unittest
 from unittest import TestCase as TC
 
-import integer_organism as organism
-from integer_organism import Organism
+import organism
+from organism import Organism
 import random
 
 
@@ -63,8 +63,8 @@ class TestOrganism(TC):
 
     def test_repr(self):
         org = Organism(1)
-        expected = 'Organism(value=1)'
-        self.assertEqual(repr(org), expected)
+        expected_beginning = 'Organism(value=1,'
+        self.assertIn(expected_beginning, repr(org))
 
 
 class TestModule(TC):
