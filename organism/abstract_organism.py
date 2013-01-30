@@ -3,9 +3,9 @@ Generic organism class for inheritance.
 
 Immutable class. Hashable. Equalible. Printable.
 """
-from structure_and_landscapes.utility import mixins
 import uuid
 from abc import ABCMeta, abstractmethod
+from ..utility import mixins
 
 
 class AbstractOrganism(mixins.KeyedHashingMixin):
