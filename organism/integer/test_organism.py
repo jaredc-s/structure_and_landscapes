@@ -1,72 +1,33 @@
-import unittest
 from unittest import TestCase as TC
 
 import organism
 from organism import Organism
-import random
+from ..test_abstract_organism import MixinTestOrganism, MixinTestModule
 
 
-class TestOrganism(TC):
+class TestModule(MixinTestModule, TC):
+    organism = organism
+    Organism = Organism
+
+
+
+class TestIntegerOrganism(MixinTestOrganism, TC):
+
+    Organism = Organism
+
     def setUp(self):
         self.value_0 = 0
         self.value_1 = 1
         self.value_2 = 2
-        self.bad_value = "0"
-
-    def test_init(self):
-        organism = Organism(self.value_0)
-        self.assertEqual(organism.value, self.value_0)
-
-        organism2 = Organism(self.value_1)
-        self.assertEqual(organism2.value, self.value_1)
 
     def test_init_exception(self):
-        with self.assertRaises(AssertionError):
-            Organism(self.bad_value)
-
-    def test_eq(self):
-        g0 = Organism(self.value_0)
-        g0_ = Organism(self.value_0)
-        g1 = Organism(self.value_1)
-        self.assertEqual(g0, g0_)
-        self.assertNotEqual(g0, g1)
-
-        self.assertFalse(g0 == self.bad_value)
-        self.assertTrue(g0 != self.bad_value)
-
-    def test_hash(self):
-        set_of_organisms = {Organism(self.value_0), Organism(self.value_1)}
-        set_of_organisms2 = {Organism(self.value_1), Organism(self.value_2)}
-        set_of_organisms3 = set_of_organisms.union(set_of_organisms2)
-
-        self.assertSetEqual(
-            set_of_organisms3,
-            {Organism(self.value_0), Organism(self.value_1),
-                Organism(self.value_2)})
-
-    def test_mutate(self):
-        g0 = Organism(self.value_0)
-        g_ = g0.mutate()
-        self.assertNotEqual(g0, g_)
-
-    def test_mutate_many(self):
-        org = Organism(self.value_0)
-        for _ in range(100):
-            org = org.mutate()
-        self.assertTrue(isinstance(org, Organism))
+        with self.assertRaises(ValueError):
+            self.Organism("1")
 
     def test_fitness(self):
-        g0 = Organism(self.value_0)
-        self.assertAlmostEqual(0, g0.fitness)
-        g1 = Organism(self.value_1)
-        self.assertAlmostEqual(1, g1.fitness)
-
-    def test_repr(self):
-        org = Organism(1)
-        expected_beginning = 'Organism(value=1,'
-        self.assertIn(expected_beginning, repr(org))
+        g0 = self.Organism(self.value_0)
+        self.assertAlmostEqual(1, g0.fitness)
+        g1 = self.Organism(self.value_1)
+        self.assertAlmostEqual(2, g1.fitness)
 
 
-class TestModule(TC):
-    def test_default_organism(self):
-        org = organism.default_organism

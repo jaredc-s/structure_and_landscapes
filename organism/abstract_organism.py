@@ -24,14 +24,19 @@ class AbstractOrganism(mixins.KeyedHashingMixin):
             self.self_id = uuid.uuid4()
 
     @abc.abstractmethod
-    def mutate(self):
+    def _mutated_value(self):
         """
         Concrete subclasses should override this.
 
-        Should return a different, mutated organism.
+        Should return a different, mutated value.
         note: original organism is unchanged
         """
         pass
+
+    def mutate(self):
+        return type(self)(
+            value=self._mutated_value(),
+            parent_id=self.self_id)
 
     @abc.abstractmethod
     def _evaluate_fitness(self):

@@ -3,7 +3,7 @@ import random
 
 from meta_population import MetaPopulation, StructuredPopulation
 from population import Population
-from ..integer.integer_organism import Organism
+from ..organism.integer.organism import Organism
 from nose.plugins.attrib import attr
 
 
@@ -65,10 +65,10 @@ class TestMetaPopulation(TC):
         self.metapop = MetaPopulation(self.pops, 0.5, 0.5)
 
     def test_max_fitness(self):
-        self.assertAlmostEqual(self.metapop.max_fitness(), 4.0)
+        self.assertAlmostEqual(self.metapop.max_fitness(), 5.0)
 
     def test_mean_fitness(self):
-        self.assertAlmostEqual(self.metapop.mean_fitness(), 2.5)
+        self.assertAlmostEqual(self.metapop.mean_fitness(), 3.5)
 
     def test_length(self):
         self.assertEqual(10, len(self.metapop))

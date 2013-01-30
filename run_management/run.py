@@ -8,7 +8,7 @@ import copy
 from structure_and_landscapes.bitstring.bitstring_organism \
     import Organism as bit_organism
 from structure_and_landscapes.bitstring import bitstring_organism
-from structure_and_landscapes.integer.integer_organism \
+from structure_and_landscapes.organism.integer.organism \
     import Organism as int_organism
 from structure_and_landscapes.bitstring.bitstring import Bitstring
 from structure_and_landscapes.population.population import Population
