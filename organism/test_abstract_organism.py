@@ -1,6 +1,8 @@
 """
 Generic Tests for all Organism Classes.
 """
+
+
 class MixinTestOrganism(object):
 
     def test_init(self):
@@ -22,8 +24,10 @@ class MixinTestOrganism(object):
         self.assertNotEqual(g0, g1)
 
     def test_hash(self):
-        set_of_organisms = {self.Organism(self.value_0), self.Organism(self.value_1)}
-        set_of_organisms2 = {self.Organism(self.value_1), self.Organism(self.value_2)}
+        set_of_organisms = {
+            self.Organism(self.value_0), self.Organism(self.value_1)}
+        set_of_organisms2 = {
+            self.Organism(self.value_1), self.Organism(self.value_2)}
         set_of_organisms3 = set_of_organisms.union(set_of_organisms2)
 
         self.assertSetEqual(
@@ -40,7 +44,7 @@ class MixinTestOrganism(object):
 
     def test_positive_fitness(self):
         orgs = [self.Organism(value) for value in
-            [self.value_0, self.value_1, self.value_2]]
+                [self.value_0, self.value_1, self.value_2]]
         for org in orgs:
             self.assertGreater(org.fitness, 0)
 
@@ -53,6 +57,7 @@ class MixinTestOrganism(object):
         g0 = self.Organism(self.value_0)
         g_ = g0.mutate()
         self.assertEqual(g0.self_id, g_.parent_id)
+
 
 class MixinTestModule(object):
     def test_default_organism(self):

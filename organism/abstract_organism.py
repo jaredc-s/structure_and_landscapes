@@ -24,13 +24,13 @@ class AbstractOrganism(mixins.KeyedHashingMixin):
         if not hasattr(self, "parent_id"):
             self.parent_id = None
         if args:
-            raise ValueError("Organisms can only take the value an unnamed argument")
+            raise ValueError(
+                "Organisms can only take the value an unnamed argument")
         if not hasattr(self, "self_id") or self.self_id is None:
             self.self_id = uuid.uuid4()
 
-
     @abstractmethod
-    def _mutated_value(self): # pragma: no cover
+    def _mutated_value(self):  # pragma: no cover
         """
         Concrete subclasses should override this.
 
@@ -45,7 +45,7 @@ class AbstractOrganism(mixins.KeyedHashingMixin):
             parent_id=self.self_id)
 
     @abstractmethod
-    def _evaluate_fitness(self): # pragma: no cover
+    def _evaluate_fitness(self):  # pragma: no cover
         """
         Method should return a float representing the fitness of the organism.
 

@@ -13,7 +13,8 @@ class Organism(AbstractOrganism):
 
     def __init__(self, *args, **kwargs):
         super(Organism, self).__init__(*args, **kwargs)
-        if isinstance(self, Organism) and not isinstance(self.value, Bitstring):
+        if (isinstance(self, Organism) and
+                not isinstance(self.value, Bitstring)):
             raise ValueError("Bitstring Organisms must hold Bitstrings")
 
     def _mutated_value(self):

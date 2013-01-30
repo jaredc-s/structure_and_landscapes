@@ -7,9 +7,9 @@ from nk_model import NKModelSimple
 class Organism(BOrg):
     def __init__(self, *args, **kwargs):
         super(Organism, self).__init__(*args, **kwargs)
-        if not hasattr(self, "nk_model") or not isinstance(self.nk_model, NKModelSimple):
+        if (not hasattr(self, "nk_model") or
+                not isinstance(self.nk_model, NKModelSimple)):
             raise ValueError("NK Organisms need a nk_model")
-
 
     def mutate(self):
         return type(self)(

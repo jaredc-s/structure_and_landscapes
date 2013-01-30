@@ -6,6 +6,7 @@ import cmd_vienna_distance as vienna_distance
 
 OPTIMAL_RNA_SEQUENCE = vienna_distance.get_tRNA_sequence()
 
+
 class TestModule(MixinTestModule, TC):
     organism = organism
     Organism = Organism

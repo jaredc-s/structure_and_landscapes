@@ -2,28 +2,16 @@
 This module contains a class (Run) that encapsulate the
 parameters and results of a single evolutionary simulation.
 """
-from structure_and_landscapes.run_management import persistence
-import copy
+import persistence
 
-from structure_and_landscapes.organism.bitstring.organism \
-    import Organism as bit_organism
-from structure_and_landscapes.organism.bitstring import organism as bitstring_organism
-from structure_and_landscapes.organism.integer.organism \
-    import Organism as int_organism
-from structure_and_landscapes.organism.bitstring.bitstring import Bitstring
-from structure_and_landscapes.population.population import Population
-from structure_and_landscapes.population.meta_population \
-    import MetaPopulation, StructuredPopulation
-from structure_and_landscapes.organism.bitstring.nk_model import nk_model as nk_model
-from structure_and_landscapes.organism import bitstring as bs
-from structure_and_landscapes.organism.bitstring.nk_model import organism as nk_organism
-from structure_and_landscapes.organism.rna import organism as rna_organism
-from structure_and_landscapes.organism.rna import vienna_distance
-
-import random
-import numpy as np
-import scipy.stats as st
-import matplotlib.pyplot as plt
+from ..organism.bitstring import organism as bitstring_organism
+from ..organism.bitstring.bitstring import Bitstring
+from ..population.population import Population
+from ..population.meta_population import MetaPopulation, StructuredPopulation
+from ..organism.bitstring.nk_model import nk_model as nk_model
+from ..organism.bitstring import bitstring
+from ..organism.bitstring.nk_model import organism as nk_organism
+from ..organism.rna import organism as rna_organism
 
 
 class Run(object):
@@ -63,7 +51,7 @@ def process_initial_org(parameter_settings):
             int(parameter_settings["Length of Org"]))
     elif parameter_settings["Organism Type"] == "NK Model":
         length = int(parameter_settings["Length of Org"])
-        b = bs.bitstring.random_string(length)
+        b = bitstring.random_string(length)
         nk_fac = nk_model.NKModelFactory()
         if "Number of Genes" not in parameter_settings:
             number_of_genes = 1
@@ -71,7 +59,8 @@ def process_initial_org(parameter_settings):
             number_of_genes = int(parameter_settings["Number of Genes"])
         k_total = int(parameter_settings["K-total"])
         if number_of_genes == 1:
-            unique_nk_model = nk_fac.non_consecutive_dependencies(n=length, k=k_total)
+            unique_nk_model = nk_fac.non_consecutive_dependencies(
+                n=length, k=k_total)
         else:
             length_of_gene = int(parameter_settings["Length of Gene"])
             k_intra = int(parameter_settings["K-intra"])
