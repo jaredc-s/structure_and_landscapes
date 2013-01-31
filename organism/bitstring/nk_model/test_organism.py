@@ -9,7 +9,7 @@ import random
 class TestOrganism(TC):
     def setUp(self):
         self.value = bitstring.Bitstring("100")
-        lookup = [{0:1, 1:0.5}, {0:0.2, 1:0.4}, {0:0.1, 1:0.8}]
+        lookup = [{0: 1, 1: 0.5}, {0: 0.2, 1: 0.4}, {0: 0.1, 1: 0.8}]
         deps = [[0], [1], [2]]
         model = nk_model.NKModelSimple(deps, lookup)
         self.org = Organism(self.value, nk_model=model)

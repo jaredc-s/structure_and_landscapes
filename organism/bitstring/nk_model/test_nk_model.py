@@ -7,23 +7,23 @@ from ..bitstring import Bitstring
 class TestSimpleNKModel(TC):
     def test_init(self):
         dep = [[0, 1], [1, 0]]
-        clt = [{0:1, 1:2, 2:3, 3:4}, {0:5, 1:6, 2:7, 3:8}]
+        clt = [{0: 1, 1: 2, 2: 3, 3: 4}, {0: 5, 1: 6, 2: 7, 3: 8}]
         model = NKModelSimple(dep, clt)
         self.assertEqual(dep, model.dependency_lists)
         self.assertEqual(clt, model.contribution_lookup_tables)
 
     def test_calculate_fitness_hard(self):
         dep = [[0, 1], [1, 0], [2, 1]]
-        clt = [{0:.1, 1:.2, 2:.3, 3:.4},
-               {0:.5, 1:.6, 2:.7, 3:.8},
-               {0:.9, 1:1.0, 2:.15, 3:.25}]
+        clt = [{0: .1, 1: .2, 2: .3, 3: .4},
+               {0: .5, 1: .6, 2: .7, 3: .8},
+               {0: .9, 1: 1.0, 2: .15, 3: .25}]
         model = NKModelSimple(dep, clt)
         bs = Bitstring("010")
         expected_fitness = (.3 + .6 + .15) / 3.0
         self.assertAlmostEqual(expected_fitness, model.calculate_fitness(bs))
 
     def test_calculate_fitness_easy(self):
-        model = NKModelSimple([[0], [1]], [{0:.2, 1:.3}, {0:.6, 1:.7}])
+        model = NKModelSimple([[0], [1]], [{0: .2, 1: .3}, {0: .6, 1: .7}])
         bs = Bitstring("01")
         expected_fitness = (.3 + .6) / 2.0
         self.assertAlmostEqual(expected_fitness, model.calculate_fitness(bs))
