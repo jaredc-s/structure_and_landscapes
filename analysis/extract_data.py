@@ -47,7 +47,8 @@ if __name__ == "__main__":
     shelf_path = '/vagrant/saved_runs.dat'
     runs = persistence.values(shelf_path)
 
-    filtered_runs = filter_runs(runs, {'Organism Type': 'NK Model'})
+    filtered_runlist = filter_runs(runs, {'Organism Type': 'NK Model'})
+    print max_fitness_for_each_run(filtered_runlist)
     #runs1, runs2 = itertools.tee(filtered_runs, 2)
     #print mean_fitness_for_each_run(runs1)
     #print max_fitness_for_each_run(runs2)

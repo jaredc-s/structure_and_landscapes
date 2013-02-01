@@ -34,7 +34,8 @@ class Run(object):
 
 
 def run_population(population, number_of_generations):
-    for _ in range(number_of_generations):
+    for gen in range(number_of_generations):
+        print("Gen: {}".format(gen))
         population.advance_generation()
     return population
 
