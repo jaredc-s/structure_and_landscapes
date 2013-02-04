@@ -3,7 +3,7 @@
 #Not sure if needed
 REPO=./
 #USER DEFINED
-NUM_REPS=2
+NUM_REPS=1
 
 for ((i=1; i<=${NUM_REPS}; i++)) ; do
 
@@ -24,7 +24,7 @@ for ((i=1; i<=${NUM_REPS}; i++)) ; do
 
 #    ec2-attach-volume ${VOL_NUMBER} -i ${instance} -d /dev/sdf
 #THIS WORKS
-    cat ./scripts/setup_script.sh | ssh -i ~/.ssh/amazon_key -o StrictHostKeyChecking=no ubuntu@${dns} /bin/bash
+    cat ./scripts/setup_script.sh | ssh -i ~/.ssh/amazon_key -o StrictHostKeyChecking=no ubuntu@${dns} /bin/bash &
      
 #    ./scripts/setup_script.sh
 
