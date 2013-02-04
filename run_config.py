@@ -16,7 +16,8 @@ def parse_arguments():
         "structure and landscapes package.")
     parser.add_argument(
         '-p',
-        '--parameters', help="specify the location of the configuration file",
+        '--parameters', help="specify the location of the configuration file, "
+        "defaults to parameters.cfg",
         default='parameters.cfg')
     parser.add_argument(
         '-s',

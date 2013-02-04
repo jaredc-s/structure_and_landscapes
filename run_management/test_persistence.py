@@ -5,7 +5,7 @@ import os.path
 import shutil
 from contextlib import closing
 
-from ..integer import integer_organism as org
+from ..organism.integer import organism as org
 
 
 class TestModule(TC):

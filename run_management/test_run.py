@@ -3,7 +3,7 @@ import tempfile
 import os
 import shutil
 
-from structure_and_landscapes.integer.integer_organism \
+from structure_and_landscapes.organism.integer.organism \
     import Organism as int_organism
 from structure_and_landscapes.population.population import Population
 

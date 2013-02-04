@@ -48,21 +48,21 @@ profile: install .profiledata
 
 # Cleans cython specific files
 clean_cython:
-	-rm rna/vienna_distance.c
-	-rm rna/*.o
-	-rm rna/*.so
+	-rm organism/rna/vienna_distance.c
+	-rm organism/rna/*.o
+	-rm organism/rna/*.so
 
 # Cython complied libraries 
-cython_compile: rna/vienna_distance.so
+cython_compile: organism/rna/vienna_distance.so
 
-rna/vienna_distance.so: rna/vienna_distance.c rna/vienna_utils.o
-	$(CC) $(CFLAGS) -o $@ rna/vienna_distance.c rna/vienna_utils.o $(LFLAGS)
+organism/rna/vienna_distance.so: organism/rna/vienna_distance.c organism/rna/vienna_utils.o
+	$(CC) $(CFLAGS) -o $@ organism/rna/vienna_distance.c organism/rna/vienna_utils.o $(LFLAGS)
 	
-rna/vienna_distance.c: rna/vienna_distance.pyx
-	cython rna/vienna_distance.pyx -o $@
+organism/rna/vienna_distance.c: organism/rna/vienna_distance.pyx
+	cython organism/rna/vienna_distance.pyx -o $@
 
-rna/vienna_utils.o: rna/vienna_utils.c rna/vienna_utils.h
-	$(CC) $(CFLAGS) -c rna/vienna_utils.c -o $@ $(LFLAGS)
+organism/rna/vienna_utils.o: organism/rna/vienna_utils.c organism/rna/vienna_utils.h
+	$(CC) $(CFLAGS) -c organism/rna/vienna_utils.c -o $@ $(LFLAGS)
 
 .profiledata: main.py
 	python -m cProfile -o $@ main.py
