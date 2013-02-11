@@ -7,7 +7,7 @@ import persistence
 from ..organism.bitstring import organism as bitstring_organism
 from ..organism.bitstring.bitstring import Bitstring
 from ..population.population import Population
-from ..population.meta_population import MetaPopulation, StructuredPopulation
+from ..population.meta_population import MetaPopulation, StructuredPopulation, ReservoirPopulation
 from ..organism.bitstring.nk_model import nk_model as nk_model
 from ..organism.bitstring import bitstring
 from ..organism.bitstring.nk_model import organism as nk_organism
@@ -105,7 +105,7 @@ def process_initial_population(parameter_settings):
                 for _ in range(number_of_pops)]
     if "Migration Type" in parameter_settings:
         assert(parameter_settings["Migration Type"] in
-               {"Local", "Global", "Restricted", "Unrestricted"})
+               {"Local", "Global", "Restricted", "Unrestricted", "Reservoir"})
         if parameter_settings["Migration Type"] in {"Local", "Restricted"}:
             return StructuredPopulation(
                 pop_list,
@@ -113,6 +113,11 @@ def process_initial_population(parameter_settings):
                 proportion_of_pop_migrated=prop_miged,
                 width=width,
                 height=height)
+        if parameter_settings["Migration Type"] == "Reservoir":
+            return ReservoirPopulation(
+                pop_list,
+                migration_rate=mig_rate,
+                proportion_of_pop_migrated=prop_miged)
     return MetaPopulation(
         pop_list,
         migration_rate=mig_rate,
