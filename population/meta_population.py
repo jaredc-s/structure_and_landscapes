@@ -17,6 +17,7 @@ have no spatial nearness.
 """
 
 import random
+import itertools
 from structure_and_landscapes.utility.selection import select
 from population import Population
 from neighborhood import nearest_4_neighbors_by_linear_position
@@ -147,9 +148,12 @@ class ReservoirPopulation(MetaPopulation):
         subpop_index_to_migrant_indices = {
             subpop_index: self._migrants_in_subpop() for subpop_index in
             subpop_indices}
-        migrants = [
+        lists_of_migrants = [
             [self.list_of_populations[subpop_index][migrant_index]
             for migrant_index in migrant_indices]
             for subpop_index, migrant_indices in subpop_index_to_migrant_indices.items()]
-
-
+        migrants = list(itertools.chain.from_iterable(lists_of_migrants))
+        random.shuffle(migrants)
+        for subpop_index, migrant_indices in subpop_index_to_migrant_indices.items():
+            for migrant_index in migrant_indices:
+                self.list_of_populations[subpop_index][migrant_index] = migrants.pop()

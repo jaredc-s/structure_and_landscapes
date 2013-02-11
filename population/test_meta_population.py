@@ -1,7 +1,7 @@
 from unittest import TestCase as TC
 import random
 
-from meta_population import MetaPopulation, StructuredPopulation
+from meta_population import MetaPopulation, StructuredPopulation, ReservoirPopulation
 from population import Population
 from ..organism.integer.organism import Organism
 from nose.plugins.attrib import attr
@@ -114,3 +114,11 @@ class TestStructuredPopulation(TestMetaPopulation):
 
         self.pops = [Population(self.orgs) for _ in range(10)]
         self.metapop = StructuredPopulation(self.pops, 0.5, 0.5, 2, 5)
+
+class TestReservoirPopulation(TestMetaPopulation):
+    def setUp(self):
+        self.orgs = [Organism(1), Organism(2),
+                     Organism(3), Organism(4)]
+
+        self.pops = [Population(self.orgs) for _ in range(10)]
+        self.metapop = ReservoirPopulation(self.pops, 0.5, 0.5)
