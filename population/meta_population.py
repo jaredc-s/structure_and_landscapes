@@ -42,30 +42,38 @@ class MetaPopulation(object):
         """
         Perform migrations in population
         """
-        number_migrating_pops = int(
-            self.mig_rate * len(self.list_of_populations))
+        source_pops_indices = self._migrant_subpopulation_indices()
+        dest_pops_indices = self._migrant_subpopulation_indices()
+        for source_index, dest_index in zip(source_pops_indices, dest_pops_indices):
+            self.subpop_migrate(self.list_of_populations[source_index],
+                    self.list_of_populations[dest_index])
 
-        source_pops = random.sample(
-            self.list_of_populations,
-            number_migrating_pops)
-
-        dest_pops = random.sample(
-            self.list_of_populations, number_migrating_pops)
-        for source, dest in zip(source_pops, dest_pops):
-            self.subpop_migrate(source, dest)
+    def _migrants_in_subpop(self):
+        """
+        Returns an iterable of indices denoting the orgs that are migrating.
+        """
+        number_of_orgs_per_subpop = len(self.list_of_populations[0])
+        number_migrating_orgs = int(self.prop_miged * number_of_orgs_per_subpop)
+        return random.sample(range(number_of_orgs_per_subpop), number_migrating_orgs)
 
     def subpop_migrate(self, source, dest):
         """
         Performs a migration (between two subpopulations)
         from source to dest
         """
-        number_migrating_orgs = int(self.prop_miged * len(source))
-        source_indices = random.sample(
-            list(range(len(source))), number_migrating_orgs)
-        dest_indices = random.sample(
-            list(range(len(dest))), number_migrating_orgs)
+        source_indices = self._migrants_in_subpop()
+        dest_indices = self._migrants_in_subpop()
         for source_index, dest_index in zip(source_indices, dest_indices):
             dest[dest_index] = source[source_index]
+
+    def _migrant_subpopulation_indices(self):
+        """
+        Returns a iterable of indicies for the subpopulation sampled from
+        the subpopulations in proportion to the migration rate.
+        """
+        number_migrating_pops = int(
+            self.mig_rate * len(self.list_of_populations))
+        return random.sample(range(len(self.list_of_populations)), number_migrating_pops)
 
     def replicate(self):
         for pop in self.list_of_populations:
@@ -116,13 +124,7 @@ class StructuredPopulation(MetaPopulation):
         """
         Perform migrations in population
         """
-        number_migrating_pops = int(
-            self.mig_rate * len(self.list_of_populations))
-
-        source_pop_indices = random.sample(
-            list(range(len(self.list_of_populations))),
-            number_migrating_pops)
-
+        source_pop_indices = self._migrant_subpopulation_indices()
         for source_pop_index in source_pop_indices:
             neighbors = nearest_4_neighbors_by_linear_position(
                 self.width, self.height, source_pop_index)
@@ -130,3 +132,24 @@ class StructuredPopulation(MetaPopulation):
             source_pop = self.list_of_populations[source_pop_index]
             dest_pop = self.list_of_populations[dest_pop_index]
             self.subpop_migrate(source_pop, dest_pop)
+
+
+class ReservoirPopulation(MetaPopulation):
+    """
+    Instead of migrations occuring directly between two subpopulations,
+    a proportion of each population is taken to a global reservoir,
+    mixed, and equally distributed to the subpopulations.
+    Migration rate is the proportion of subpopulations participating
+    in the migration event (usually 1).
+    """
+    def migrate(self):
+        subpop_indices = self._migrant_subpopulation_indices()
+        subpop_index_to_migrant_indices = {
+            subpop_index: self._migrants_in_subpop() for subpop_index in
+            subpop_indices}
+        migrants = [
+            [self.list_of_populations[subpop_index][migrant_index]
+            for migrant_index in migrant_indices]
+            for subpop_index, migrant_indices in subpop_index_to_migrant_indices.items()]
+
+
