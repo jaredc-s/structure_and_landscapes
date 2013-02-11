@@ -6,16 +6,16 @@ apt-get -yq update
 #apt-get -y dist-upgrade
 apt-get -yq install make python-numpy python-scipy python-matplotlib build-essential python2.7-dev python-pip vim screen python-profiler python-wxgtk2.8 python-setuptools git cython python-nose > /dev/null
 cd 
-wget http://www.tbi.univie.ac.at/~ronny/RNA/ViennaRNA-2.0.7.tar.gz
+wget http://www.tbi.univie.ac.at/~ronny/RNA/ViennaRNA-2.0.7.tar.gz > /dev/null 
 tar -xf ViennaRNA-2.0.7.tar.gz
 cd ViennaRNA-2.0.7
-./configure
-make
-make install
+./configure > /dev/null
+make > /dev/null
+make install > /dev/null
 cd ..
-git clone git://github.com/jaredc-s/structure_and_landscapes.git
+git clone git://github.com/jaredc-s/structure_and_landscapes.git > /dev/null
 export PYTHONPATH=$PYTHONPATH:$(pwd)
 cd structure_and_landscapes
-make install
+make install 
 
 #Put actual run instantiation here?
